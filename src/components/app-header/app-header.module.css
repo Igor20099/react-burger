@@ -1,0 +1,32 @@
+.appHeader {
+  display: flex;
+  max-width: 1920px;
+  background-color: #1c1c21;
+  margin: 40px 40px 0;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px;
+  padding: 0 320px;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+}
+
+.link {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  /* text/primary-light (standart text) */
+
+  color: #f2f2f3;
+}
+
