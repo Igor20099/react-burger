@@ -1,0 +1,22 @@
+.burger_ingredients {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+.burger_ingredients::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bun_conteiner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  list-style-type: none;
+}
+
+.burger_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
