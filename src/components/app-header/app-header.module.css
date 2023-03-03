@@ -1,11 +1,7 @@
 .appHeader {
   display: flex;
-  max-width: 1920px;
   background-color: #1c1c21;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
-  padding: 0 320px;
+  padding: 0 100px;
 }
 
 .list {
@@ -19,12 +15,46 @@
   font-size: 16px;
   line-height: 24px;
   /* identical to box height, or 150% */
-
+  margin-right: 8px;
   display: flex;
   align-items: center;
   text-decoration: none;
 
   /* text/primary-light (standart text) */
-
+  padding: 0 20px;
   color: #f2f2f3;
+}
+
+.link_inactive {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #8585ad;
+  padding: 0 20px;
+}
+
+.login_inactive {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #8585ad;
+  padding: 0 20px;
+  margin-left: auto;
+}
+
+.logo {
+  padding-top: 4px;
+  margin: 0 auto;
 }

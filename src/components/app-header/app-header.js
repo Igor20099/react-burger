@@ -13,22 +13,25 @@ function AppHeader() {
         <ul className={styles.list}>
           <li>
             <a className={styles.link} href="#">
-              <BurgerIcon className="m-4" type="primary" />
-              <span className="text text_type_main-default">Конструктор</span>
+              <BurgerIcon type="primary" />
+              <span className="text text_type_main-default pl-2">Конструктор</span>
             </a>
           </li>
           <li>
-            <a className={styles.link} href="#">
+            <a className={styles.link_inactive} href="#">
               <ListIcon type="secondary" />
-              <span className="text text_type_main-default">Лента заказов</span>
+              <span className="text text_type_main-default pl-2">Лента заказов</span>
             </a>
           </li>
         </ul>
       </nav>
+      <div className={styles.logo}>
       <Logo />
-      <a className={styles.link} href="#">
+      </div>
+      
+      <a className={styles.login_inactive} href="#">
         <ProfileIcon type="secondary" />
-        <span className="text text_type_main-default">Личный кабинет</span>
+        <span className="text text_type_main-default pl-2">Личный кабинет</span>
       </a>
     </header>
   );

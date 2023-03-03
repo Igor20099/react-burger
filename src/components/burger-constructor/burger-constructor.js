@@ -68,10 +68,11 @@ function BurgerConstructor({ data }) {
         />
       </ul>
       <div className={styles.burger_info}>
-        <p>
-          {data[0].price}
+        <div className={styles.price}>
+          <p className="text text_type_main-large mr-2">{data[0].price}</p>
           <CurrencyIcon type="primary" />
-        </p>
+        </div>
+
         <Button htmlType="button" type="primary" size="large">
           Оформить заказ
         </Button>

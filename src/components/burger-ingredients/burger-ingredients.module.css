@@ -2,10 +2,8 @@
   display: flex;
   flex-direction: column;
   max-width: 600px;
-}
-
-.burger_ingredients::-webkit-scrollbar {
-  width: 8px;
+  margin-right: 40px;
+  margin-top: 40px;
 }
 
 .bun_conteiner {
@@ -19,4 +17,28 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  cursor: pointer;
+}
+
+.ingredients_container {
+  max-height: 64vh;
+  overflow-y: scroll;
+}
+
+.ingredients_container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredients_container::-webkit-scrollbar-track {
+  background-color: #2f2f37;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
