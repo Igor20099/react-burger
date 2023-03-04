@@ -4,11 +4,11 @@
 
 ## Технологии
 
-*HTML
-*CSS
-*JavaScript
-*JSX
-*React
+* HTML
+* CSS
+* JavaScript
+* JSX
+* React
 
 
 
