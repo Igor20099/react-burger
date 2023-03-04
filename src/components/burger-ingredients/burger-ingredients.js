@@ -32,7 +32,7 @@ function BurgerIngredients({ data }) {
               if (el.type === "bun") {
                 return (
                   <li key={el._id} className={styles.burger_item}>
-                    <img src={el.image} />
+                    <img src={el.image} className="mr-4 ml-4 mb-1"/>
                     <Counter count={1} size="default" extraClass="m-1" />
                     <div className={styles.price}>
                       <p className="text text_type_main-medium mr-2">{el.price}</p>
