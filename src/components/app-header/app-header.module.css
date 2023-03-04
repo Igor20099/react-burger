@@ -1,12 +1,11 @@
 .appHeader {
-  display: flex;
   background-color: #1c1c21;
-  padding: 0 100px;
 }
 
 .list {
   list-style-type: none;
   display: flex;
+  padding: 0 22px;
 }
 
 .link {
@@ -14,14 +13,12 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  /* identical to box height, or 150% */
-  margin-right: 8px;
   display: flex;
   align-items: center;
   text-decoration: none;
 
   /* text/primary-light (standart text) */
-  padding: 0 20px;
+  padding-right: 24px;
   color: #f2f2f3;
 }
 
@@ -56,5 +53,12 @@
 
 .logo {
   padding-top: 4px;
+  padding-left: 78px;
+}
+
+.content {
+  display: flex;
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 14px 0;
 }

@@ -5,6 +5,7 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients({ data }) {
@@ -32,10 +33,12 @@ function BurgerIngredients({ data }) {
               if (el.type === "bun") {
                 return (
                   <li key={el._id} className={styles.burger_item}>
-                    <img src={el.image} className="mr-4 ml-4 mb-1"/>
+                    <img src={el.image} className="mr-4 ml-4 mb-1" />
                     <Counter count={1} size="default" extraClass="m-1" />
                     <div className={styles.price}>
-                      <p className="text text_type_main-medium mr-2">{el.price}</p>
+                      <p className="text text_type_main-medium mr-2">
+                        {el.price}
+                      </p>
                       <CurrencyIcon type="primary" />
                     </div>
 
@@ -56,7 +59,9 @@ function BurgerIngredients({ data }) {
                     <img src={el.image}></img>
                     <Counter count={1} size="default" extraClass="m-1" />
                     <div className={styles.price}>
-                      <p className="text text_type_main-medium mr-2">{el.price}</p>
+                      <p className="text text_type_main-medium mr-2">
+                        {el.price}
+                      </p>
                       <CurrencyIcon type="primary" />
                     </div>
                     <p className="text text_type_main-small">{el.name}</p>
@@ -66,7 +71,7 @@ function BurgerIngredients({ data }) {
             })}
           </ul>
         </div>
-        <div className="main-container">
+        <div className="main-container ">
           <h2 className="text text_type_main-medium">Начинки</h2>
           <ul className={styles.bun_conteiner}>
             {data.map((el) => {
@@ -76,7 +81,9 @@ function BurgerIngredients({ data }) {
                     <img src={el.image}></img>
                     <Counter count={1} size="default" extraClass="m-1" />
                     <div className={styles.price}>
-                      <p className="text text_type_main-default mr-2">{el.price}</p>
+                      <p className="text text_type_main-default mr-2">
+                        {el.price}
+                      </p>
                       <CurrencyIcon type="primary" />
                     </div>
                     <p className="text text_type_main-small">{el.name}</p>
@@ -90,5 +97,9 @@ function BurgerIngredients({ data }) {
     </section>
   );
 }
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default BurgerIngredients;
