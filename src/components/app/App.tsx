@@ -5,6 +5,8 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import {ingredients} from '../../utils/ingredients';
+import ModalOverlay from '../modal-overlay/modal-overlay'
+import Modal from '../modal/modal';
 
 
 function App() {
@@ -16,11 +18,14 @@ function App() {
  
   return (
     <div className={styles.app} >
+      <Modal />
+      <ModalOverlay />
       <AppHeader />
       <main className={styles.content}>
         <BurgerIngredients data={data}/>
         <BurgerConstructor ingredients={ingredients}/>
       </main>
+      
     </div>
   );
 }
