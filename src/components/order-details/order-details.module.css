@@ -1,7 +1,7 @@
 .order {
   display: flex;
   flex-direction: column;
-  padding: 120px 100px;
+  padding: 80px 134px 120px;
   justify-content: center;
   align-items: center;
 }

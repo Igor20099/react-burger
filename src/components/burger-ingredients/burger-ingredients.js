@@ -12,26 +12,31 @@ import Modal from "../modal/modal";
 
 function BurgerIngredients({ data }) {
   const [current, setCurrent] = React.useState("one");
-  //   console.log(data);
-  const [visible,setVisible] = React.useState(false)
+  const [visible, setVisible] = React.useState(false);
+  const [ingredient, setIngredient] = React.useState(null);
 
-  const handleOpenModal = () => {
-    setVisible(true)
- }
- 
- const handleCloseModal = () => {
-   setVisible(false)
- }
+  const handleOpenModal = (e) => {
+   data.forEach(el => {
+      if (e.currentTarget.id === el._id) {
+        setIngredient(el)
+      }
+   });
+    setVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setVisible(false);
+  };
 
   const modal = (
-    <Modal onClose={handleCloseModal}>
-      <IngredientDetails ingredient={data[0]}/>
+    <Modal onClose={handleCloseModal} title="Детали ингредиента">
+      <IngredientDetails ingredient={ingredient} />
     </Modal>
   );
 
   return (
     <section className={styles.burger_ingredients}>
-       <div className={styles.modal}> {visible && modal}</div>
+      <div className={styles.modal}> {visible && modal}</div>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
       <div className={styles.tabs}>
         <Tab value="one" active={current === "one"} onClick={setCurrent}>
@@ -51,7 +56,12 @@ function BurgerIngredients({ data }) {
             {data.map((el) => {
               if (el.type === "bun") {
                 return (
-                  <li key={el._id} className={styles.burger_item} onClick= {handleOpenModal}>
+                  <li
+                    key={el._id}
+                    id={el._id}
+                    className={styles.burger_item}
+                    onClick={handleOpenModal}
+                  >
                     <img
                       src={el.image}
                       alt={el.name}
@@ -78,7 +88,12 @@ function BurgerIngredients({ data }) {
             {data.map((el) => {
               if (el.type === "sauce") {
                 return (
-                  <li key={el._id} className={styles.burger_item}>
+                  <li
+                    key={el._id}
+                    id={el._id}
+                    className={styles.burger_item}
+                    onClick={handleOpenModal}
+                  >
                     <img src={el.image} alt={el.name}></img>
                     <Counter count={1} size="default" extraClass="m-1" />
                     <div className={styles.price}>
@@ -94,13 +109,18 @@ function BurgerIngredients({ data }) {
             })}
           </ul>
         </div>
-        <div className="main-container ">
+        <div className="main-container">
           <h2 className="text text_type_main-medium">Начинки</h2>
           <ul className={styles.bun_conteiner}>
             {data.map((el) => {
               if (el.type === "main") {
                 return (
-                  <li key={el._id} className={styles.burger_item}>
+                  <li
+                    key={el._id}
+                    id={el._id}
+                    className={styles.burger_item}
+                    onClick={handleOpenModal}
+                  >
                     <img src={el.image} alt={el.name}></img>
                     <Counter count={1} size="default" extraClass="m-1" />
                     <div className={styles.price}>
