@@ -10,10 +10,10 @@ import styles from "./burger-constructor.module.css";
 function BurgerConstructor({ ingredients }) {
   return (
     <section className={styles.burger_constructor}>
-      {ingredients.map((el) => {
+      {ingredients.map((el,index) => {
         if (el.type === "bun") {
           return (
-            <div className="ml-8 mr-2">
+            <div key={index} className="ml-8 mr-2">
               <ConstructorElement
                 type="top"
                 isLocked={true}
@@ -27,10 +27,10 @@ function BurgerConstructor({ ingredients }) {
         }
       })}
       <ul className={styles.burger_list}>
-        {ingredients.map((el) => {
+        {ingredients.map((el,index) => {
           if (!el.isLocked && el.type !== "bun") {
             return (
-              <li className={styles.item}>
+              <li key={index} className={styles.item}>
                 <DragIcon type="primary"></DragIcon>
                 <ConstructorElement
                   type={el.type}
@@ -45,10 +45,10 @@ function BurgerConstructor({ ingredients }) {
           }
         })}
       </ul>
-      {ingredients.map((el) => {
+      {ingredients.map((el,index) => {
         if (el.type === "bun") {
           return (
-            <div className="ml-8 mr-2">
+            <div key={index} className="ml-8 mr-2">
               <ConstructorElement
                 type="bottom"
                 isLocked={true}

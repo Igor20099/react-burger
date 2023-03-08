@@ -14,7 +14,7 @@ function BurgerIngredients({ data }) {
   return (
     <section className={styles.burger_ingredients}>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-      <div className="mb-10" style={{ display: "flex" }}>
+      <div className={styles.tabs}>
         <Tab value="one" active={current === "one"} onClick={setCurrent}>
           Булки
         </Tab>
@@ -33,7 +33,11 @@ function BurgerIngredients({ data }) {
               if (el.type === "bun") {
                 return (
                   <li key={el._id} className={styles.burger_item}>
-                    <img src={el.image} alt={el.name} className="mr-4 ml-4 mb-1" />
+                    <img
+                      src={el.image}
+                      alt={el.name}
+                      className="mr-4 ml-4 mb-1"
+                    />
                     <Counter count={1} size="default" extraClass="m-1" />
                     <div className={styles.price}>
                       <p className="text text_type_main-medium mr-2">

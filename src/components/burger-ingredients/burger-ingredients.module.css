@@ -46,3 +46,8 @@
   margin: 0;
   margin-bottom: 4px;
 }
+
+.tabs {
+  display: flex;
+  margin-bottom: 40px;
+}
