@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   ConstructorElement,
   Button,
@@ -6,11 +7,31 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
+import OrderDetails from "../order-details/order-details";
+import Modal from "../modal/modal";
 
 function BurgerConstructor({ ingredients }) {
+
+const [visible,setVisible] = React.useState(false)
+
+const handleOpenModal = () => {
+   setVisible(true)
+}
+
+const handleCloseModal = () => {
+  setVisible(false)
+}
+
+  const modal = (
+    <Modal onClose={handleCloseModal}>
+      <OrderDetails />
+    </Modal>
+  );
+
   return (
     <section className={styles.burger_constructor}>
-      {ingredients.map((el,index) => {
+      <div className={styles.modal}> {visible && modal}</div>
+      {ingredients.map((el, index) => {
         if (el.type === "bun") {
           return (
             <div key={index} className="ml-8 mr-2">
@@ -27,7 +48,7 @@ function BurgerConstructor({ ingredients }) {
         }
       })}
       <ul className={styles.burger_list}>
-        {ingredients.map((el,index) => {
+        {ingredients.map((el, index) => {
           if (!el.isLocked && el.type !== "bun") {
             return (
               <li key={index} className={styles.item}>
@@ -45,7 +66,7 @@ function BurgerConstructor({ ingredients }) {
           }
         })}
       </ul>
-      {ingredients.map((el,index) => {
+      {ingredients.map((el, index) => {
         if (el.type === "bun") {
           return (
             <div key={index} className="ml-8 mr-2">
@@ -70,7 +91,7 @@ function BurgerConstructor({ ingredients }) {
           <CurrencyIcon type="primary" />
         </div>
 
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
           Оформить заказ
         </Button>
       </div>

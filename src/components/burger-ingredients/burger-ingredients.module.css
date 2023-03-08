@@ -23,7 +23,7 @@
 }
 
 .ingredients_container {
-  max-height: 66vh;
+  max-height: 60vh;
   overflow-y: scroll;
 }
 
@@ -50,4 +50,11 @@
 .tabs {
   display: flex;
   margin-bottom: 40px;
+}
+
+.modal {
+  overflow: hidden;
+  position: fixed;
+  top:0;
+  left:0;
 }

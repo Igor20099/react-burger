@@ -7,12 +7,31 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-ingredients.module.css";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 
 function BurgerIngredients({ data }) {
   const [current, setCurrent] = React.useState("one");
   //   console.log(data);
+  const [visible,setVisible] = React.useState(false)
+
+  const handleOpenModal = () => {
+    setVisible(true)
+ }
+ 
+ const handleCloseModal = () => {
+   setVisible(false)
+ }
+
+  const modal = (
+    <Modal onClose={handleCloseModal}>
+      <IngredientDetails ingredient={data[0]}/>
+    </Modal>
+  );
+
   return (
     <section className={styles.burger_ingredients}>
+       <div className={styles.modal}> {visible && modal}</div>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
       <div className={styles.tabs}>
         <Tab value="one" active={current === "one"} onClick={setCurrent}>
@@ -32,7 +51,7 @@ function BurgerIngredients({ data }) {
             {data.map((el) => {
               if (el.type === "bun") {
                 return (
-                  <li key={el._id} className={styles.burger_item}>
+                  <li key={el._id} className={styles.burger_item} onClick= {handleOpenModal}>
                     <img
                       src={el.image}
                       alt={el.name}

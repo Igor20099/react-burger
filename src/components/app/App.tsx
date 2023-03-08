@@ -18,8 +18,6 @@ function App() {
  
   return (
     <div className={styles.app} >
-      <Modal />
-      <ModalOverlay />
       <AppHeader />
       <main className={styles.content}>
         <BurgerIngredients data={data}/>

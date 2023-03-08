@@ -1,0 +1,14 @@
+.order {
+  display: flex;
+  flex-direction: column;
+  padding: 120px 100px;
+  justify-content: center;
+  align-items: center;
+}
+
+.done {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 60px;
+}
+
