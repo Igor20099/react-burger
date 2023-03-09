@@ -21,9 +21,10 @@ function BurgerConstructor({ ingredients }) {
     setVisible(false);
   };
 
+  
   const handleEscapeClose = (evt) => {
     if (evt.key === "Escape") {
-      handleCloseModal();
+      handleCloseModal()
     }
   };
   const handleOverlayClose = (evt) => {
@@ -32,15 +33,8 @@ function BurgerConstructor({ ingredients }) {
     }
   };
 
-  React.useEffect(() => {
-    document.addEventListener("keydown", handleEscapeClose);
-    return () => {
-      document.removeEventListener("keydown", handleEscapeClose);
-    };
-  });
-
   const modal = (
-    <Modal onClose={handleCloseModal} onClick={handleOverlayClose}>
+    <Modal escClose={handleEscapeClose} onClose={handleCloseModal} overlayClose={handleOverlayClose}>
       <OrderDetails />
     </Modal>
   );

@@ -7,14 +7,18 @@ import React from "react";
 const modalRoot = document.getElementById("react-modals");
 
 function Modal(props) {
+  React.useEffect(() => {
+    document.addEventListener("keydown", props.escClose);
+    return () => {
+      document.removeEventListener("keydown", props.escClose);
+    };
+  });
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClick={props.onClick}/>
+      <ModalOverlay overlayClose={props.overlayClose} />
       <div className={styles.modal}>
-        <h2 className="text text_type_main-large mr-10 mt-15 ml-10">
-          {props.title}
-        </h2>
+        <h2 className="text text_type_main-large mr-40 ml-10">{props.title}</h2>
         <button type="button" onClick={props.onClose} className={styles.close}>
           <CloseIcon type="primary" />
         </button>

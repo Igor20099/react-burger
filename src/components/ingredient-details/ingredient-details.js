@@ -6,7 +6,7 @@ function IngredientDetails({ ingredient }) {
     <div className={styles.details}>
       <div className={styles.ingredient}>
         <img
-          className="mb-6"
+          className="mb-8"
           src={ingredient.image_large}
           alt={ingredient.name}
         />
@@ -30,7 +30,7 @@ function IngredientDetails({ ingredient }) {
             </p>
           </div>
           <div className={styles.info}>
-            <p className="text text_type_main-default text_color_inactive mb-2 mr-2">
+            <p className="text text_type_main-default text_color_inactive mb-2 ml-4">
               Жиры, г
             </p>
             <p className="text text_type_digits-default text_color_inactive">
@@ -38,7 +38,7 @@ function IngredientDetails({ ingredient }) {
             </p>
           </div>
           <div className={styles.info}>
-            <p className="text text_type_main-default text_color_inactive mb-2">
+            <p className="text text_type_main-default text_color_inactive mb-2 ml-6">
               Углеводы, г
             </p>
             <p className="text text_type_digits-default text_color_inactive">

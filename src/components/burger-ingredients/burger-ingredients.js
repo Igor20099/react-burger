@@ -30,28 +30,19 @@ function BurgerIngredients({ data }) {
 
   const handleEscapeClose = (evt) => {
     if (evt.key === "Escape") {
-      handleCloseModal();
+      handleCloseModal()
     }
   };
+  
   const handleOverlayClose = (evt) => {
     if (evt.target === evt.currentTarget) {
       handleCloseModal();
     }
   };
 
-  React.useEffect(() => {
-    document.addEventListener("keydown", handleEscapeClose);
-    return () => {
-      document.removeEventListener("keydown", handleEscapeClose);
-    };
-  });
 
   const modal = (
-    <Modal
-      onClose={handleCloseModal}
-      title="Детали ингредиента"
-      onClick={handleOverlayClose}
-    >
+    <Modal escClose={handleEscapeClose} onClose={handleCloseModal} overlayClose={handleOverlayClose} title="Детали ингредиента">
       <IngredientDetails ingredient={ingredient} />
     </Modal>
   );
