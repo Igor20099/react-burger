@@ -16,11 +16,11 @@ function BurgerIngredients({ data }) {
   const [ingredient, setIngredient] = React.useState(null);
 
   const handleOpenModal = (e) => {
-   data.forEach(el => {
+    data.forEach((el) => {
       if (e.currentTarget.id === el._id) {
-        setIngredient(el)
+        setIngredient(el);
       }
-   });
+    });
     setVisible(true);
   };
 
@@ -28,8 +28,30 @@ function BurgerIngredients({ data }) {
     setVisible(false);
   };
 
+  const handleEscapeClose = (evt) => {
+    if (evt.key === "Escape") {
+      handleCloseModal();
+    }
+  };
+  const handleOverlayClose = (evt) => {
+    if (evt.target === evt.currentTarget) {
+      handleCloseModal();
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleEscapeClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscapeClose);
+    };
+  });
+
   const modal = (
-    <Modal onClose={handleCloseModal} title="Детали ингредиента">
+    <Modal
+      onClose={handleCloseModal}
+      title="Детали ингредиента"
+      onClick={handleOverlayClose}
+    >
       <IngredientDetails ingredient={ingredient} />
     </Modal>
   );

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   ConstructorElement,
   Button,
@@ -11,19 +11,36 @@ import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 
 function BurgerConstructor({ ingredients }) {
+  const [visible, setVisible] = React.useState(false);
 
-const [visible,setVisible] = React.useState(false)
+  const handleOpenModal = () => {
+    setVisible(true);
+  };
 
-const handleOpenModal = () => {
-   setVisible(true)
-}
+  const handleCloseModal = () => {
+    setVisible(false);
+  };
 
-const handleCloseModal = () => {
-  setVisible(false)
-}
+  const handleEscapeClose = (evt) => {
+    if (evt.key === "Escape") {
+      handleCloseModal();
+    }
+  };
+  const handleOverlayClose = (evt) => {
+    if (evt.target === evt.currentTarget) {
+      handleCloseModal();
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleEscapeClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscapeClose);
+    };
+  });
 
   const modal = (
-    <Modal onClose={handleCloseModal}>
+    <Modal onClose={handleCloseModal} onClick={handleOverlayClose}>
       <OrderDetails />
     </Modal>
   );
@@ -91,7 +108,12 @@ const handleCloseModal = () => {
           <CurrencyIcon type="primary" />
         </div>
 
-        <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={handleOpenModal}
+        >
           Оформить заказ
         </Button>
       </div>
