@@ -52,7 +52,7 @@ function IngredientDetails({ ingredient }) {
 }
 
 IngredientDetails.propTypes = {
-  ingredient: PropTypes.arrayOf(PropTypes.object),
+  ingredient: PropTypes.object,
 };
 
 export default IngredientDetails;
