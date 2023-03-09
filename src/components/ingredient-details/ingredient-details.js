@@ -16,7 +16,7 @@ function IngredientDetails({ ingredient }) {
             <p className="text text_type_main-default text_color_inactive mb-2 mr-6">
               Калории,ккал
             </p>
-            <p className="text text_type_digits-default text_color_inactive">
+            <p className="text text_type_digits-default text_color_inactive mb-2 mr-6">
               {ingredient.proteins}
             </p>
           </div>
@@ -25,7 +25,7 @@ function IngredientDetails({ ingredient }) {
             <p className="text text_type_main-default text_color_inactive mb-2  mr-6">
               Белки, г
             </p>
-            <p className="text text_type_digits-default text_color_inactive">
+            <p className="text text_type_digits-default text_color_inactive mb-2  mr-6">
               {ingredient.calories}
             </p>
           </div>
@@ -33,7 +33,7 @@ function IngredientDetails({ ingredient }) {
             <p className="text text_type_main-default text_color_inactive mb-2 ml-4">
               Жиры, г
             </p>
-            <p className="text text_type_digits-default text_color_inactive">
+            <p className="text text_type_digits-default text_color_inactive mb-2 ml-4">
               {ingredient.fat}
             </p>
           </div>
@@ -41,7 +41,7 @@ function IngredientDetails({ ingredient }) {
             <p className="text text_type_main-default text_color_inactive mb-2 ml-6">
               Углеводы, г
             </p>
-            <p className="text text_type_digits-default text_color_inactive">
+            <p className="text text_type_digits-default text_color_inactive mb-2 ml-6">
               {ingredient.carbohydrates}
             </p>
           </div>
