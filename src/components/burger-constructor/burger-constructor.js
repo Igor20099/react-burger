@@ -21,12 +21,12 @@ function BurgerConstructor({ ingredients }) {
     setVisible(false);
   };
 
-  
   const handleEscapeClose = (evt) => {
     if (evt.key === "Escape") {
-      handleCloseModal()
+      handleCloseModal();
     }
   };
+
   const handleOverlayClose = (evt) => {
     if (evt.target === evt.currentTarget) {
       handleCloseModal();
@@ -34,7 +34,11 @@ function BurgerConstructor({ ingredients }) {
   };
 
   const modal = (
-    <Modal escClose={handleEscapeClose} onClose={handleCloseModal} overlayClose={handleOverlayClose}>
+    <Modal
+      escClose={handleEscapeClose}
+      onClose={handleCloseModal}
+      overlayClose={handleOverlayClose}
+    >
       <OrderDetails />
     </Modal>
   );
