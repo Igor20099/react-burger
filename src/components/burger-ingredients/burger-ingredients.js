@@ -28,25 +28,8 @@ function BurgerIngredients({ data }) {
     setVisible(false);
   };
 
-  const handleEscapeClose = (evt) => {
-    if (evt.key === "Escape") {
-      handleCloseModal();
-    }
-  };
-
-  const handleOverlayClose = (evt) => {
-    if (evt.target === evt.currentTarget) {
-      handleCloseModal();
-    }
-  };
-
   const modal = (
-    <Modal
-      escClose={handleEscapeClose}
-      onClose={handleCloseModal}
-      overlayClose={handleOverlayClose}
-      title="Детали ингредиента"
-    >
+    <Modal onClose={handleCloseModal} title="Детали ингредиента">
       <IngredientDetails ingredient={ingredient} />
     </Modal>
   );
