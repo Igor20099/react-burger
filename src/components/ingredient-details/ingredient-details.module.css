@@ -1,0 +1,30 @@
+.details {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 100px;
+    align-items: center;
+}
+
+.ingredient {
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+}
+
+.compound {
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    margin-bottom: 60px;
+    padding: 0;
+    justify-content:baseline;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+}
