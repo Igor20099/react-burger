@@ -9,9 +9,13 @@ import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
+import { BurgerContext } from "../../services/burgerContext";
 
-function BurgerConstructor({ ingredients }) {
+
+
+function BurgerConstructor() {
   const [visible, setVisible] = React.useState(false);
+  const data = React.useContext(BurgerContext)
 
   const handleOpenModal = () => {
     setVisible(true);
@@ -30,7 +34,7 @@ function BurgerConstructor({ ingredients }) {
   return (
     <section className={styles.burger_constructor}>
       <div className={styles.modal}> {visible && modal}</div>
-      {ingredients.map((el, index) => {
+      {data.map((el, index) => {
         if (el.type === "bun") {
           return (
             <div key={index} className="ml-8 mr-2">
@@ -47,7 +51,7 @@ function BurgerConstructor({ ingredients }) {
         }
       })}
       <ul className={styles.burger_list}>
-        {ingredients.map((el, index) => {
+        {data.map((el, index) => {
           if (!el.isLocked && el.type !== "bun") {
             return (
               <li key={index} className={styles.item}>
@@ -65,7 +69,7 @@ function BurgerConstructor({ ingredients }) {
           }
         })}
       </ul>
-      {ingredients.map((el, index) => {
+      {data.map((el, index) => {
         if (el.type === "bun") {
           return (
             <div key={index} className="ml-8 mr-2">
@@ -85,7 +89,7 @@ function BurgerConstructor({ ingredients }) {
       <div className={styles.burger_info}>
         <div className={styles.price}>
           <p className="text text_type_main-large mr-2">
-            {ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0)}
+            {data.reduce((acc, ingredient) => acc + ingredient.price, 0)}
           </p>
           <CurrencyIcon type="primary" />
         </div>

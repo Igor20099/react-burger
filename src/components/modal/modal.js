@@ -18,11 +18,11 @@ function Modal(props) {
     return () => {
       document.removeEventListener("keydown", handleEscapeClose);
     };
-  },[]);
+  }, []);
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={props.onClose}/>
+      <ModalOverlay onClose={props.onClose} />
       <div className={styles.modal}>
         <h2 className="text text_type_main-large mr-40 ml-10">{props.title}</h2>
         <button type="button" onClick={props.onClose} className={styles.close}>
