@@ -9,13 +9,15 @@ import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import { BurgerContext } from "../../services/burgerContext";
-
-
+import { DataContext } from "../../services/dataContext";
+import { SetOrderContext } from "../../services/setOrderContext";
 
 function BurgerConstructor() {
   const [visible, setVisible] = React.useState(false);
-  const data = React.useContext(BurgerContext)
+  const data = React.useContext(DataContext);
+  const setOrderNumber = React.useContext(SetOrderContext);
+
+  const bun = data.find((item) => item.type === "bun");
 
   const handleOpenModal = () => {
     setVisible(true);
@@ -23,6 +25,34 @@ function BurgerConstructor() {
 
   const handleCloseModal = () => {
     setVisible(false);
+  };
+
+  const postIngredients = () => {
+    fetch("https://norma.nomoreparties.space/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ingredients: data.map((el) => {
+          return el._id;
+        }),
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          return Promise.reject(res.status);
+        }
+      })
+      .then((res) => {
+        if (res.success) {
+          setOrderNumber(res.order.number);
+          handleOpenModal();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const modal = (
@@ -34,22 +64,20 @@ function BurgerConstructor() {
   return (
     <section className={styles.burger_constructor}>
       <div className={styles.modal}> {visible && modal}</div>
-      {data.map((el, index) => {
-        if (el.type === "bun") {
-          return (
-            <div key={index} className="ml-8 mr-2">
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={`${el.name} (верх)`}
-                price={el.price}
-                thumbnail={el.image}
-                extraClass={styles.element}
-              />
-            </div>
-          );
-        }
-      })}
+
+      {bun ? (
+        <div className="ml-8 mr-2">
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
+            extraClass={styles.element}
+          />
+        </div>
+      ) : null}
+
       <ul className={styles.burger_list}>
         {data.map((el, index) => {
           if (!el.isLocked && el.type !== "bun") {
@@ -69,22 +97,19 @@ function BurgerConstructor() {
           }
         })}
       </ul>
-      {data.map((el, index) => {
-        if (el.type === "bun") {
-          return (
-            <div key={index} className="ml-8 mr-2">
-              <ConstructorElement
-                type="bottom"
-                isLocked={true}
-                text={`${el.name} (низ)`}
-                price={el.price}
-                thumbnail={el.image}
-                extraClass={styles.element}
-              />
-            </div>
-          );
-        }
-      })}
+
+      {bun ? (
+        <div className="ml-8 mr-2">
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
+            extraClass={styles.element}
+          />
+        </div>
+      ) : null}
 
       <div className={styles.burger_info}>
         <div className={styles.price}>
@@ -98,7 +123,7 @@ function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={handleOpenModal}
+          onClick={postIngredients}
         >
           Оформить заказ
         </Button>

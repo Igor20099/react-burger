@@ -3,13 +3,15 @@ import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import {ingredients} from '../../utils/ingredients';
-import { BurgerContext } from '../../services/burgerContext';
+import { DataContext } from '../../services/dataContext';
+import { OrderContext } from '../../services/orderContext';
+import { SetOrderContext } from '../../services/setOrderContext';
 
 
 function App() {
   const URL = 'https://norma.nomoreparties.space/api/ingredients'
   const [data,setData] = React.useState([])
+  const [orderNumber,setOrderNumber] = React.useState(0)
   React.useEffect(() => {
       fetch(URL).then(res => {
         if (res.ok) {
@@ -26,10 +28,14 @@ function App() {
       <AppHeader />
       <main className={styles.content}>
        
-        <BurgerContext.Provider value={data}>
+        <DataContext.Provider value={ data }>
           <BurgerIngredients />
-          <BurgerConstructor />
-        </BurgerContext.Provider>
+          <OrderContext.Provider value={orderNumber}>
+          <SetOrderContext.Provider value={setOrderNumber}>
+            <BurgerConstructor />
+          </SetOrderContext.Provider>
+          </OrderContext.Provider>
+        </DataContext.Provider>
       </main>
       
     </div>

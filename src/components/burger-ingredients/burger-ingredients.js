@@ -9,14 +9,14 @@ import PropTypes from "prop-types";
 import styles from "./burger-ingredients.module.css";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { BurgerContext } from "../../services/burgerContext";
+import { DataContext } from "../../services/dataContext";
 
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("one");
   const [visible, setVisible] = React.useState(false);
   const [ingredient, setIngredient] = React.useState(null);
-  const data = React.useContext(BurgerContext)
+  const data = React.useContext(DataContext)
 
   const handleOpenModal = (e) => {
     data.forEach((el) => {
