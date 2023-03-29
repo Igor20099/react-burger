@@ -11,7 +11,7 @@ import { SetOrderContext } from '../../services/setOrderContext';
 function App() {
   const URL = 'https://norma.nomoreparties.space/api/ingredients'
   const [data,setData] = React.useState([])
-  const [orderNumber,setOrderNumber] = React.useState(0)
+  const [order,setOrder] = React.useState({})
   React.useEffect(() => {
       fetch(URL).then(res => {
         if (res.ok) {
@@ -30,8 +30,8 @@ function App() {
        
         <DataContext.Provider value={ data }>
           <BurgerIngredients />
-          <OrderContext.Provider value={orderNumber}>
-          <SetOrderContext.Provider value={setOrderNumber}>
+          <OrderContext.Provider value={order}>
+          <SetOrderContext.Provider value={setOrder}>
             <BurgerConstructor />
           </SetOrderContext.Provider>
           </OrderContext.Provider>

@@ -15,7 +15,7 @@ import { SetOrderContext } from "../../services/setOrderContext";
 function BurgerConstructor() {
   const [visible, setVisible] = React.useState(false);
   const data = React.useContext(DataContext);
-  const setOrderNumber = React.useContext(SetOrderContext);
+  const setOrder = React.useContext(SetOrderContext);
 
   const bun = data.find((item) => item.type === "bun");
 
@@ -27,7 +27,7 @@ function BurgerConstructor() {
     setVisible(false);
   };
 
-  const postIngredients = () => {
+  const getOrder = () => {
     fetch("https://norma.nomoreparties.space/api/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -46,7 +46,7 @@ function BurgerConstructor() {
       })
       .then((res) => {
         if (res.success) {
-          setOrderNumber(res.order.number);
+          setOrder(res);
           handleOpenModal();
         }
       })
@@ -123,7 +123,7 @@ function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={postIngredients}
+          onClick={getOrder}
         >
           Оформить заказ
         </Button>
@@ -134,6 +134,7 @@ function BurgerConstructor() {
 
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.object),
+  setOrderNumber: PropTypes.func,
 };
 
 export default BurgerConstructor;
