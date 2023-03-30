@@ -1,15 +1,13 @@
-import React, { useContext } from "react";
+
 import styles from "./order-details.module.css";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { OrderContext } from "../../services/orderContext";
 
-function OrderDetails() {
-  const order = useContext(OrderContext);
+function OrderDetails(props) {
 
   return (
     <div className={styles.order}>
-      <p className="text text_type_digits-large mb-8">{order.order.number}</p>
+      <p className="text text_type_digits-large mb-8">{props.order.number}</p>
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
       <div className={styles.done}>
         {" "}
@@ -26,7 +24,7 @@ function OrderDetails() {
 }
 
 OrderDetails.propTypes = {
-  orderNumber: PropTypes.number,
+   number: PropTypes.number,
 };
 
 export default OrderDetails;

@@ -10,12 +10,11 @@ import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import { DataContext } from "../../services/dataContext";
-import { SetOrderContext } from "../../services/setOrderContext";
 
 function BurgerConstructor() {
   const [visible, setVisible] = React.useState(false);
   const data = React.useContext(DataContext);
-  const setOrder = React.useContext(SetOrderContext);
+  const [order,setOrder] = React.useState({})
 
   const bun = data.find((item) => item.type === "bun");
 
@@ -57,7 +56,7 @@ function BurgerConstructor() {
 
   const modal = (
     <Modal onClose={handleCloseModal}>
-      <OrderDetails />
+      <OrderDetails order ={order.order}/>
     </Modal>
   );
 
@@ -133,8 +132,21 @@ function BurgerConstructor() {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object),
-  setOrderNumber: PropTypes.func,
+  data: PropTypes.arrayOf( PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+  }).isRequired
+  )
 };
 
 export default BurgerConstructor;

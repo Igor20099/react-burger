@@ -6,12 +6,13 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { DataContext } from '../../services/dataContext';
 import { OrderContext } from '../../services/orderContext';
 import { SetOrderContext } from '../../services/setOrderContext';
+import {URL} from '../../utils/constants'
 
 
 function App() {
-  const URL = 'https://norma.nomoreparties.space/api/ingredients'
+  
   const [data,setData] = React.useState([])
-  const [order,setOrder] = React.useState({})
+
   React.useEffect(() => {
       fetch(URL).then(res => {
         if (res.ok) {
@@ -30,11 +31,7 @@ function App() {
        
         <DataContext.Provider value={ data }>
           <BurgerIngredients />
-          <OrderContext.Provider value={order}>
-          <SetOrderContext.Provider value={setOrder}>
-            <BurgerConstructor />
-          </SetOrderContext.Provider>
-          </OrderContext.Provider>
+          <BurgerConstructor />
         </DataContext.Provider>
       </main>
       

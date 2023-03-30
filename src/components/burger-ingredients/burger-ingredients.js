@@ -11,12 +11,10 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { DataContext } from "../../services/dataContext";
 
-
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("one");
-  const [visible, setVisible] = React.useState(false);
   const [ingredient, setIngredient] = React.useState(null);
-  const data = React.useContext(DataContext)
+  const data = React.useContext(DataContext);
 
   const handleOpenModal = (e) => {
     data.forEach((el) => {
@@ -24,11 +22,10 @@ function BurgerIngredients() {
         setIngredient(el);
       }
     });
-    setVisible(true);
   };
 
   const handleCloseModal = () => {
-    setVisible(false);
+    setIngredient(null);
   };
 
   const modal = (
@@ -39,7 +36,7 @@ function BurgerIngredients() {
 
   return (
     <section className={styles.burger_ingredients}>
-      <div className={styles.modal}> {visible && modal}</div>
+      <div className={styles.modal}> {ingredient && modal}</div>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
       <div className={styles.tabs}>
         <Tab value="one" active={current === "one"} onClick={setCurrent}>
@@ -145,7 +142,21 @@ function BurgerIngredients() {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
-};
+  data: PropTypes.arrayOf( PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+  }).isRequired
+  )
+}
 
 export default BurgerIngredients;
