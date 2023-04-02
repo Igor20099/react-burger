@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import {
   Tab,
@@ -9,28 +9,45 @@ import PropTypes from "prop-types";
 import styles from "./burger-ingredients.module.css";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { DataContext } from "../../services/dataContext";
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredients } from "../../services/actions/ingredients";
+import { getIngredient, deleteIngredient } from "../../services/actions/ingredient-details";
 
 function BurgerIngredients() {
+  const {ingredients} = useSelector(state => state.ingredients)
   const [current, setCurrent] = React.useState("one");
-  const [ingredient, setIngredient] = React.useState(null);
-  const data = React.useContext(DataContext);
+  const {ingredient} = useSelector(state=> state.ingredientDetails)
+
+
+  const ingredientsContainerRef = useRef(null)
+  console.log(ingredientsContainerRef.current)
+  const bunRef = useRef(null)
+  console.log(bunRef.current)
+  const mainRef = useRef(null)
+  console.log(mainRef.current.getBoundingClientRect().top)
+
+  const dispatch = useDispatch();
+    
+  React.useEffect(()=> {
+      dispatch(getIngredients())
+      
+  }, [dispatch])
 
   const handleOpenModal = (e) => {
-    data.forEach((el) => {
+    ingredients.forEach((el) => {
       if (e.currentTarget.id === el._id) {
-        setIngredient(el);
+        dispatch(getIngredient(el))
       }
     });
   };
 
   const handleCloseModal = () => {
-    setIngredient(null);
+    dispatch(deleteIngredient())
   };
 
   const modal = (
     <Modal onClose={handleCloseModal} title="Детали ингредиента">
-      <IngredientDetails ingredient={ingredient} />
+      <IngredientDetails />
     </Modal>
   );
 
@@ -49,11 +66,11 @@ function BurgerIngredients() {
           Начинки
         </Tab>
       </div>
-      <div className={styles.ingredients_container}>
-        <div className="bun-container">
+      <div className={styles.ingredients_container} ref={ingredientsContainerRef}>
+        <div className="bun-container" ref={bunRef}>
           <h2 className="text text_type_main-medium">Булки</h2>
           <ul className={styles.bun_conteiner}>
-            {data.map((el) => {
+            {ingredients.map((el) => {
               if (el.type === "bun") {
                 return (
                   <li
@@ -82,10 +99,10 @@ function BurgerIngredients() {
             })}
           </ul>
         </div>
-        <div className="sauce-container">
+        <div className="sauce-container" ref={mainRef}>
           <h2 className="text text_type_main-medium">Соусы</h2>
           <ul className={styles.bun_conteiner}>
-            {data.map((el) => {
+            {ingredients.map((el) => {
               if (el.type === "sauce") {
                 return (
                   <li
@@ -112,7 +129,7 @@ function BurgerIngredients() {
         <div className="main-container">
           <h2 className="text text_type_main-medium">Начинки</h2>
           <ul className={styles.bun_conteiner}>
-            {data.map((el) => {
+            {ingredients.map((el) => {
               if (el.type === "main") {
                 return (
                   <li

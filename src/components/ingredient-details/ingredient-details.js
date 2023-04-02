@@ -1,7 +1,9 @@
 import styles from "./ingredient-details.module.css";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-function IngredientDetails({ ingredient }) {
+function IngredientDetails() {
+  const {ingredient} = useSelector((state) => state.ingredientDetails);
   return (
     <div className={styles.details}>
       <div className={styles.ingredient}>

@@ -9,60 +9,33 @@ import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import { DataContext } from "../../services/dataContext";
+import {useSelector,useDispatch} from 'react-redux'
+import { getOrder,CLOSE_ORDER } from "../../services/actions/order-details";
 
 function BurgerConstructor() {
-  const [visible, setVisible] = React.useState(false);
-  const data = React.useContext(DataContext);
-  const [order,setOrder] = React.useState({})
-
+  const dispatch = useDispatch()
+  const data = useSelector(state => state.burgerIngredients.ingredients)
   const bun = data.find((item) => item.type === "bun");
+  const { order } = useSelector (state => state.orderDetails)
 
   const handleOpenModal = () => {
-    setVisible(true);
+    dispatch(getOrder(data))
   };
 
   const handleCloseModal = () => {
-    setVisible(false);
+    dispatch({type:CLOSE_ORDER})
   };
 
-  const getOrder = () => {
-    fetch("https://norma.nomoreparties.space/api/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ingredients: data.map((el) => {
-          return el._id;
-        }),
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(res.status);
-        }
-      })
-      .then((res) => {
-        if (res.success) {
-          setOrder(res);
-          handleOpenModal();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
+ 
   const modal = (
     <Modal onClose={handleCloseModal}>
-      <OrderDetails order ={order.order}/>
+      <OrderDetails/>
     </Modal>
   );
 
   return (
     <section className={styles.burger_constructor}>
-      <div className={styles.modal}> {visible && modal}</div>
+      <div className={styles.modal}> {order && modal}</div>
 
       {bun ? (
         <div className="ml-8 mr-2">
@@ -122,7 +95,7 @@ function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={getOrder}
+          onClick={handleOpenModal}
         >
           Оформить заказ
         </Button>
