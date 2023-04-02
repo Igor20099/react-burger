@@ -3,6 +3,12 @@
   flex-direction: column;
   max-width: 600px;
   margin-top: 100px;
+ 
+}
+
+.ingredients_container {
+  width: 565px;
+  height: 58vh;
 }
 
 .burger_list {

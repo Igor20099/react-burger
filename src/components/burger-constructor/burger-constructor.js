@@ -37,6 +37,8 @@ function BurgerConstructor() {
     <section className={styles.burger_constructor}>
       <div className={styles.modal}> {order && modal}</div>
 
+      <div className={styles.ingredients_container}>
+
       {bun ? (
         <div className="ml-8 mr-2">
           <ConstructorElement
@@ -82,7 +84,7 @@ function BurgerConstructor() {
           />
         </div>
       ) : null}
-
+</div>
       <div className={styles.burger_info}>
         <div className={styles.price}>
           <p className="text text_type_main-large mr-2">
