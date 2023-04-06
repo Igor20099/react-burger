@@ -15,12 +15,13 @@ import {
   getIngredient,
   deleteIngredient,
 } from "../../services/actions/ingredient-details";
+import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
 
 function BurgerIngredients() {
   const { ingredients } = useSelector((state) => state.ingredients);
   const [current, setCurrent] = React.useState("one");
   const { ingredient } = useSelector((state) => state.ingredientDetails);
-
+  console.log(ingredient)
   const ingredientsContainerRef = useRef(null);
   const bunRef = useRef(null);
   const mainRef = useRef(null);
@@ -107,27 +108,7 @@ function BurgerIngredients() {
             {ingredients.map((el) => {
               if (el.type === "bun") {
                 return (
-                  <li
-                    key={el._id}
-                    id={el._id}
-                    className={styles.burger_item}
-                    onClick={handleOpenModal}
-                  >
-                    <img
-                      src={el.image}
-                      alt={el.name}
-                      className="mr-4 ml-4 mb-1"
-                    />
-                    <Counter count={1} size="default" extraClass="m-1" />
-                    <div className={styles.price}>
-                      <p className="text text_type_main-medium mr-2">
-                        {el.price}
-                      </p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-
-                    <p className="text text_type_main-small">{el.name}</p>
-                  </li>
+                  <DraggableIngredient key={el._id} handleOpenModal={handleOpenModal} ingredient={el}/>
                 );
               }
             })}
@@ -139,22 +120,7 @@ function BurgerIngredients() {
             {ingredients.map((el) => {
               if (el.type === "sauce") {
                 return (
-                  <li
-                    key={el._id}
-                    id={el._id}
-                    className={styles.burger_item}
-                    onClick={handleOpenModal}
-                  >
-                    <img src={el.image} alt={el.name}></img>
-                    <Counter count={1} size="default" extraClass="m-1" />
-                    <div className={styles.price}>
-                      <p className="text text_type_main-medium mr-2">
-                        {el.price}
-                      </p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                    <p className="text text_type_main-small">{el.name}</p>
-                  </li>
+                  <DraggableIngredient key={el._id}  handleOpenModal={handleOpenModal} ingredient={el}/>
                 );
               }
             })}
@@ -166,22 +132,7 @@ function BurgerIngredients() {
             {ingredients.map((el) => {
               if (el.type === "main") {
                 return (
-                  <li
-                    key={el._id}
-                    id={el._id}
-                    className={styles.burger_item}
-                    onClick={handleOpenModal}
-                  >
-                    <img src={el.image} alt={el.name}></img>
-                    <Counter count={1} size="default" extraClass="m-1" />
-                    <div className={styles.price}>
-                      <p className="text text_type_main-default mr-2">
-                        {el.price}
-                      </p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                    <p className="text text_type_main-small">{el.name}</p>
-                  </li>
+                  <DraggableIngredient key={el._id}  handleOpenModal={handleOpenModal} ingredient={el}/>
                 );
               }
             })}

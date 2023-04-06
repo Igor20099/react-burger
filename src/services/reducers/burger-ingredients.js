@@ -1,3 +1,4 @@
+import { ADD_INGREDIENT } from "../actions/burger-ingredients"
 
 
 const initialState = {
@@ -5,5 +6,15 @@ const initialState = {
 }
 
 export const burgerIngredientsReducer = (state= initialState, action) => {
- return state
+ switch (action.type) {
+    case ADD_INGREDIENT: {
+        return {
+            ...state,
+            ingredients: [...state.ingredients,action.payload]
+        }
+    }
+
+    default:
+        return state
+ }
 }
