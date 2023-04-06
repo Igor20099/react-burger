@@ -7,13 +7,14 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch } from 'react-redux';
 import { addIngredient } from '../../services/actions/burger-ingredients';
+import { v4 as uuidv4 } from 'uuid';
 
 
 function App() {
   const dispatch = useDispatch()
 
 const handleDrop = (ingredient: object) => {
-  dispatch(addIngredient(ingredient))
+  dispatch(addIngredient(ingredient,uuidv4()))
 }
 
   return (

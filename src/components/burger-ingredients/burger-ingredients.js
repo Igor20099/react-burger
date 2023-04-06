@@ -21,7 +21,6 @@ function BurgerIngredients() {
   const { ingredients } = useSelector((state) => state.ingredients);
   const [current, setCurrent] = React.useState("one");
   const { ingredient } = useSelector((state) => state.ingredientDetails);
-  console.log(ingredient)
   const ingredientsContainerRef = useRef(null);
   const bunRef = useRef(null);
   const mainRef = useRef(null);
