@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   ConstructorElement,
   Button,
@@ -11,8 +11,9 @@ import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrder, CLOSE_ORDER } from "../../services/actions/order-details";
-import { useDrop,useDrag } from "react-dnd";
-import { deleteIngredient } from "../../services/actions/burger-ingredients";
+import { useDrop, useDrag } from "react-dnd";
+import { countUp, deleteIngredient } from "../../services/actions/burger-ingredients";
+import ConstructorIngredient from "../constuctor-ingredient/constructor-ingredient";
 
 function BurgerConstructor({ onDropHandler }) {
   const dispatch = useDispatch();
@@ -23,21 +24,14 @@ function BurgerConstructor({ onDropHandler }) {
     accept: "ingredient",
     drop(itemId) {
       onDropHandler(itemId);
+      dispatch(countUp(itemId._id))
     },
   });
 
-
-
-  const ingredients = useSelector((state) => state.burgerIngredients.ingredients);
+  const ingredients = useSelector(
+    (state) => state.burgerIngredients.ingredients
+  );
   const bun = useSelector((state) => state.burgerIngredients.bun);
-
-  const [{isDrag}, dragRef] = useDrag({
-    type: 'ingredientConstructor',
-    collect: monitor => ({
-      isDrag: monitor.isDragging()
-  })
-  
-});
 
   const handleOpenModal = () => {
     dispatch(getOrder(ingredients));
@@ -47,9 +41,9 @@ function BurgerConstructor({ onDropHandler }) {
     dispatch({ type: CLOSE_ORDER });
   };
 
-  const onDelete = (id) =>{
-    dispatch(deleteIngredient(id))
-  }
+  const onDelete = (id) => {
+    dispatch(deleteIngredient(id));
+  };
 
   const modal = (
     <Modal onClose={handleCloseModal}>
@@ -71,27 +65,20 @@ function BurgerConstructor({ onDropHandler }) {
               price={bun.price}
               thumbnail={bun.image}
               extraClass={styles.element}
-              
             />
           </div>
         ) : null}
 
         <ul className={styles.burger_list}>
-          {ingredients.map((el) => {
+          {ingredients.map((el, i) => {
             if (!el.isLocked && el.type !== "bun") {
               return (
-                <li key={el.uniqueId} className={styles.item} ref ={dragRef}>
-                  <DragIcon type="primary"></DragIcon>
-                  <ConstructorElement
-                    type={el.type}
-                    isLocked={el.isLocked}
-                    text={el.name}
-                    price={el.price}
-                    thumbnail={el.image}
-                    extraClass="ml-2"
-                    handleClose={() => {onDelete(el.uniqueId)} }
-                  />
-                </li>
+                <ConstructorIngredient
+                  key={el.uniqueId}
+                  el={el}
+                  index={i}
+                  onDelete={onDelete}
+                />
               );
             }
           })}
@@ -114,9 +101,15 @@ function BurgerConstructor({ onDropHandler }) {
         <div className={styles.price}>
           <p className="text text_type_main-large mr-2">
             {bun
-              ? ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0) +
+              ? ingredients.reduce(
+                  (acc, ingredient) => acc + ingredient.price,
+                  0
+                ) +
                 bun.price * 2
-              : ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0)}
+              : ingredients.reduce(
+                  (acc, ingredient) => acc + ingredient.price,
+                  0
+                )}
           </p>
           <CurrencyIcon type="primary" />
         </div>

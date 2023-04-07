@@ -1,9 +1,12 @@
-import { ADD_INGREDIENT } from "../actions/burger-ingredients";
+import { ADD_INGREDIENT, COUNT_UP } from "../actions/burger-ingredients";
 import { DELETE_INGREDIENT } from "../actions/burger-ingredients";
+import { MOVE_INGREDIENT } from "../actions/burger-ingredients";
 
 const initialState = {
   ingredients: [],
   bun: null,
+  counts:{},
+  count:0
 };
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
@@ -27,6 +30,23 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
             ...state,
             ingredients:  [...state.ingredients].filter(el => el.uniqueId !== action.id)
         }
+    }
+    case MOVE_INGREDIENT: {
+			const ingredietsConstructor = [...state.ingredients];
+			ingredietsConstructor.splice(action.toIndex, 0,ingredietsConstructor.splice(action.fromIndex,1)[0]);
+			return {
+				...state,
+				ingredients: ingredietsConstructor
+			};
+		}
+    case COUNT_UP: {
+      return {
+        ...state,
+        counts:{
+          ...state.counts,
+          [action.id]:  ( state.counts[action.id] || 0 ) + 1
+        }
+      }
     }
 
     default:
