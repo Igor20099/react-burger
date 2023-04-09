@@ -1,7 +1,5 @@
 import {
   ConstructorElement,
-  Button,
-  CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrop, useDrag } from "react-dnd";
