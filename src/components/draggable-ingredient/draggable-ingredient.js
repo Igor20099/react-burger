@@ -14,15 +14,12 @@ function DraggableIngredient({ ingredient, handleOpenModal }) {
     item: ingredient,
   });
   const burgerIngredients = useSelector(
-    (state) => state.burgerIngredients.ingredients
+    (state) => state.burgerIngredients.counts
   );
 
-  const bun = useSelector((state) => state.burgerIngredients.bun);
 
 
-  let count = burgerIngredients.filter(
-    (item) => item._id === ingredient._id
-  ).length;
+  let count = burgerIngredients[ingredient._id]
   return (
     <li
       id={ingredient._id}

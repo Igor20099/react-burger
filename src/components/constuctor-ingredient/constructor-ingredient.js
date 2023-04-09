@@ -65,7 +65,7 @@ function ConstructorIngredient({ el, onDelete, index }) {
         thumbnail={el.image}
         extraClass="ml-2"
         handleClose={() => {
-          onDelete(el.uniqueId);
+          onDelete(el);
         }}
       />
     </li>

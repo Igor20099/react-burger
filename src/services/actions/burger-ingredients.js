@@ -21,16 +21,18 @@ export const moveIngredient = (fromIndex,toIndex) =>({
   toIndex:toIndex
 })
 
-export const countUp = (id) => (
+export const countUp = (id,ingredientType) => (
   {
     type:COUNT_UP,
-    id:id
+    id:id,
+    ingredientType:ingredientType
   }
 )
 
-export const countDowm = (id) => (
+export const countDown = (id,ingredientType) => (
   {
     type:COUNT_DOWN,
-    id:id
+    id:id,
+    ingredientType:ingredientType
   }
 )

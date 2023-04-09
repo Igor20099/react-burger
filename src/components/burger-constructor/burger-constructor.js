@@ -12,7 +12,7 @@ import Modal from "../modal/modal";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrder, CLOSE_ORDER } from "../../services/actions/order-details";
 import { useDrop, useDrag } from "react-dnd";
-import { countUp, deleteIngredient } from "../../services/actions/burger-ingredients";
+import { countUp, countDown, deleteIngredient } from "../../services/actions/burger-ingredients";
 import ConstructorIngredient from "../constuctor-ingredient/constructor-ingredient";
 
 function BurgerConstructor({ onDropHandler }) {
@@ -24,7 +24,7 @@ function BurgerConstructor({ onDropHandler }) {
     accept: "ingredient",
     drop(itemId) {
       onDropHandler(itemId);
-      dispatch(countUp(itemId._id))
+      dispatch(countUp(itemId._id,itemId.type))
     },
   });
 
@@ -41,8 +41,9 @@ function BurgerConstructor({ onDropHandler }) {
     dispatch({ type: CLOSE_ORDER });
   };
 
-  const onDelete = (id) => {
-    dispatch(deleteIngredient(id));
+  const onDelete = (el) => {
+    dispatch(deleteIngredient(el.uniqueId));
+    dispatch(countDown(el._id,el.type))
   };
 
   const modal = (
