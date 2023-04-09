@@ -24,6 +24,8 @@ export function getIngredients() {
                 type: INGREDIENTS_SUCCESS,
                 ingredients: res.data
             })
-        })
+        }).catch((error) => {
+          console.log(error);
+        });
   }
 }

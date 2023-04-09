@@ -82,7 +82,13 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
           },
         };
       } else {
-        return state;
+        return {
+          ...state,
+          counts: {
+            ...state.counts,
+            [action.id]: 0,
+          },
+        };
       }
     }
 
