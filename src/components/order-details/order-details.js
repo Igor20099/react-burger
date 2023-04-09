@@ -1,7 +1,6 @@
 
 import styles from "./order-details.module.css";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import {useSelector} from 'react-redux'
 
 function OrderDetails() {
@@ -26,9 +25,5 @@ function OrderDetails() {
     </div>
   );
 }
-
-OrderDetails.propTypes = {
-   number: PropTypes.number,
-};
 
 export default OrderDetails;

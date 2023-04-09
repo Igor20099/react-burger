@@ -17,16 +17,22 @@ import {
   deleteIngredient,
 } from "../../services/actions/burger-ingredients";
 import ConstructorIngredient from "../constuctor-ingredient/constructor-ingredient";
+import { v4 as uuidv4 } from "uuid";
+import { addIngredient } from "../../services/actions/burger-ingredients";
 
-function BurgerConstructor({ onDropHandler }) {
+function BurgerConstructor() {
   const dispatch = useDispatch();
+
+  const handleDrop = (ingredient) => {
+    dispatch(addIngredient(ingredient, uuidv4()));
+  };
 
   const { order } = useSelector((state) => state.orderDetails);
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(itemId) {
-      onDropHandler(itemId);
+      handleDrop(itemId);
       dispatch(countUp(itemId._id, itemId.type));
     },
   });
@@ -141,24 +147,5 @@ function BurgerConstructor({ onDropHandler }) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-    }).isRequired
-  ),
-};
 
 export default BurgerConstructor;

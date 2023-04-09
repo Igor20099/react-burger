@@ -2,10 +2,10 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { useRef } from "react";
-
 import styles from "./constructor-ingredient.module.css";
 import { moveIngredient } from "../../services/actions/burger-ingredients";
 
@@ -40,7 +40,7 @@ function ConstructorIngredient({ el, onDelete, index }) {
     },
   });
 
-  const [{ isDrag }, dragRef] = useDrag({
+  const [, dragRef] = useDrag({
     type: "ingredientConstructor",
     item: () => {
       return { id, index };
@@ -69,5 +69,25 @@ function ConstructorIngredient({ el, onDelete, index }) {
     </li>
   );
 }
+
+ConstructorIngredient.propTypes = {
+  el: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    uniqueId: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+  }).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export default ConstructorIngredient;

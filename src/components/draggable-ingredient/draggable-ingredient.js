@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./draggable-ingredient.module.css";
+import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   Counter,
@@ -17,9 +18,7 @@ function DraggableIngredient({ ingredient, handleOpenModal }) {
     (state) => state.burgerIngredients.counts
   );
 
-
-
-  let count = burgerIngredients[ingredient._id]
+  let count = burgerIngredients[ingredient._id];
   return (
     <li
       id={ingredient._id}
@@ -42,5 +41,23 @@ function DraggableIngredient({ ingredient, handleOpenModal }) {
     </li>
   );
 }
+
+DraggableIngredient.propTypes = {
+  ingredient: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+  }).isRequired,
+  handleOpenModal: PropTypes.func.isRequired,
+};
 
 export default DraggableIngredient;
