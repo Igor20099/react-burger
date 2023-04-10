@@ -52,11 +52,10 @@ function BurgerIngredients() {
 
   React.useEffect(() => {
     dispatch(getIngredients());
-    document
-      .querySelector("#ingredients-container")
-      .addEventListener("scroll", handleScroll);
+    const container = document.querySelector("#ingredients-container");
+    container.addEventListener("scroll", handleScroll);
     return () => {
-      document.removeEventListener("scroll", handleScroll);
+      container.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
