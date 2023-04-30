@@ -62,3 +62,7 @@
   margin: 0 auto;
   padding: 14px 0;
 }
+
+.active {
+  color: white;
+}
