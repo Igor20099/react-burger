@@ -6,7 +6,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter ,Routes,Route } from 'react-router-dom';
-import {HomePage , LoginPage, RegisterPage,ForgotPasswordPage, ResetPasswordPage} from '../../pages';
+import {HomePage , LoginPage, RegisterPage,ForgotPasswordPage, ResetPasswordPage, NotFound404} from '../../pages';
 
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
        <Route path='/register' element={<RegisterPage />} />
        <Route path='/forgot-password' element={<ForgotPasswordPage />} />
        <Route path='/reset-password' element={<ResetPasswordPage />} />
+       <Route path="*" element={<NotFound404/>}/>
     </Routes>
     </BrowserRouter>
   );

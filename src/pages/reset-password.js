@@ -1,7 +1,6 @@
 import styles from "./login.module.css";
 import { Link } from "react-router-dom";
 import {
-  EmailInput,
   Button,
   PasswordInput,
   Input,
