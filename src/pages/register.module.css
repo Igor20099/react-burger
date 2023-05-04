@@ -1,0 +1,19 @@
+.login {
+    
+    margin-top: 180px;
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    max-width: 760px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    
+}

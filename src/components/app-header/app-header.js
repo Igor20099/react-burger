@@ -37,7 +37,7 @@ function AppHeader() {
 
         <NavLink
           className={styles.login_inactive}
-          to="/profile"
+          to="/login"
           activeClassName={styles.active}
         >
           <ProfileIcon type="secondary" />
