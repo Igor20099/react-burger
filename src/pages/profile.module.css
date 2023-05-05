@@ -17,3 +17,12 @@
     width: 340px;
     padding-left: 40px;
 }
+
+.link {
+    text-decoration: none;
+}
+
+.link_active {
+    text-decoration: none;
+    color:white
+}

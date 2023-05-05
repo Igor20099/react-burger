@@ -1,5 +1,6 @@
 import { checkResponse } from "../../utils/utils";
 import { BASE_URL } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -13,7 +14,15 @@ export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_ERROR = "LOGOUT_ERROR";
 
-export function register(name, email, password) {
+export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
+
+export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_ERROR = "RESET_PASSWORD_ERROR";
+
+export function registerRequest(name, email, password) {
   return function (dispatch) {
     dispatch({
       type: REGISTER_REQUEST,
@@ -44,7 +53,7 @@ export function register(name, email, password) {
   };
 }
 
-export function login(email, password) {
+export function loginRequest(email, password) {
   return function (dispatch) {
     dispatch({
       type: LOGIN_REQUEST,
@@ -65,6 +74,61 @@ export function login(email, password) {
             user: res.user,
             accessToken: res.accessToken,
             refreshToken: res.refreshToken,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+}
+
+export function forgotPasswordRequest(email) {
+  return function (dispatch) {
+    dispatch({
+      type: FORGOT_PASSWORD_REQUEST,
+    });
+    fetch(`${BASE_URL}/password-reset`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+      }),
+    })
+      .then(checkResponse)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: FORGOT_PASSWORD_SUCCESS,
+            isForgotPasswordSuccess: res.success,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+}
+
+export function resetPasswordRequest(password, token) {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_PASSWORD_REQUEST,
+    });
+    fetch(`${BASE_URL}/password-reset/reset`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        password: password,
+        token: token,
+      }),
+    })
+      .then(checkResponse)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: FORGOT_PASSWORD_SUCCESS,
+            isResetPasswordSuccess: res.success,
           });
         }
       })

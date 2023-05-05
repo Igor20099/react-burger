@@ -1,18 +1,45 @@
 import styles from "./login.module.css";
+import {useState} from 'react'
 import { Link } from "react-router-dom";
 import {
   Button,
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch,useSelector } from "react-redux";
+import { resetPasswordRequest } from "../services/actions/authorization";
+import { useNavigate } from "react-router-dom";
 
 function ResetPasswordPage() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const isResetPasswordSuccess = useSelector(state => state.auth.isResetPasswordSuccess)
+  const [password,setPassword] = useState('')
+  const [token,setToken] = useState('')
+
+  function changePassword(e) {
+    setPassword(e.target.value)
+  }
+
+  function changeToken(e) {
+    setToken(e.target.value)
+  }
+
+  function resetPasswordHandle () {
+    dispatch(resetPasswordRequest(password,token))
+    if (isResetPasswordSuccess) {
+      navigate('/login')
+    }
+  }
+
   return (
     <div className={styles.login}>
       <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
-      <PasswordInput name={"password"} extraClass="mb-6" placeholder="Введите новый пароль"/>
+      <PasswordInput name={"password"} extraClass="mb-6" placeholder="Введите новый пароль" value={password} onChange={changePassword}/>
       <Input
         type={"text"}
+        value = {token}
+        onChange={changeToken}
         placeholder={"Введите код из письма"}
         name={"name"}
         error={false}
@@ -20,7 +47,7 @@ function ResetPasswordPage() {
         size={"default"}
         extraClass="mb-6"
       />
-      <Button htmlType="button" type="primary" size="medium" extraClass="mb-20">
+      <Button htmlType="button" type="primary" size="medium" extraClass="mb-20" onClick={resetPasswordHandle}>
         Сохранить
       </Button>
       <p className="text text_type_main-default text_color_inactive mb-4">

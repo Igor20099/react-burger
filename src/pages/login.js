@@ -2,7 +2,7 @@ import styles from "./login.module.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { login } from "../services/actions/authorization";
+import { loginRequest } from "../services/actions/authorization";
 import {
   EmailInput,
   PasswordInput,
@@ -11,8 +11,8 @@ import {
 
 function LoginPage() {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const changeEmail = (e) => {
     setEmail(e.target.value)
@@ -24,7 +24,7 @@ function LoginPage() {
 
   function loginHandle(e) {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(loginRequest(email, password));
   }
 
   return (

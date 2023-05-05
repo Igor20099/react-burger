@@ -8,7 +8,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { register } from "../services/actions/authorization";
+import { registerRequest } from "../services/actions/authorization";
 
 function RegisterPage() {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function RegisterPage() {
 
   function registerHandle(e) {
     e.preventDefault();
-    dispatch(register(name, email, password));
+    dispatch(registerRequest(name, email, password));
   }
 
   return (
