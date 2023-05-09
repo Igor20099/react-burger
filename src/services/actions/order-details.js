@@ -4,7 +4,7 @@ export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_ERROR = "GET_ORDER_ERROR";
 export const GET_ORDER_NUMBER = "GET_ORDER_NUMBER";
-export const CLOSE_ORDER = "CLOSE_ORDER"
+export const CLOSE_ORDER = "CLOSE_ORDER";
 
 export function getOrder(data) {
   return function (dispatch) {

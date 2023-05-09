@@ -20,6 +20,7 @@
   /* text/primary-light (standart text) */
   padding-right: 24px;
   color: #f2f2f3;
+  margin-left: auto;
 }
 
 .link_inactive {
@@ -34,6 +35,7 @@
   text-decoration: none;
   color: #8585ad;
   padding: 0 20px;
+  margin-left: auto;
 }
 
 .login_inactive {

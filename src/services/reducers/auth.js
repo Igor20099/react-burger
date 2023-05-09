@@ -14,7 +14,6 @@ const initialState = {
     email: null,
   },
   accessToken: null,
-  refreshToken: null,
   isAuth:false
 };
 
@@ -25,7 +24,6 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         user: action.user,
         accessToken: action.accessToken,
-        refreshToken: action.refreshToken,
         isAuth:true
       };
     }
@@ -35,7 +33,6 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         user: action.user,
         accessToken: action.accessToken,
-        refreshToken: action.refreshToken,
         isAuth:true
       };
     }
@@ -45,7 +42,6 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         user: {},
         accessToken: null,
-        refreshToken: null,
         isAuth:false
       };
     }

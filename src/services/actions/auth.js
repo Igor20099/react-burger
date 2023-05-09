@@ -35,7 +35,6 @@ export function register(name, email, password) {
           type: REGISTER_SUCCESS,
           user: res.user,
           accessToken: accessToken,
-          refreshToken: res.refreshToken,
         });
       }
     });
@@ -56,7 +55,6 @@ export function login(email, password) {
           type: LOGIN_SUCCESS,
           user: res.user,
           accessToken: accessToken,
-          refreshToken: res.refreshToken,
         });
       }
     });

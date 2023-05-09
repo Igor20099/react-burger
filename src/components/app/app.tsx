@@ -7,7 +7,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter ,Routes,Route } from 'react-router-dom';
 import { ProtectedRouteElement } from '../protected-route/protected-route';
-import {HomePage , LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, NotFound404, ProfilePage} from '../../pages';
+import {HomePage , LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, NotFound404, ProfilePage, OrdersPage} from '../../pages';
 
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
      <Routes>
        <Route path='/' element={<HomePage />} />
        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} />
+       <Route path="/profile/orders" element={<ProtectedRouteElement element={<OrdersPage/>}/>} />
        <Route path='/login' element={<LoginPage />} />
        <Route path='/register' element={<RegisterPage />} />
        <Route path='/forgot-password' element={<ForgotPasswordPage />} />

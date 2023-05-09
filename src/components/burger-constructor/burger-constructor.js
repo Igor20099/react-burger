@@ -19,9 +19,12 @@ import {
 import ConstructorIngredient from "../constuctor-ingredient/constructor-ingredient";
 import { v4 as uuidv4 } from "uuid";
 import { addIngredient } from "../../services/actions/burger-ingredients";
+import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
+  const isAuth = useSelector(state => state.auth.isAuth)
+  const navigate = useNavigate()
 
   const handleDrop = (ingredient) => {
     dispatch(addIngredient(ingredient, uuidv4()));
@@ -54,7 +57,8 @@ function BurgerConstructor() {
   }, [bun, dispatch]);
 
   const handleOpenModal = () => {
-    dispatch(getOrder(burgerIngredients));
+  
+    isAuth ? dispatch(getOrder(burgerIngredients)) : navigate('/login')
   };
 
   const handleCloseModal = () => {
