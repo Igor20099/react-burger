@@ -26,3 +26,11 @@
     text-decoration: none;
     color:white
 }
+
+.btns_invisible {
+    display: none;
+}
+
+.btns_visible {
+    display: block;
+}

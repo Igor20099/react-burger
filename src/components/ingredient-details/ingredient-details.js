@@ -1,8 +1,14 @@
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import {useState, useEffect} from 'react'
+import { getIngredients } from "../../services/actions/ingredients";
+
+
 
 function IngredientDetails() {
-  const {ingredient} = useSelector((state) => state.ingredientDetails);
+  const {ingredient} = useSelector(state => state.ingredientDetails)
+
   return (
     <div className={styles.details}>
       <div className={styles.ingredient}>

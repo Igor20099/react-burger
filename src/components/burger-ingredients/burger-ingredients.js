@@ -12,7 +12,9 @@ import {
   getIngredient,
   deleteIngredient,
 } from "../../services/actions/ingredient-details";
+import { useNavigate } from "react-router-dom";
 import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
+import { useLocation } from "react-router-dom";
 
 function BurgerIngredients() {
   const { ingredients } = useSelector((state) => state.ingredients);
@@ -22,7 +24,8 @@ function BurgerIngredients() {
   const bunRef = useRef(null);
   const mainRef = useRef(null);
   const sauseRef = useRef(null);
-
+  const navigate = useNavigate()
+  const location = useLocation
   const dispatch = useDispatch();
 
   const handleScroll = () => {
@@ -53,6 +56,7 @@ function BurgerIngredients() {
   React.useEffect(() => {
     dispatch(getIngredients());
     const container = document.querySelector("#ingredients-container");
+   
     container.addEventListener("scroll", handleScroll);
     return () => {
       container.removeEventListener("scroll", handleScroll);
@@ -63,12 +67,14 @@ function BurgerIngredients() {
     ingredients.forEach((el) => {
       if (e.currentTarget.id === el._id) {
         dispatch(getIngredient(el));
+        navigate(`/ingredients/${el._id}`)
       }
     });
   };
 
   const handleCloseModal = () => {
     dispatch(deleteIngredient());
+    navigate('/')
   };
 
   const modal = (

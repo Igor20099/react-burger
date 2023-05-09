@@ -14,8 +14,6 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
-  const token = useSelector(state => state.auth.accessToken)
-  console.log(token)
 
 
   const changeEmail = (e) => {

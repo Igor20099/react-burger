@@ -5,8 +5,11 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  GET_USER_SUCCESS,
+  UPDATE_USER_SUCCESS
 } from "../actions/auth";
+import { getCookie } from "../../utils/cookie";
 
 const initialState = {
   user: {
@@ -14,7 +17,7 @@ const initialState = {
     email: null,
   },
   accessToken: null,
-  isAuth:false
+  isAuth: getCookie('token')
 };
 
 export const authorizationReducer = (state = initialState, action) => {
@@ -24,7 +27,7 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         user: action.user,
         accessToken: action.accessToken,
-        isAuth:true
+        isAuth: true,
       };
     }
 
@@ -33,7 +36,7 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         user: action.user,
         accessToken: action.accessToken,
-        isAuth:true
+        isAuth: true,
       };
     }
 
@@ -42,7 +45,21 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         user: {},
         accessToken: null,
-        isAuth:false
+        isAuth: false,
+      };
+    }
+
+    case GET_USER_SUCCESS: {
+      return {
+        ...state,
+        user: action.user,
+      };
+    }
+
+    case UPDATE_USER_SUCCESS: {
+      return {
+        ...state,
+        user: action.user,
       };
     }
 
