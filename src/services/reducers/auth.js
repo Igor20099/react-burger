@@ -5,13 +5,8 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
-  FORGOT_PASSWORD_REQUEST,
-  FORGOT_PASSWORD_SUCCESS,
-  FORGOT_PASSWORD_ERROR,
-  RESET_PASSWORD_REQUEST,
-  RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_ERROR
-} from "../actions/authorization";
+  LOGOUT_SUCCESS
+} from "../actions/auth";
 
 const initialState = {
   user: {
@@ -20,9 +15,7 @@ const initialState = {
   },
   accessToken: null,
   refreshToken: null,
-  data: null,
-  isForgotPasswordSuccess:false,
-  isResetPasswordSuccess:false,
+  isAuth:false
 };
 
 export const authorizationReducer = (state = initialState, action) => {
@@ -33,6 +26,7 @@ export const authorizationReducer = (state = initialState, action) => {
         user: action.user,
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
+        isAuth:true
       };
     }
 
@@ -42,20 +36,17 @@ export const authorizationReducer = (state = initialState, action) => {
         user: action.user,
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
+        isAuth:true
       };
     }
 
-    case FORGOT_PASSWORD_SUCCESS: {
+    case LOGOUT_SUCCESS: {
       return {
         ...state,
-        isForgotPasswordSuccess: action.isForgotPasswordSuccess
-      };
-    }
-    case RESET_PASSWORD_SUCCESS: {
-      return {
-        ...state,
-        isForgotPasswordSuccess: false,
-        isResetPasswordSuccess: action.isResetPasswordSuccess
+        user: {},
+        accessToken: null,
+        refreshToken: null,
+        isAuth:false
       };
     }
 

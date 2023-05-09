@@ -7,7 +7,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch,useSelector } from "react-redux";
-import { resetPasswordRequest } from "../services/actions/authorization";
+import { resetPasswordRequest } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
 function ResetPasswordPage() {
@@ -26,10 +26,9 @@ function ResetPasswordPage() {
   }
 
   function resetPasswordHandle () {
-    dispatch(resetPasswordRequest(password,token))
-    if (isResetPasswordSuccess) {
+    resetPasswordRequest(password, token).then(() => {
       navigate('/login')
-    }
+    })
   }
 
   return (

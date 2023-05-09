@@ -5,14 +5,24 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
+import { logout } from "../services/actions/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function ProfilePage() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  function logoutHandle() {
+    dispatch(logout())
+  }
+
   return (
     <div className={styles.profile}>
       <ul className={styles.nav}>
         <li className="text text_type_main-medium mb-8"><NavLink to='/profile' className={styles.link_active}>Профиль</NavLink></li>
         <li className="mb-8"><NavLink to="/profile/orders" className={styles.link}><span className="text text_type_main-medium text_color_inactive">История заказов</span></NavLink></li>
-        <li><NavLink to="/logout" className={styles.link}><span className="text text_type_main-medium text_color_inactive">Выход</span></NavLink></li>
+        <li><NavLink to="/login" className={styles.link}><span className="text text_type_main-medium text_color_inactive" onClick={logoutHandle}>Выход</span></NavLink></li>
       </ul>
       <div>
         <Input

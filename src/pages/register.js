@@ -1,5 +1,5 @@
 import styles from "./register.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
@@ -8,16 +8,15 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { registerRequest } from "../services/actions/authorization";
+import { register } from "../services/actions/auth";
 
 function RegisterPage() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
   useEffect(() => {}, []);
-  const { user } = useSelector((state) => state.auth);
-  console.log(user);
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -31,7 +30,11 @@ function RegisterPage() {
 
   function registerHandle(e) {
     e.preventDefault();
-    dispatch(registerRequest(name, email, password));
+    dispatch(register({name, email, password})).then(() => {
+      navigate('/')
+    }).catch((error) => {
+      console.log(error);
+    });;
   }
 
   return (

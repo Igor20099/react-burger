@@ -3,7 +3,7 @@ import { ingredientsReducer } from "./ingredients";
 import { burgerIngredientsReducer } from "./burger-ingredients";
 import { ingredientDetailsReducer } from "./ingredient-details";
 import { orderDetailsReducer } from "./order-details";
-import { authorizationReducer } from "./authorization";
+import { authorizationReducer } from "./auth";
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
