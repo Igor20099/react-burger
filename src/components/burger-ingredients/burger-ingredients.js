@@ -25,7 +25,7 @@ function BurgerIngredients() {
   const mainRef = useRef(null);
   const sauseRef = useRef(null);
   const navigate = useNavigate()
-  const location = useLocation
+  const location = useLocation()
   const dispatch = useDispatch();
 
   const handleScroll = () => {

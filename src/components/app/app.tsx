@@ -12,10 +12,11 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useDispatch } from 'react-redux';
 import {useEffect} from 'react'
 import { login } from "../../services/actions/auth";
+import { getIngredients } from '../../services/actions/ingredients';
 
 
 function App() {
-  const dispatch = useDispatch();
+
   return (
     <BrowserRouter>
      <AppHeader />
