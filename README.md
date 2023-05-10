@@ -9,6 +9,9 @@
 * JavaScript
 * JSX
 * React
+* Redux
+* React-dnd
+* React-router
 
 
 
