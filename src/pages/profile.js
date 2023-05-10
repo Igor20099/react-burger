@@ -6,7 +6,12 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
-import { getUser, logout, updateUser } from "../services/actions/auth";
+import {
+  getUser,
+  logout,
+  tokenRequest,
+  updateUser,
+} from "../services/actions/auth";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -18,7 +23,12 @@ function ProfilePage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChange, setIsChange] = useState(false);
-  const token = getCookie('token')
+  const token = getCookie("token");
+
+  if (!token) {
+    dispatch(tokenRequest());
+  }
+
   const user = useSelector((state) => state.auth.user);
   useEffect(() => {
     dispatch(getUser(token)).then(() => {
@@ -26,7 +36,6 @@ function ProfilePage() {
       setEmail(user.email);
       setPassword("");
     });
-    
   }, [dispatch]);
 
   function cancelChange() {
@@ -37,9 +46,9 @@ function ProfilePage() {
   }
 
   function saveChange() {
-    dispatch(updateUser( email, name,token)).then(() => {
-      setIsChange(false)
-    })
+    dispatch(updateUser(email, name, token)).then(() => {
+      setIsChange(false);
+    });
   }
 
   function logoutHandle() {
@@ -86,6 +95,14 @@ function ProfilePage() {
             </span>
           </NavLink>
         </li>
+        <li className="mt-20">
+          {" "}
+          <p className={styles.text}>
+            <span className="text text_type_main-small text_color_inactive">
+              В этом разделе вы можете изменить&nbsp;свои персональные данные
+            </span>
+          </p>
+        </li>
       </ul>
       <div>
         <EmailInput
@@ -106,7 +123,6 @@ function ProfilePage() {
           placeholder="Логин"
           isIcon={true}
           extraClass="mb-6"
-      
           value={email}
           onChange={changeEmail}
         />
@@ -118,20 +134,25 @@ function ProfilePage() {
         />
 
         <div className={isChange ? styles.btns_visible : styles.btns_invisible}>
-          <Button type="primary" size="small" onClick={saveChange} >
+          <Button
+            type="primary"
+            size="small"
+            onClick={saveChange}
+            htmlType="button"
+            extraClass="mr-4"
+          >
             <p className="text text_type_main-default">Сохранить</p>
           </Button>
-          <Button type="primary" size="small" onClick={cancelChange}>
+          <Button
+            type="primary"
+            size="small"
+            onClick={cancelChange}
+            htmlType="button"
+          >
             <p className="text text_type_main-default">Отмена</p>
           </Button>
         </div>
       </div>
-
-      <p className={styles.text}>
-        <span className="text text_type_main-small text_color_inactive">
-          В этом разделе вы можете изменить&nbsp;свои персональные данные
-        </span>
-      </p>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./login.module.css";
+import styles from "./forgot-password.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import {
   EmailInput,

@@ -1,4 +1,4 @@
-import styles from "./login.module.css";
+import styles from "./reset-password.module.css";
 import {useState} from 'react'
 import { Link } from "react-router-dom";
 import {

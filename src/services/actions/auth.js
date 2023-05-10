@@ -4,6 +4,7 @@ import {
   logoutRequest,
   getUserRequest,
   updateUserRequest,
+  refreshTokenRequest,
 } from "../../utils/api";
 import { delCookie, setCookie } from "../../utils/cookie";
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
@@ -33,6 +34,11 @@ export const GET_USER__ERROR = "GET_USER_ERROR";
 export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
 export const UPDATE_USER__ERROR = "UPDATE_USER_ERROR";
+
+export const TOKEN_REQUEST = "TOKEN_REQUEST";
+export const TOKEN_SUCCESS = "TOKEN_SUCCESS";
+export const TOKEN__ERROR = "TOKEN_ERROR";
+
 
 export function register(name, email, password) {
   return function (dispatch) {
@@ -120,6 +126,27 @@ export function updateUser(name, email, token) {
         dispatch({
           type: UPDATE_USER_SUCCESS,
           user: res.user,
+        });
+      }
+    });
+  };
+}
+
+export function tokenRequest() {
+  return function (dispatch) {
+    dispatch({
+      type: TOKEN_REQUEST,
+    });
+    return refreshTokenRequest().then((res) => {
+      if (res.success) {
+        const accessToken = res.accessToken.split("Bearer ")[1];
+        const refreshToken = res.refreshToken;
+        setCookie('token', accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        dispatch({
+          type: TOKEN_SUCCESS,
+          user: res.user,
+          accessToken: accessToken,
         });
       }
     });

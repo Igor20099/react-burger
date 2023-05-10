@@ -52,14 +52,14 @@ function AppHeader() {
 
         <NavLink
           className={
-            pathname === "/profile" 
+            pathname === "/profile" || pathname === "/profile/orders"
               ? styles.link
               : styles.link_inactive
           }
           to="/profile"
         >
           <ProfileIcon
-            type={pathname === "/profile" ? "primary" : "secondary"}
+            type={pathname === "/profile" || pathname === "/profile/orders" ? "primary" : "secondary"}
           />
           <span className="text text_type_main-default pl-2">
             Личный кабинет

@@ -5,7 +5,7 @@
 .list {
   list-style-type: none;
   display: flex;
-  padding: 0 22px;
+  padding: 0 10px;
 }
 
 .link {
@@ -13,11 +13,14 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+  margin-right: 8px;
   display: flex;
   align-items: center;
   text-decoration: none;
   padding-right: 24px;
+  margin-right: 8px;
   color: #f2f2f3;
+  padding: 0 20px;
   margin-left: auto;
 }
 
@@ -26,7 +29,6 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  /* identical to box height, or 150% */
   margin-right: 8px;
   display: flex;
   align-items: center;
@@ -49,11 +51,12 @@
   color: #8585ad;
   padding: 0 20px;
   margin-left: auto;
+ 
 }
 
 .logo {
   padding-top: 4px;
-  padding-left: 78px;
+  padding-left: 90px;
 }
 
 .content {

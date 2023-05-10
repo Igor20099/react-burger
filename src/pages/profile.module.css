@@ -9,13 +9,12 @@
 
 .nav {
     list-style-type: none;
-    margin-right: 140px;
+    margin-right: 60px;
     margin-bottom: 80px;
 }
 
 .text {
-    width: 340px;
-    padding-left: 40px;
+    width: 280px;
 }
 
 .link {
@@ -33,4 +32,5 @@
 
 .btns_visible {
     display: block;
+    margin-top: 14px;
 }

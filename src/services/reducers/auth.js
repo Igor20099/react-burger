@@ -7,7 +7,8 @@ import {
   LOGIN_ERROR,
   LOGOUT_SUCCESS,
   GET_USER_SUCCESS,
-  UPDATE_USER_SUCCESS
+  UPDATE_USER_SUCCESS,
+  TOKEN_SUCCESS
 } from "../actions/auth";
 import { getCookie } from "../../utils/cookie";
 
@@ -62,6 +63,15 @@ export const authorizationReducer = (state = initialState, action) => {
         user: action.user,
       };
     }
+
+    case TOKEN_SUCCESS: {
+      return {
+        ...state,
+        isAuth:true,
+      };
+    }
+
+
 
     default: {
       return state;
