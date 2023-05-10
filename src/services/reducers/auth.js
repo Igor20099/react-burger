@@ -8,7 +8,8 @@ import {
   LOGOUT_SUCCESS,
   GET_USER_SUCCESS,
   UPDATE_USER_SUCCESS,
-  TOKEN_SUCCESS
+  TOKEN_SUCCESS,
+  FORGOT_PASSWORD_SUCCESS
 } from "../actions/auth";
 import { getCookie } from "../../utils/cookie";
 
@@ -18,7 +19,7 @@ const initialState = {
     email: null,
   },
   accessToken: null,
-  isAuth: getCookie('token')
+  isAuth: getCookie('token'),
 };
 
 export const authorizationReducer = (state = initialState, action) => {
@@ -70,8 +71,6 @@ export const authorizationReducer = (state = initialState, action) => {
         isAuth:true,
       };
     }
-
-
 
     default: {
       return state;
