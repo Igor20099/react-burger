@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 function ResetPasswordPage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const isResetPasswordSuccess = useSelector(state => state.auth.isResetPasswordSuccess)
   const [password,setPassword] = useState('')
   const [token,setToken] = useState('')
 
@@ -32,7 +31,8 @@ function ResetPasswordPage() {
   }
 
   return (
-    <div className={styles.login}>
+    <div>
+      <form className={styles.form}>
       <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
       <PasswordInput name={"password"} extraClass="mb-6" placeholder="Введите новый пароль" value={password} onChange={changePassword}/>
       <Input
@@ -55,6 +55,7 @@ function ResetPasswordPage() {
           Войти
         </Link>
       </p>
+      </form>
     </div>
   );
 }

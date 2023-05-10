@@ -38,7 +38,7 @@ function RegisterPage() {
   }
 
   return (
-    <div className={styles.login}>
+    <div className={styles.register}>
       <form className={styles.form} onSubmit={registerHandle}>
         <p className="text text_type_main-medium mb-6">Регистрация</p>
         <Input
@@ -66,11 +66,10 @@ function RegisterPage() {
           onChange={changePassword}
         />
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="medium"
           extraClass="mb-20"
-          onClick={registerHandle}
         >
           Зарегистрироваться
         </Button>

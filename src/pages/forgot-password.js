@@ -23,7 +23,8 @@ function ForgotPasswordPage() {
     })
   }
   return (
-    <div className={styles.login}>
+    <div>
+      <form className={styles.form}>
       <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
       <EmailInput
         value={email}
@@ -48,6 +49,7 @@ function ForgotPasswordPage() {
           Войти
         </Link>
       </p>
+      </form>
     </div>
   );
 }
