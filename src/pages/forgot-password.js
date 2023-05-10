@@ -17,14 +17,15 @@ function ForgotPasswordPage() {
     setEmail(e.target.value);
   }
 
-  function forgotPasswordHandle() {
+  function forgotPasswordHandle(e) {
+    e.preventDefault()
     forgotPasswordRequest(email).then(() => {
       navigate('/reset-password')
     })
   }
   return (
     <div>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={forgotPasswordHandle}>
       <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
       <EmailInput
         value={email}
@@ -35,11 +36,10 @@ function ForgotPasswordPage() {
         placeholder="Укажите e-mail"
       />
       <Button
-        htmlType="button"
+        htmlType="submit"
         type="primary"
         size="medium"
         extraClass="mb-20"
-        onClick={forgotPasswordHandle}
       >
         Восстановить
       </Button>

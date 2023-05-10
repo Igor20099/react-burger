@@ -24,7 +24,8 @@ function ResetPasswordPage() {
     setToken(e.target.value)
   }
 
-  function resetPasswordHandle () {
+  function resetPasswordHandle (e) {
+    e.preventDefault()
     resetPasswordRequest(password, token).then(() => {
       navigate('/login')
     })
@@ -32,7 +33,7 @@ function ResetPasswordPage() {
 
   return (
     <div>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={resetPasswordHandle}>
       <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
       <PasswordInput name={"password"} extraClass="mb-6" placeholder="Введите новый пароль" value={password} onChange={changePassword}/>
       <Input
@@ -46,7 +47,7 @@ function ResetPasswordPage() {
         size={"default"}
         extraClass="mb-6"
       />
-      <Button htmlType="button" type="primary" size="medium" extraClass="mb-20" onClick={resetPasswordHandle}>
+      <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">
         Сохранить
       </Button>
       <p className="text text_type_main-default text_color_inactive mb-4">
