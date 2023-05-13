@@ -5,7 +5,16 @@ import { useState, useEffect } from "react";
 import { getIngredients } from "../../services/actions/ingredients";
 
 function IngredientDetails() {
-  const { ingredient } = useSelector((state) => state.ingredientDetails);
+  let { ingredient } = useSelector((state) => state.ingredientDetails);
+  if (ingredient) {
+    localStorage.setItem("ingredient", JSON.stringify(ingredient));
+  } else {
+    ingredient = JSON.parse(localStorage.getItem("ingredient"));
+    localStorage.setItem("isModal", JSON.stringify(false));
+  }
+  const location = useLocation()
+  console.log(location.pathname)
+
   return (
     <div className={styles.details}>
       <div className={styles.ingredient}>

@@ -19,7 +19,7 @@ const initialState = {
     email: null,
   },
   accessToken: null,
-  isAuth: getCookie('token'),
+  isAuth: !!getCookie('token')
 };
 
 export const authorizationReducer = (state = initialState, action) => {

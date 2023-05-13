@@ -1,5 +1,5 @@
 import styles from "./register.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
@@ -15,8 +15,19 @@ function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const isAuth = useSelector(state => state.auth.isAuth)
   const navigate = useNavigate()
-  useEffect(() => {}, []);
+  const location = useLocation()
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/')
+    }
+    
+  }, []);
+
+ 
+  console.log(location.state?.from.pathname)
+  
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -30,11 +41,7 @@ function RegisterPage() {
 
   function registerHandle(e) {
     e.preventDefault();
-    dispatch(register({name, email, password})).then(() => {
-      navigate('/')
-    }).catch((error) => {
-      console.log(error);
-    });;
+    dispatch(register({name, email, password}))
   }
 
   return (

@@ -1,19 +1,36 @@
 import styles from "./login.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login } from "../services/actions/auth";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { delCookie, getCookie } from "../utils/cookie";
 
 function LoginPage() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const isAuth = useSelector((state) => state.auth.isAuth);
+
+  useEffect(() => {
+    if (isAuth) {
+      if (
+        location.state?.from.pathname === "/" ||
+        location.state?.from.pathname === "/profile" ||
+        location.state?.from.pathname === "/profile/orders"
+      ) {
+        navigate(location.state?.from.pathname);
+      } else {
+        navigate("/profile");
+      }
+    }
+  });
 
   const changeEmail = (e) => {
     setEmail(e.target.value);
@@ -25,18 +42,12 @@ function LoginPage() {
 
   function loginHandle(e) {
     e.preventDefault();
-    dispatch(login({ email, password }))
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(login({ email, password }));
   }
 
   return (
     <div>
-      <form  className={styles.form} onSubmit={loginHandle}>
+      <form className={styles.form} onSubmit={loginHandle}>
         <p className="text text_type_main-medium mb-6">Вход</p>
         <EmailInput
           value={email}

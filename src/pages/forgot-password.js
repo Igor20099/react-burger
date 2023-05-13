@@ -13,7 +13,7 @@ function ForgotPasswordPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   function changeEmail(e) {
     setEmail(e.target.value);
   }
@@ -26,7 +26,9 @@ function ForgotPasswordPage() {
     forgotPasswordRequest(email).then(() => {
       localStorage.setItem('forgotPassword', true);
       navigate("/reset-password");
-    });
+    }).catch((err) => {
+      console.error('Error: ', err);
+  });;
   }
   return (
     <div>

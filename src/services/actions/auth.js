@@ -6,7 +6,7 @@ import {
   updateUserRequest,
   refreshTokenRequest,
 } from "../../utils/api";
-import { delCookie, setCookie } from "../../utils/cookie";
+import { delCookie,  setCookie } from "../../utils/cookie";
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_ERROR = "REGISTER_ERROR";
@@ -39,26 +39,29 @@ export const TOKEN_REQUEST = "TOKEN_REQUEST";
 export const TOKEN_SUCCESS = "TOKEN_SUCCESS";
 export const TOKEN__ERROR = "TOKEN_ERROR";
 
-
 export function register(name, email, password) {
   return function (dispatch) {
     dispatch({
       type: REGISTER_REQUEST,
     });
-    return registerRequest(name, email, password).then((res) => {
-      if (res.success) {
-        const accessToken = res.accessToken.split("Bearer ")[1];
-        const refreshToken = res.refreshToken;
-        setCookie('token', accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+    registerRequest(name, email, password)
+      .then((res) => {
+        if (res.success) {
+          const accessToken = res.accessToken.split("Bearer ")[1];
+          const refreshToken = res.refreshToken;
+          setCookie("token", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
 
-        dispatch({
-          type: REGISTER_SUCCESS,
-          user: res.user,
-          accessToken: accessToken,
-        });
-      }
-    });
+          dispatch({
+            type: REGISTER_SUCCESS,
+            user: res.user,
+            accessToken: accessToken,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
   };
 }
 
@@ -67,19 +70,24 @@ export function login(email, password) {
     dispatch({
       type: LOGIN_REQUEST,
     });
-    return loginRequest(email, password).then((res) => {
-      if (res.success) {
-        const accessToken = res.accessToken.split("Bearer ")[1];
-        const refreshToken = res.refreshToken;
-        setCookie('token', accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        dispatch({
-          type: LOGIN_SUCCESS,
-          user: res.user,
-          accessToken: accessToken,
-        });
-      }
-    });
+    loginRequest(email, password)
+      .then((res) => {
+        if (res.success) {
+          const accessToken = res.accessToken.split("Bearer ")[1];
+          const refreshToken = res.refreshToken;
+          setCookie("token", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          dispatch({
+            type: LOGIN_SUCCESS,
+            user: res.user,
+            accessToken: accessToken,
+          });
+         
+        }
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
   };
 }
 
@@ -88,15 +96,20 @@ export function logout() {
     dispatch({
       type: LOGOUT_REQUEST,
     });
-    return logoutRequest().then((res) => {
-      if (res.success) {
-        delCookie('token');
-        localStorage.removeItem('refreshToken');
-        dispatch({
-          type: LOGOUT_SUCCESS,
-        });
-      }
-    });
+    logoutRequest()
+      .then((res) => {
+        if (res.success) {
+          delCookie("token");
+          localStorage.removeItem("refreshToken");
+          dispatch({
+            type: LOGOUT_SUCCESS,
+          });
+          return true;
+        }
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
   };
 }
 
@@ -105,14 +118,18 @@ export function getUser(token) {
     dispatch({
       type: GET_USER_REQUEST,
     });
-    return getUserRequest(token).then((res) => {
-      if (res.success) {
-        dispatch({
-          type: GET_USER_SUCCESS,
-          user: res.user,
-        });
-      }
-    });
+    return getUserRequest(token)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: GET_USER_SUCCESS,
+            user: res.user,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
   };
 }
 
@@ -121,14 +138,18 @@ export function updateUser(name, email, token) {
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
-    return updateUserRequest(name, email, token).then((res) => {
-      if (res.success) {
-        dispatch({
-          type: UPDATE_USER_SUCCESS,
-          user: res.user,
-        });
-      }
-    });
+    return updateUserRequest(name, email, token)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: UPDATE_USER_SUCCESS,
+            user: res.user,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
   };
 }
 
@@ -137,18 +158,22 @@ export function tokenRequest() {
     dispatch({
       type: TOKEN_REQUEST,
     });
-    return refreshTokenRequest().then((res) => {
-      if (res.success) {
-        const accessToken = res.accessToken.split("Bearer ")[1];
-        const refreshToken = res.refreshToken;
-        setCookie('token', accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        dispatch({
-          type: TOKEN_SUCCESS,
-          user: res.user,
-          accessToken: accessToken,
-        });
-      }
-    });
+    return refreshTokenRequest()
+      .then((res) => {
+        if (res.success) {
+          const accessToken = res.accessToken.split("Bearer ")[1];
+          const refreshToken = res.refreshToken;
+          setCookie("token", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          dispatch({
+            type: TOKEN_SUCCESS,
+            user: res.user,
+            accessToken: accessToken,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
   };
 }

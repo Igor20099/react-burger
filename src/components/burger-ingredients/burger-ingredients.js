@@ -1,8 +1,6 @@
 import React, { useRef } from "react";
 
-import {
-  Tab,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -16,16 +14,16 @@ import { useNavigate } from "react-router-dom";
 import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
 import { useLocation } from "react-router-dom";
 
-function BurgerIngredients() {
+function BurgerIngredients({ setIsModal }) {
   const { ingredients } = useSelector((state) => state.ingredients);
   const [current, setCurrent] = React.useState("one");
-  const { ingredient } = useSelector((state) => state.ingredientDetails);
   const ingredientsContainerRef = useRef(null);
+  let {ingredient} = useSelector(state => state.ingredientDetails) 
   const bunRef = useRef(null);
   const mainRef = useRef(null);
   const sauseRef = useRef(null);
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const handleScroll = () => {
@@ -55,25 +53,37 @@ function BurgerIngredients() {
 
   React.useEffect(() => {
     dispatch(getIngredients());
+    
     const container = document.querySelector("#ingredients-container");
-   
     container.addEventListener("scroll", handleScroll);
     return () => {
       container.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
+  const isModal = JSON.parse(localStorage.getItem('isModal'))
+
+  if(!ingredient && isModal) {
+    ingredient = JSON.parse(localStorage.getItem('ingredient'))
+  }
+
+
+
   const handleOpenModal = (e) => {
     ingredients.forEach((el) => {
       if (e.currentTarget.id === el._id) {
         dispatch(getIngredient(el));
-        navigate(`/ingredients/${el._id}`)
+        setIsModal(true);
+        localStorage.setItem('isModal',JSON.stringify(true))
+        navigate(`/ingredients/${el._id}`);
       }
     });
   };
 
+
   const handleCloseModal = () => {
     dispatch(deleteIngredient());
+    localStorage.setItem('isModal',JSON.stringify(false))
     navigate('/')
   };
 
@@ -109,7 +119,11 @@ function BurgerIngredients() {
             {ingredients.map((el) => {
               if (el.type === "bun") {
                 return (
-                  <DraggableIngredient key={el._id} handleOpenModal={handleOpenModal} ingredient={el}/>
+                  <DraggableIngredient
+                    key={el._id}
+                    handleOpenModal={handleOpenModal}
+                    ingredient={el}
+                  />
                 );
               }
             })}
@@ -121,7 +135,11 @@ function BurgerIngredients() {
             {ingredients.map((el) => {
               if (el.type === "sauce") {
                 return (
-                  <DraggableIngredient key={el._id}  handleOpenModal={handleOpenModal} ingredient={el}/>
+                  <DraggableIngredient
+                    key={el._id}
+                    handleOpenModal={handleOpenModal}
+                    ingredient={el}
+                  />
                 );
               }
             })}
@@ -133,7 +151,11 @@ function BurgerIngredients() {
             {ingredients.map((el) => {
               if (el.type === "main") {
                 return (
-                  <DraggableIngredient key={el._id}  handleOpenModal={handleOpenModal} ingredient={el}/>
+                  <DraggableIngredient
+                    key={el._id}
+                    handleOpenModal={handleOpenModal}
+                    ingredient={el}
+                  />
                 );
               }
             })}
@@ -143,6 +165,5 @@ function BurgerIngredients() {
     </section>
   );
 }
-
 
 export default BurgerIngredients;

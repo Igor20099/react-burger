@@ -20,7 +20,6 @@ function ResetPasswordPage() {
 
   useEffect(() => {
     if (!forgotPassword) {
-      // Redirect to the forgot-password page
       navigate("/forgot-password");
       
     }else {

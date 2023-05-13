@@ -5,7 +5,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate, useLocation } from "react-router-dom";
 import {
   getUser,
   logout,
@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getCookie } from "../utils/cookie";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -23,8 +24,11 @@ function ProfilePage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChange, setIsChange] = useState(false);
-  const token = getCookie("token");
-
+ const [token,setToken] = useState(getCookie('token'))
+  // const isAuth = useSelector((state) => state.auth.isAuth);
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log(getCookie("token"));
   if (!token) {
     dispatch(tokenRequest());
   }
@@ -32,11 +36,11 @@ function ProfilePage() {
   const user = useSelector((state) => state.auth.user);
   useEffect(() => {
     dispatch(getUser(token)).then(() => {
-      setName(user.name);
-      setEmail(user.email);
+      setName(user.name || "");
+      setEmail(user.email || "");
       setPassword("");
     });
-  }, [dispatch]);
+  }, [user.name]);
 
   function cancelChange() {
     setName(user.name);
