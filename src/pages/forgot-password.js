@@ -11,8 +11,6 @@ import { useEffect } from "react";
 
 function ForgotPasswordPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const location = useLocation();
   const [email, setEmail] = useState('');
   function changeEmail(e) {
     setEmail(e.target.value);

@@ -4,14 +4,16 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const modalRoot = document.getElementById("react-modals");
 
-function Modal(props) {
+function Modal({title,children,setIsModal, onClose}) {
+  const navigate = useNavigate()
   React.useEffect(() => {
     const handleEscapeClose = (evt) => {
       if (evt.key === "Escape") {
-        props.onClose();
+        handleCloseModal()
       }
     };
     document.addEventListener("keydown", handleEscapeClose);
@@ -20,15 +22,24 @@ function Modal(props) {
     };
   }, []);
 
+  function handleCloseModal() {
+     onClose()
+     setIsModal(false)
+     navigate('/')
+  
+  }
+
+ 
+
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={props.onClose} />
+      <ModalOverlay onClose={handleCloseModal} />
       <div className={styles.modal}>
-        <h2 className="text text_type_main-large mr-40 ml-10">{props.title}</h2>
-        <button type="button" onClick={props.onClose} className={styles.close}>
+        <h2 className="text text_type_main-large mr-40 ml-10">{title}</h2>
+        <button type="button" onClick={handleCloseModal} className={styles.close}>
           <CloseIcon type="primary" />
         </button>
-        {props.children}
+        {children}
       </div>
     </>,
     modalRoot

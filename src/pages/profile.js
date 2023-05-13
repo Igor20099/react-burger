@@ -25,13 +25,14 @@ function ProfilePage() {
   const [password, setPassword] = useState("");
   const [isChange, setIsChange] = useState(false);
  const [token,setToken] = useState(getCookie('token'))
-  // const isAuth = useSelector((state) => state.auth.isAuth);
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(getCookie("token"));
-  if (!token) {
-    dispatch(tokenRequest());
-  }
+
+  // if (!token) {
+  //   dispatch(tokenRequest());
+  // }
+
 
   const user = useSelector((state) => state.auth.user);
   useEffect(() => {

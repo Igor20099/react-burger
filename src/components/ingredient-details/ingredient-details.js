@@ -1,8 +1,6 @@
 import styles from "./ingredient-details.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { getIngredients } from "../../services/actions/ingredients";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 function IngredientDetails() {
   let { ingredient } = useSelector((state) => state.ingredientDetails);
@@ -10,10 +8,8 @@ function IngredientDetails() {
     localStorage.setItem("ingredient", JSON.stringify(ingredient));
   } else {
     ingredient = JSON.parse(localStorage.getItem("ingredient"));
-    localStorage.setItem("isModal", JSON.stringify(false));
+    localStorage.setItem("isModal", JSON.stringify(true));
   }
-  const location = useLocation()
-  console.log(location.pathname)
 
   return (
     <div className={styles.details}>

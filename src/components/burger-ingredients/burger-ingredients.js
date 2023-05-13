@@ -1,9 +1,6 @@
 import React, { useRef } from "react";
-
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions/ingredients";
 import {
@@ -61,10 +58,11 @@ function BurgerIngredients({ setIsModal }) {
     };
   }, []);
 
-  const isModal = JSON.parse(localStorage.getItem('isModal'))
 
-  if(!ingredient && isModal) {
+
+  if(!ingredient) {
     ingredient = JSON.parse(localStorage.getItem('ingredient'))
+    localStorage.setItem('isModal',JSON.stringify(true))
   }
 
 
@@ -75,7 +73,7 @@ function BurgerIngredients({ setIsModal }) {
         dispatch(getIngredient(el));
         setIsModal(true);
         localStorage.setItem('isModal',JSON.stringify(true))
-        navigate(`/ingredients/${el._id}`);
+        navigate(`/ingredients/${el._id}`,{  state:{background: location  }});
       }
     });
   };
@@ -83,19 +81,13 @@ function BurgerIngredients({ setIsModal }) {
 
   const handleCloseModal = () => {
     dispatch(deleteIngredient());
-    localStorage.setItem('isModal',JSON.stringify(false))
+    setIsModal(false)
+    
     navigate('/')
   };
 
-  const modal = (
-    <Modal onClose={handleCloseModal} title="Детали ингредиента">
-      <IngredientDetails />
-    </Modal>
-  );
-
   return (
     <section className={styles.burger_ingredients}>
-      <div className={styles.modal}> {ingredient && modal}</div>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
       <div className={styles.tabs}>
         <Tab value="one" active={current === "one"} onClick={setCurrent}>

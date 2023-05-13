@@ -6,7 +6,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import { NavLink, useLocation } from "react-router-dom";
-import { useState } from "react";
 
 function AppHeader() {
   const { pathname } = useLocation();
