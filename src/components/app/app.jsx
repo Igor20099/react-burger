@@ -40,7 +40,7 @@ function App() {
     </Routes>
     {background && isModal &&
                 (<Routes>
-                        <Route path='/ingredients/:id' element={<Modal header="Детали ингредиента!" onClose={handleCloseModal} setIsModal={setIsModal}><IngredientDetails /></Modal>} />
+                        <Route path='/ingredients/:id' element={<Modal title="Детали ингредиента" onClose={handleCloseModal} setIsModal={setIsModal}><IngredientDetails /></Modal>} />
                  </Routes>
                 )}
       </div>
