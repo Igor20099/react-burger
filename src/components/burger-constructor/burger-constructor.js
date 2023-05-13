@@ -155,4 +155,8 @@ function BurgerConstructor({setIsModal}) {
   );
 }
 
+BurgerConstructor.propTypes = {
+  setIsModal:PropTypes.func
+};
+
 export default BurgerConstructor;

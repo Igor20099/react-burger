@@ -10,12 +10,13 @@ import {
 import { useNavigate } from "react-router-dom";
 import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
 import { useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function BurgerIngredients({ setIsModal }) {
   const { ingredients } = useSelector((state) => state.ingredients);
   const [current, setCurrent] = React.useState("one");
   const ingredientsContainerRef = useRef(null);
-  let {ingredient} = useSelector(state => state.ingredientDetails) 
+  let { ingredient } = useSelector((state) => state.ingredientDetails);
   const bunRef = useRef(null);
   const mainRef = useRef(null);
   const sauseRef = useRef(null);
@@ -50,7 +51,7 @@ function BurgerIngredients({ setIsModal }) {
 
   React.useEffect(() => {
     dispatch(getIngredients());
-    
+
     const container = document.querySelector("#ingredients-container");
     container.addEventListener("scroll", handleScroll);
     return () => {
@@ -58,32 +59,27 @@ function BurgerIngredients({ setIsModal }) {
     };
   }, []);
 
-
-
-  if(!ingredient) {
-    ingredient = JSON.parse(localStorage.getItem('ingredient'))
-    localStorage.setItem('isModal',JSON.stringify(true))
+  if (!ingredient) {
+    ingredient = JSON.parse(localStorage.getItem("ingredient"));
+    localStorage.setItem("isModal", JSON.stringify(true));
   }
-
-
 
   const handleOpenModal = (e) => {
     ingredients.forEach((el) => {
       if (e.currentTarget.id === el._id) {
         dispatch(getIngredient(el));
         setIsModal(true);
-        localStorage.setItem('isModal',JSON.stringify(true))
-        navigate(`/ingredients/${el._id}`,{  state:{background: location  }});
+        localStorage.setItem("isModal", JSON.stringify(true));
+        navigate(`/ingredients/${el._id}`, { state: { background: location } });
       }
     });
   };
 
-
   const handleCloseModal = () => {
     dispatch(deleteIngredient());
-    setIsModal(false)
-    
-    navigate('/')
+    setIsModal(false);
+
+    navigate("/");
   };
 
   return (
@@ -157,5 +153,9 @@ function BurgerIngredients({ setIsModal }) {
     </section>
   );
 }
+
+BurgerIngredients.propTypes = {
+  setIsModal:PropTypes.func
+};
 
 export default BurgerIngredients;

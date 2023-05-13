@@ -3,6 +3,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
+import PropTypes from "prop-types";
 
 function HomePage({ setIsModal }) {
   return (
@@ -16,5 +17,9 @@ function HomePage({ setIsModal }) {
     </div>
   );
 }
+
+HomePage.propTypes = {
+  setIsModal:PropTypes.func
+};
 
 export default HomePage;
