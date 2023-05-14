@@ -49,8 +49,6 @@ function BurgerIngredients({ setIsModal }) {
   };
 
   React.useEffect(() => {
-   
-
     const container = document.querySelector("#ingredients-container");
     container.addEventListener("scroll", handleScroll);
     return () => {
@@ -58,7 +56,6 @@ function BurgerIngredients({ setIsModal }) {
     };
   }, [ingredients]);
 
- 
   const handleOpenModal = (e) => {
     ingredients.forEach((el) => {
       if (e.currentTarget.id === el._id) {
@@ -71,7 +68,6 @@ function BurgerIngredients({ setIsModal }) {
   const handleCloseModal = () => {
     dispatch(deleteIngredient());
     setIsModal(false);
-
     navigate("/");
   };
 
@@ -148,7 +144,7 @@ function BurgerIngredients({ setIsModal }) {
 }
 
 BurgerIngredients.propTypes = {
-  setIsModal:PropTypes.func
+  setIsModal: PropTypes.func,
 };
 
 export default BurgerIngredients;
