@@ -16,7 +16,6 @@ function BurgerIngredients({ setIsModal }) {
   const { ingredients } = useSelector((state) => state.ingredients);
   const [current, setCurrent] = React.useState("one");
   const ingredientsContainerRef = useRef(null);
-  let { ingredient } = useSelector((state) => state.ingredientDetails);
   const bunRef = useRef(null);
   const mainRef = useRef(null);
   const sauseRef = useRef(null);
@@ -50,26 +49,20 @@ function BurgerIngredients({ setIsModal }) {
   };
 
   React.useEffect(() => {
-    dispatch(getIngredients());
+   
 
     const container = document.querySelector("#ingredients-container");
     container.addEventListener("scroll", handleScroll);
     return () => {
       container.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [ingredients]);
 
-  if (!ingredient) {
-    ingredient = JSON.parse(localStorage.getItem("ingredient"));
-    localStorage.setItem("isModal", JSON.stringify(true));
-  }
-
+ 
   const handleOpenModal = (e) => {
     ingredients.forEach((el) => {
       if (e.currentTarget.id === el._id) {
-        dispatch(getIngredient(el));
         setIsModal(true);
-        localStorage.setItem("isModal", JSON.stringify(true));
         navigate(`/ingredients/${el._id}`, { state: { background: location } });
       }
     });

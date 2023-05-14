@@ -7,17 +7,21 @@ import {useEffect} from 'react'
 import { useLocation } from 'react-router-dom';
 import Modal from '../modal/modal';
 import {useState} from 'react'
+import { getIngredients } from '../../services/actions/ingredients';
+import { useDispatch,useSelector } from 'react-redux';
 
 
 
 function App() {
   function ModalSwitch() {
     let location = useLocation();
+    const dispatch = useDispatch()
     let background = location.state && location.state.background;
     let [isModal, setIsModal] = useState(false);
     useEffect(() =>{
+      dispatch(getIngredients());
       setIsModal(localStorage.getItem('isModal'))
-    },[isModal])
+    },[isModal,dispatch])
 
     function handleCloseModal() {
       setIsModal(false)  
