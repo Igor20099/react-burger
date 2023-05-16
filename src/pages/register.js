@@ -23,7 +23,7 @@ function RegisterPage() {
       navigate('/')
     }
     
-  }, []);
+  }, [isAuth]);
 
  
   console.log(location.state?.from.pathname)

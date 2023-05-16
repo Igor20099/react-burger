@@ -9,6 +9,8 @@ import Modal from '../modal/modal';
 import {useState} from 'react'
 import { getIngredients } from '../../services/actions/ingredients';
 import { useDispatch,useSelector } from 'react-redux';
+import { getCookie } from '../../utils/cookie';
+import { tokenRequest } from '../../services/actions/auth';
 
 
 
@@ -17,7 +19,7 @@ function App() {
     let location = useLocation();
     const dispatch = useDispatch()
     let background = location.state && location.state.background;
-    let [isModal, setIsModal] = useState(false);
+    const [isModal, setIsModal] = useState(false);
     useEffect(() =>{
       dispatch(getIngredients());
       setIsModal(localStorage.getItem('isModal'))

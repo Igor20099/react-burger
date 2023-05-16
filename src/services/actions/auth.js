@@ -6,7 +6,7 @@ import {
   updateUserRequest,
   refreshTokenRequest,
 } from "../../utils/api";
-import { delCookie,  setCookie } from "../../utils/cookie";
+import { delCookie, getCookie, setCookie } from "../../utils/cookie";
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_ERROR = "REGISTER_ERROR";
@@ -82,7 +82,6 @@ export function login(email, password) {
             user: res.user,
             accessToken: accessToken,
           });
-         
         }
       })
       .catch((err) => {
@@ -113,12 +112,12 @@ export function logout() {
   };
 }
 
-export function getUser(token) {
+export function getUser() {
   return function (dispatch) {
     dispatch({
       type: GET_USER_REQUEST,
     });
-    return getUserRequest(token)
+    return getUserRequest(getCookie('token'))
       .then((res) => {
         if (res.success) {
           dispatch({
@@ -128,8 +127,8 @@ export function getUser(token) {
         }
       })
       .catch((err) => {
-        console.error("Error: ", err);
-      });
+        console.error('Error: ', err);
+    });
   };
 }
 

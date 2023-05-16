@@ -8,6 +8,7 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { getCookie } from "../utils/cookie";
 
 function LoginPage() {
   const dispatch = useDispatch();

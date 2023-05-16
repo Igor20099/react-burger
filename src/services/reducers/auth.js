@@ -19,7 +19,7 @@ const initialState = {
     email: null,
   },
   accessToken: null,
-  isAuth: !!getCookie('token')
+  isAuth: localStorage.getItem('refreshToken') ? true : false
 };
 
 export const authorizationReducer = (state = initialState, action) => {

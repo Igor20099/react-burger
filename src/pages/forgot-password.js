@@ -11,22 +11,22 @@ import { useEffect } from "react";
 
 function ForgotPasswordPage() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   function changeEmail(e) {
     setEmail(e.target.value);
   }
-  useEffect(() => {
+  useEffect(() => {});
 
-  })
-  
   function forgotPasswordHandle(e) {
     e.preventDefault();
-    forgotPasswordRequest(email).then(() => {
-      localStorage.setItem('forgotPassword', true);
-      navigate("/reset-password");
-    }).catch((err) => {
-      console.error('Error: ', err);
-  });;
+    forgotPasswordRequest(email)
+      .then(() => {
+        localStorage.setItem("forgotPassword", true);
+        navigate("/reset-password");
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
   }
   return (
     <div>

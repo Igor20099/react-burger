@@ -1,6 +1,6 @@
 import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getIngredient } from "../../services/actions/ingredient-details";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 function IngredientDetails() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const id = location.pathname.split("/")[2];
+  const {id} = useParams()
 
   const { ingredients } = useSelector((state) => state.ingredients);
   const { ingredient } = useSelector((state) => state.ingredientDetails);

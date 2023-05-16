@@ -26,6 +26,7 @@ function Modal({title,children,setIsModal, onClose}) {
      onClose()
      setIsModal(false)
      navigate('/')
+     localStorage.removeItem('isModal')
   
   }
 

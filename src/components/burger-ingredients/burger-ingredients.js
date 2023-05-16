@@ -60,6 +60,7 @@ function BurgerIngredients({ setIsModal }) {
     ingredients.forEach((el) => {
       if (e.currentTarget.id === el._id) {
         setIsModal(true);
+        localStorage.setItem('isModal',JSON.stringify(true))
         navigate(`/ingredients/${el._id}`, { state: { background: location } });
       }
     });

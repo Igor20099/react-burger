@@ -24,23 +24,26 @@ function ProfilePage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChange, setIsChange] = useState(false);
- const [token,setToken] = useState(getCookie('token'))
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // if (!token) {
-  //   dispatch(tokenRequest());
-  // }
-
-
   const user = useSelector((state) => state.auth.user);
+
   useEffect(() => {
-    dispatch(getUser(token)).then(() => {
-      setName(user.name || "");
-      setEmail(user.email || "");
-      setPassword("");
-    });
+    if (!getCookie('token')) {
+      dispatch(tokenRequest()).then(() => {
+        dispatch(getUser()).then(() => {
+          setName(user.name || "");
+          setEmail(user.email || "");
+          setPassword("");
+        });
+      })
+    }
+    else {
+      dispatch(getUser()).then(() => {
+        setName(user.name || "");
+        setEmail(user.email || "");
+        setPassword("");
+      });
+    }
+   
   }, [user.name]);
 
   function cancelChange() {
@@ -51,7 +54,7 @@ function ProfilePage() {
   }
 
   function saveChange() {
-    dispatch(updateUser(email, name, token)).then(() => {
+    dispatch(updateUser(email, name, getCookie("token"))).then(() => {
       setIsChange(false);
     });
   }
