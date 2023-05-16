@@ -27,8 +27,6 @@ function ResetPasswordPage() {
     }
   }, []);
   
-  console.log(forgotPassword);
-
   function changePassword(e) {
     setPassword(e.target.value);
   }
