@@ -33,7 +33,7 @@ function AppHeader() {
                 className={
                   pathname === "/feed" ? styles.link : styles.link_inactive
                 }
-                to="/"
+                to="/feed"
               >
                 <ListIcon
                   type={pathname === "feed" ? "primary" : "secondary"}

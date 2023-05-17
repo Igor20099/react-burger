@@ -1,7 +1,7 @@
 import AppHeader from '../app-header/app-header';
 import { BrowserRouter ,Routes,Route, Navigate, useNavigate } from 'react-router-dom';
 import { ProtectedRouteElement } from '../protected-route/protected-route';
-import {HomePage , LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, NotFound404, ProfilePage, OrdersPage} from '../../pages';
+import {HomePage , LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, NotFound404, ProfilePage, OrdersPage, FeedPage} from '../../pages';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import {useEffect} from 'react'
 import { useLocation } from 'react-router-dom';
@@ -42,6 +42,7 @@ function App() {
        <Route path='/register' element={<RegisterPage />} />
        <Route path='/forgot-password' element={<ForgotPasswordPage />} />
        <Route path='/reset-password' element={<ResetPasswordPage />} />
+       <Route path='/feed' element={<FeedPage />} />
        <Route path="*" element={<NotFound404 />}/>   
     </Routes>
     {background && isModal &&

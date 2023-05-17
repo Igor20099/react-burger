@@ -28,17 +28,18 @@ export const socketMiddleware = wsUrl => {
                 // функция, которая вызывается при получении события от сервера
         socket.onmessage = event => {
           const { data } = event;
-          dispatch({ type: 'WS_GET_MESSAGE', payload: data });
+          const newData = JSON.parse(data)
+          dispatch({ type: 'WS_GET_ORDERS', payload: newData });
         };
                 // функция, которая вызывается при закрытии соединения
         socket.onclose = event => {
           dispatch({ type: 'WS_CONNECTION_CLOSED', payload: event });
         };
 
-        if (type === 'WS_SEND_MESSAGE') {
-          const message = payload;
+        if (type === 'WS_SEND_ORDER') {
+          const order = payload;
                     // функция для отправки сообщения на сервер
-          socket.send(JSON.stringify(message));
+          socket.send(JSON.stringify(order));
         }
       }
 

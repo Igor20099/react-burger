@@ -5,7 +5,6 @@ import { rootReducer } from './reducers/index'
 import { socketMiddleware } from "./middleware/socketMiddleware";
 import { WS_URL } from "../utils/constants";
 
-const middleware = [thunk, socketMiddleware];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(applyMiddleware(thunk,socketMiddleware(WS_URL)));
