@@ -5,32 +5,23 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from "../services/actions/wsActionTypes";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import { v4 as uuidv4 } from "uuid";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import FeedOrder from "../components/feed-order/feed-order";
+import { WS_URL } from "../utils/constants";
 function FeedPage() {
   const dispatch = useDispatch();
   const [allOrders, setAllOrders] = useState();
   const [ordersCount, setOrdersCount] = useState(0);
   const [ordersToday, setOrdersToday] = useState(0);
-
   const { orders } = useSelector((state) => state.ws);
   const { ingredients } = useSelector((state) => state.ingredients);
-  console.log(orders);
-
-  function getPrice(elementIngredients, ingredients) {
-    const elements = elementIngredients.map((id) =>
-      ingredients.find((el) => el._id === id)
-    );
-    console.log(elements);
-    const totalPrice = elements.reduce(
-      (acc, ingredient) => acc + ingredient?.price,
-      0
-    );
-    return totalPrice;
-  }
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
+    dispatch({ type: WS_CONNECTION_START, payload: WS_URL + '/all' });
 
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
@@ -44,7 +35,6 @@ function FeedPage() {
       setOrdersToday(orders.totalToday);
     }
   }, [orders, ingredients]);
-  console.log(allOrders);
   return (
     <section className={styles.feed}>
       <div className={styles.order_list}>
@@ -53,51 +43,7 @@ function FeedPage() {
           {allOrders &&
             allOrders.map((el) => {
               return (
-                <li key={el._id} className={styles.order}>
-                  <div className={styles.wrapper}>
-                    <p className="text text_type_digits-default pt-6">{`#${el.number}`}</p>
-                    <p className="text text_type_main-default text_color_inactive pt-6">
-                      {el.createdAt}
-                    </p>
-                  </div>
-
-                  <p className="text text_type_main-medium p-6">{el.name}</p>
-                  <div className={styles.wrapper}>
-                    <div className={styles.icons}>
-                      {el.ingredients.slice(0, 5).map((id) => {
-                        const ingredient = ingredients.find(
-                          (el) => el._id === id
-                        );
-                        const image = ingredient?.image_mobile;
-                        const name = ingredient?.name;
-                        return (
-                          <div className={styles.image_wrapper}>
-                            <img
-                              src={image}
-                              alt={name}
-                              className={styles.icon}
-                            />
-                          </div>
-                        );
-                      })}
-                      {el.ingredients.length > 5 ? (
-                        <div className={styles.number_wrapper}>
-                          <p
-                            className={`text text_type_digits-default pt-6 pl-4 ${styles.number}`}
-                          >
-                            +{el.ingredients.length - 5}
-                          </p>
-                        </div>
-                      ) : null}
-                    </div>
-                    <div className={styles.price}>
-                      <p className="text text_type_digits-default pr-2">
-                        {getPrice(el.ingredients, ingredients)}
-                      </p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                  </div>
-                </li>
+                <FeedOrder key={el._id} el={el} ingredients={ingredients} />
               );
             })}
         </ul>
@@ -108,9 +54,11 @@ function FeedPage() {
             <p className="text text_type_main-small mb-6">Готовы:</p>
             <ul className={styles.list_done}>
               {allOrders &&
-                allOrders.slice(0,5).map((el) => {
+                allOrders.slice(0, 10).map((el) => {
                   return el.status === "done" ? (
-                    <li className={`text text_type_digits-default ${styles.done_number}`}>
+                    <li
+                      className={`text text_type_digits-default ${styles.done_number}`}
+                    >
                       {el.number}
                     </li>
                   ) : null;
@@ -119,10 +67,10 @@ function FeedPage() {
           </div>
           <div className={styles.orders_progress}>
             <p className="text text_type_main-small">В работе:</p>
-            <ul>
+            <ul className={styles.list_progress}>
               {allOrders &&
-                allOrders.map((el) => {
-                  return el.status !== "done" ? (
+                allOrders.slice(0, 10).map((el) => {
+                  return el.status === "pending" ? (
                     <li className="text text_type_digits-default">
                       {el.number}
                     </li>
@@ -131,7 +79,7 @@ function FeedPage() {
             </ul>
           </div>
         </div>
-        <div className='mb-6'>
+        <div className="mb-6">
           <p className="text text_type_main-default">Выполнено за все время:</p>
           <p className="text text_type_digits-large">{ordersCount}</p>
         </div>

@@ -1,4 +1,4 @@
-import styles from "./profile.module.css";
+import styles from "./orders.module.css";
 import {
   EmailInput,
   PasswordInput,
@@ -7,11 +7,40 @@ import {
 import { NavLink } from "react-router-dom";
 import { logout } from "../services/actions/auth";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getCookie } from "../utils/cookie";
+import FeedOrder from "../components/feed-order/feed-order";
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+} from "../services/actions/wsActionTypes";
+import { WS_URL } from "../utils/constants";
 
 function OrdersPage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const {ingredients} = useSelector(state => state.ingredients)
+  const { orders } = useSelector((state) => state.ws);
+  const [profileOrders,setProfileOrders] = useState([])
+  console.log(orders.orders)
+  console.log(getCookie('token'))
+
+  useEffect(() => {
+    
+    dispatch({ type: WS_CONNECTION_START, payload: WS_URL + `?token=${getCookie('token')}` });
+
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (orders) {
+      setProfileOrders(orders.orders);
+      
+    }
+  }, [orders, ingredients]);
 
   function logoutHandle() {
     dispatch(logout())
@@ -32,7 +61,16 @@ function OrdersPage() {
           </p>
         </li>
       </ul>
-      
+      <div className={styles.order_list}>
+        <ul className={styles.list}>
+          {profileOrders &&
+            profileOrders.map((el) => {
+              return (
+                <FeedOrder key={el._id} el={el} ingredients={ingredients} />
+              );
+            })}
+        </ul>
+      </div>
       
     </div>
   );

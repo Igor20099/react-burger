@@ -1,4 +1,5 @@
 import { BASE_URL } from "./constants";
+import { getCookie } from "./cookie";
 
 //проверка на запрос
 export function checkResponse(res) {
@@ -14,14 +15,12 @@ export function ingredientsRequest() {
 }
 
 //запрос на номер заказа
-export function orderRequest(data) {
+export function orderRequest(data,token) {
   return fetch(`${BASE_URL}/orders`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token,},
     body: JSON.stringify({
-      ingredients: data.map((el) => {
-        return el._id;
-      }),
+      ingredients: data
     }),
   }).then(checkResponse);
 }

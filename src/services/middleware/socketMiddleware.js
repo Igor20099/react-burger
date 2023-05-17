@@ -1,7 +1,7 @@
 // socketMiddleware.js
 import { Middleware, MiddlewareAPI } from 'redux';
 
-export const socketMiddleware = wsUrl => {
+export const socketMiddleware = wsActionTypes => {
     return store => {
         let socket = null;
 
@@ -11,7 +11,7 @@ export const socketMiddleware = wsUrl => {
  
       if (type === 'WS_CONNECTION_START') {
             // объект класса WebSocket
-        socket = new WebSocket(wsUrl);
+        socket = new WebSocket(action.payload);
       }
       if (socket) {
 

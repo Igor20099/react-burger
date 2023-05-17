@@ -3,9 +3,9 @@ import thunk from "redux-thunk";
 
 import { rootReducer } from './reducers/index'
 import { socketMiddleware } from "./middleware/socketMiddleware";
-import { WS_URL } from "../utils/constants";
+import * as wsActionsTypes from './actions/wsActionTypes';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk,socketMiddleware(WS_URL)));
+const enhancer = composeEnhancers(applyMiddleware(thunk),applyMiddleware(socketMiddleware(wsActionsTypes)));
 export const store = createStore(rootReducer, enhancer);

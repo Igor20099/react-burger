@@ -1,4 +1,5 @@
 import { orderRequest } from "../../utils/api";
+import { getCookie } from "../../utils/cookie";
 
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
@@ -11,7 +12,7 @@ export function getOrder(data) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
-    orderRequest(data)
+    orderRequest(data,getCookie('token'))
       .then((res) => {
         if (res.success) {
           dispatch({ type: GET_ORDER_SUCCESS, payload: res });
