@@ -28,7 +28,7 @@ console.log(location.pathname)
     onClose();
     setIsModal(false);
  
-    navigate(location.state.background.pathname)
+    navigate(location?.state.background.pathname)
     localStorage.removeItem("isModal");
   }
 

@@ -56,15 +56,9 @@ function FeedPage({setIsModal}) {
     });
   };
 
-  const modal = (
-    <Modal  setIsModal={setIsModal}>
-      <OrderInfo />
-    </Modal>
-  );
 
   return (
     <section className={styles.feed}>
-      <div className={styles.modal}> {order && modal}</div>
       <div className={styles.order_list}>
         <h2 className="text text_type_main-medium mb-5">Лента заказов</h2>
         <ul className={styles.list}>
