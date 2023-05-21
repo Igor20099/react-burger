@@ -7,6 +7,7 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { getPrice,getStatus } from "../../utils/utils";
 
 function OrderInfo() {
   const { orders } = useSelector((state) => state.ws);
@@ -46,15 +47,8 @@ function OrderInfo() {
     }
   }, [orders, id, dispatch, ingredients, order, setChildIngredients]);
 
-  function getStatus(order) {
-    if (orders.status === "created") {
-      return "Создан";
-    } else if (orders.status === "created") {
-      return "Готовится";
-    } else {
-      return "Выполнен";
-    }
-  }
+
+
 
   return (
     <div className={styles.order}>
@@ -79,9 +73,9 @@ function OrderInfo() {
                     {el.name}
                   </p>
                   <div className={styles.count_price_wrapper}>
-                    <p className="mr-2">{`${
-                      ingredientsCount[el._id]
-                    } x ${el.price}`}</p>
+                    <p className="mr-2">{`${ingredientsCount[el._id]} x ${
+                      el.price
+                    }`}</p>
                     <CurrencyIcon />
                   </div>
                 </li>
@@ -93,7 +87,8 @@ function OrderInfo() {
               {<FormattedDate date={new Date(order.createdAt)} />}
             </p>
             <div className={styles.price}>
-              <p className="mr-2">1000</p> <CurrencyIcon />
+              <p className="mr-2">{getPrice(order.ingredients, ingredients)}</p>{" "}
+              <CurrencyIcon />
             </div>
           </div>
         </>

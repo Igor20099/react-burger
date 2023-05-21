@@ -20,12 +20,14 @@ import ConstructorIngredient from "../constuctor-ingredient/constructor-ingredie
 import { v4 as uuidv4 } from "uuid";
 import { addIngredient } from "../../services/actions/burger-ingredients";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-function BurgerConstructor({setIsModal}) {
+function BurgerConstructor({ setIsModal }) {
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.auth.isAuth);
   const navigate = useNavigate();
   const location = useLocation();
+  const [ingredientsOrder, setIngredientsOrder] = useState([]);
 
   const handleDrop = (ingredient) => {
     dispatch(addIngredient(ingredient, uuidv4()));
@@ -55,17 +57,21 @@ function BurgerConstructor({setIsModal}) {
   }, [bun, dispatch]);
 
   const handleOpenModal = () => {
-    isAuth
-      ? dispatch(getOrder(burgerIngredients))
-      : navigate("/login", {
-          state: { from: { pathname: location.pathname } },
-        });
-        setIsModal(false)
+    if (isAuth) {
+      if (bun) {
+        dispatch(getOrder([bun, ...burgerIngredients, bun]));
+      }
+    } else {
+      navigate("/login", {
+        state: { from: { pathname: location.pathname } },
+      });
+    }
+    setIsModal(false);
   };
 
   const handleCloseModal = () => {
     dispatch({ type: CLOSE_ORDER });
-    localStorage.setItem('isModal', JSON.stringify(false))
+    localStorage.setItem("isModal", JSON.stringify(false));
   };
 
   const onDelete = (el) => {
@@ -79,6 +85,8 @@ function BurgerConstructor({setIsModal}) {
     </Modal>
   );
 
+  console.log(burgerIngredients);
+  console.log(ingredientsOrder);
   return (
     <section className={styles.burger_constructor}>
       <div className={styles.modal}> {order && modal}</div>
@@ -156,7 +164,7 @@ function BurgerConstructor({setIsModal}) {
 }
 
 BurgerConstructor.propTypes = {
-  setIsModal:PropTypes.func
+  setIsModal: PropTypes.func,
 };
 
 export default BurgerConstructor;

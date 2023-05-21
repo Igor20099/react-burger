@@ -37,7 +37,8 @@ function App() {
     <Routes location= {background || location}>
        <Route path='/' element={<HomePage setIsModal ={setIsModal}/>} />
        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} />
-       <Route path="/profile/orders" element={<ProtectedRouteElement element={<OrdersPage/>}/>} />
+       <Route path="/profile/orders" element={<ProtectedRouteElement element={<OrdersPage setIsModal={setIsModal}/>}/>} />
+       <Route path='/profile/orders/:id' element={<ProtectedRouteElement element={<OrderInfo setIsModal ={setIsModal}/>}/>} />
        <Route path="/ingredients/:id" element={<IngredientDetails />}/>
        <Route path="/feed/:id" element={<OrderInfo />}/>
        <Route path='/login' element={<LoginPage />} />
@@ -51,6 +52,7 @@ function App() {
                 (<Routes>
                         <Route path='/ingredients/:id' element={<Modal title="Детали ингредиента" onClose={handleCloseModal} setIsModal={setIsModal}><IngredientDetails /></Modal>} />
                         <Route path='/feed/:id' element={<Modal  onClose={handleCloseModal}  setIsModal={setIsModal}> <OrderInfo /></Modal>} />
+                        <Route path='/profile/orders/:id' element={<ProtectedRouteElement element={<Modal  onClose={handleCloseModal}  setIsModal={setIsModal}> <OrderInfo /></Modal>}/>} />
                  </Routes>
                 )}
       </div>

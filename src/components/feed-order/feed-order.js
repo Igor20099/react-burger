@@ -4,23 +4,16 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { v4 as uuidv4 } from "uuid";
+import { getPrice, getStatus } from "../../utils/utils";
 
-
-function FeedOrder({ el, ingredients, handleOpenModal}) {
-  function getPrice(elementIngredients, ingredients) {
-    const elements = elementIngredients.map((id) =>
-      ingredients.find((el) => el._id === id)
-    );
-    console.log(elements);
-    const totalPrice = elements.reduce(
-      (acc, ingredient) => acc + ingredient?.price,
-      0
-    );
-    return totalPrice;
-  }
-
+function FeedOrder({ el, ingredients, handleOpenModal, isStatus }) {
   return (
-    <li id={el._id} key={el._id}  className={styles.order} onClick={handleOpenModal}>
+    <li
+      id={el._id}
+      key={el._id}
+      className={styles.order}
+      onClick={handleOpenModal}
+    >
       <div className={styles.wrapper}>
         <p className="text text_type_digits-default pt-6">{`#${el.number}`}</p>
         <p className="text text_type_main-default text_color_inactive pt-6">
@@ -29,6 +22,9 @@ function FeedOrder({ el, ingredients, handleOpenModal}) {
       </div>
 
       <p className="text text_type_main-medium p-6">{el.name}</p>
+      {isStatus && (
+        <p className="text text_type_main-small ml-6 pb-6">{getStatus(el)}</p>
+      )}
       <div className={styles.wrapper}>
         <div className={styles.icons}>
           {el.ingredients.slice(0, 5).map((id) => {

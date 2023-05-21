@@ -40,8 +40,8 @@
 }
 
 .orders_progress {
-  max-width: 272;
-  height: 206;
+  max-width: 272px;
+  height: 206px;
 }
 
 .wrapper_list_orders {
@@ -90,14 +90,15 @@
   flex-direction: row;
   max-width: 1200px;
   flex-wrap: wrap;
-  margin-left: 120px;
-  margin-top: 120px;
+  margin-left: 40px;
+  justify-content: center;
 }
 
 .nav {
   list-style-type: none;
   margin-right: 60px;
   margin-bottom: 80px;
+  padding-top: 120px;
 }
 
 .text {

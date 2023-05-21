@@ -6,7 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 import { logout } from "../services/actions/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getCookie } from "../utils/cookie";
@@ -16,15 +16,19 @@ import {
   WS_CONNECTION_CLOSED,
 } from "../services/actions/wsActionTypes";
 import { WS_URL } from "../utils/constants";
+import PropTypes from "prop-types";
 
-function OrdersPage() {
+function OrdersPage({setIsModal}) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {ingredients} = useSelector(state => state.ingredients)
   const { orders } = useSelector((state) => state.ws);
   const [profileOrders,setProfileOrders] = useState([])
+  const location = useLocation()
   console.log(orders.orders)
   console.log(getCookie('token'))
+
+  
 
   useEffect(() => {
     
@@ -46,6 +50,18 @@ function OrdersPage() {
     dispatch(logout())
   }
 
+  const handleOpenModal = (e) => {
+    console.log(e)
+    profileOrders.forEach((el) => {
+      if (e.currentTarget.id === el._id) {
+        setIsModal(true);
+        localStorage.setItem('isModal',JSON.stringify(true))
+        navigate(`/profile/orders/${el._id}`, { state: { background: location } });
+      }
+    });
+  };
+
+
   return (
     <div className={styles.profile}>
       <ul className={styles.nav}>
@@ -66,14 +82,20 @@ function OrdersPage() {
           {profileOrders &&
             profileOrders.map((el) => {
               return (
-                <FeedOrder key={el._id} el={el} ingredients={ingredients} />
+                <FeedOrder key={el._id} el={el} ingredients={ingredients} handleOpenModal={handleOpenModal} isStatus={true}/>
               );
-            })}
+            }).reverse()}
         </ul>
       </div>
       
     </div>
   );
 }
+
+OrdersPage.propTypes = {
+
+  setIsModal: PropTypes.func,
+};
+
 
 export default OrdersPage;

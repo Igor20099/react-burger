@@ -71,7 +71,7 @@ function FeedPage({setIsModal}) {
           {allOrders &&
             allOrders.map((el) => {
               return (
-                <FeedOrder key={el._id} el={el} ingredients={ingredients} handleOpenModal={handleOpenModal}/>
+                <FeedOrder key={el._id} el={el} ingredients={ingredients} handleOpenModal={handleOpenModal} isStatus={false}/>
               );
             })}
         </ul>

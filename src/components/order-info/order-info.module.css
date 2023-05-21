@@ -53,6 +53,7 @@
 
 .name {
     max-width: 320px;
+    margin-right: 110px;
 }
 
 .count_price_wrapper {
@@ -60,5 +61,6 @@
     justify-content: center;
     align-items: center;
     margin-left: auto;
+    margin-right: 24px;
 }
 
