@@ -11,6 +11,7 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { useDispatch,useSelector } from 'react-redux';
 import { getCookie } from '../../utils/cookie';
 import { tokenRequest } from '../../services/actions/auth';
+import OrderInfo from '../order-info/order-info';
 
 
 
@@ -38,16 +39,18 @@ function App() {
        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} />
        <Route path="/profile/orders" element={<ProtectedRouteElement element={<OrdersPage/>}/>} />
        <Route path="/ingredients/:id" element={<IngredientDetails />}/>
+       <Route path="/feed/:id" element={<OrderInfo />}/>
        <Route path='/login' element={<LoginPage />} />
        <Route path='/register' element={<RegisterPage />} />
        <Route path='/forgot-password' element={<ForgotPasswordPage />} />
        <Route path='/reset-password' element={<ResetPasswordPage />} />
-       <Route path='/feed' element={<FeedPage />} />
+       <Route path='/feed' element={<FeedPage setIsModal ={setIsModal}/>} />
        <Route path="*" element={<NotFound404 />}/>   
     </Routes>
     {background && isModal &&
                 (<Routes>
                         <Route path='/ingredients/:id' element={<Modal title="Детали ингредиента" onClose={handleCloseModal} setIsModal={setIsModal}><IngredientDetails /></Modal>} />
+                        <Route path='/feed/:id' element={<Modal  onClose={handleCloseModal}  setIsModal={setIsModal}> <OrderInfo /></Modal>} />
                  </Routes>
                 )}
       </div>

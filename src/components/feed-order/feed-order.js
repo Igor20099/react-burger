@@ -6,7 +6,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 
-function FeedOrder({ el, ingredients,number}) {
+function FeedOrder({ el, ingredients, handleOpenModal}) {
   function getPrice(elementIngredients, ingredients) {
     const elements = elementIngredients.map((id) =>
       ingredients.find((el) => el._id === id)
@@ -20,7 +20,7 @@ function FeedOrder({ el, ingredients,number}) {
   }
 
   return (
-    <li key={el._id} className={styles.order}>
+    <li id={el._id} key={el._id}  className={styles.order} onClick={handleOpenModal}>
       <div className={styles.wrapper}>
         <p className="text text_type_digits-default pt-6">{`#${el.number}`}</p>
         <p className="text text_type_main-default text_color_inactive pt-6">
