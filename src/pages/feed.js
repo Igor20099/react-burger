@@ -27,7 +27,6 @@ function FeedPage({setIsModal}) {
   const {order} = useSelector(state => state.orderInfo)
   const navigate = useNavigate()
   const location = useLocation()
-  console.log(allOrders)
 
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START, payload: WS_URL + '/all' });

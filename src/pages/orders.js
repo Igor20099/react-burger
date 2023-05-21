@@ -31,7 +31,6 @@ function OrdersPage({setIsModal}) {
   
 
   useEffect(() => {
-    
     dispatch({ type: WS_CONNECTION_START, payload: WS_URL + `?token=${getCookie('token')}` });
 
     return () => {

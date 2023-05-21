@@ -7,7 +7,8 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getPrice,getStatus } from "../../utils/utils";
+import { getPrice, getStatus } from "../../utils/utils";
+import { WS_GET_ORDERS } from "../../services/actions/wsActionTypes";
 
 function OrderInfo() {
   const { orders } = useSelector((state) => state.ws);
@@ -23,7 +24,7 @@ function OrderInfo() {
   let ingredientList = [];
 
   useEffect(() => {
-    orders.orders.find((el) => {
+    orders?.orders?.find((el) => {
       if (id === el._id) {
         dispatch(getOrder(el));
       }
@@ -45,10 +46,8 @@ function OrderInfo() {
       setIngredientsCount(listTemp);
       setChildIngredients(ingredientList);
     }
-  }, [orders, id, dispatch, ingredients, order, setChildIngredients]);
-
-
-
+  }, [orders.orders, id, order, ingredients, childIngreients]);
+console.log(orders)
 
   return (
     <div className={styles.order}>
