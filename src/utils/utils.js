@@ -2,7 +2,6 @@
     const elements = elementIngredients.map((id) =>
       ingredients.find((el) => el._id === id)
     );
-    console.log(elements);
     const totalPrice = elements.reduce(
       (acc, ingredient) => acc + ingredient?.price,
       0
@@ -18,4 +17,8 @@
     } else {
       return "Выполнен";
     }
+  }
+
+  export function getStatusColor(status) {
+   return status === 'Выполнен' ? '#00CCCC' : '#FFFFFF';
   }

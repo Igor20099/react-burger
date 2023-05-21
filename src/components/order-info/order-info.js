@@ -7,8 +7,9 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getPrice, getStatus } from "../../utils/utils";
-import { WS_GET_ORDERS } from "../../services/actions/wsActionTypes";
+import { getPrice, getStatus, getStatusColor } from "../../utils/utils";
+import { WS_CONNECTION_START,WS_CONNECTION_CLOSED } from "../../services/actions/wsActionTypes";
+import { WS_URL } from "../../utils/constants";
 
 function OrderInfo() {
   const { orders } = useSelector((state) => state.ws);
@@ -24,6 +25,14 @@ function OrderInfo() {
   let ingredientList = [];
 
   useEffect(() => {
+    dispatch({ type: WS_CONNECTION_START, payload: WS_URL + '/all' });
+
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
     orders?.orders?.find((el) => {
       if (id === el._id) {
         dispatch(getOrder(el));
@@ -34,12 +43,9 @@ function OrderInfo() {
       order.ingredients.forEach((el) => {
         ingredientSet.add(el);
       });
-      console.log(ingredientSet);
       ingredientSet.forEach((id) => {
         const count = order.ingredients.filter((ing) => ing === id);
         listTemp[id] = count.length;
-
-        console.log(ingredientsCount);
         const ingredient = ingredients.find((el) => el._id === id);
         ingredientList.push(ingredient);
       });
@@ -47,7 +53,6 @@ function OrderInfo() {
       setChildIngredients(ingredientList);
     }
   }, [orders.orders, id, order, ingredients, childIngreients]);
-console.log(orders)
 
   return (
     <div className={styles.order}>
@@ -57,7 +62,7 @@ console.log(orders)
             #{order.number}
           </p>
           <p className="text text_type_main-default mb-3">{order.name}</p>
-          <p className="text text_type_main-small mb-15">{getStatus(order)}</p>
+          <p className="text text_type_main-small mb-15" style={{color: getStatusColor(getStatus(order))}}>{getStatus(order)}</p>
           <p className="text text_type_main-default mb-6">Состав:</p>
           <ul className={styles.list}>
             {childIngreients?.map((el) => {

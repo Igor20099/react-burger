@@ -6,16 +6,11 @@ import {
   WS_CONNECTION_CLOSED,
 } from "../services/actions/wsActionTypes";
 import { v4 as uuidv4 } from "uuid";
-import {
-  CurrencyIcon,
-  FormattedDate,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+
 import FeedOrder from "../components/feed-order/feed-order";
 import { WS_URL } from "../utils/constants";
 import { useLocation, useNavigate } from "react-router-dom";
-import Modal from "../components/modal/modal";
-import OrderInfo from "../components/order-info/order-info";
-import { getOrder } from "../services/actions/order-info";
+
 
 function FeedPage({setIsModal}) {
   const dispatch = useDispatch();

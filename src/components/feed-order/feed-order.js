@@ -4,9 +4,11 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { v4 as uuidv4 } from "uuid";
-import { getPrice, getStatus } from "../../utils/utils";
+import { getPrice, getStatus, getStatusColor } from "../../utils/utils";
 
 function FeedOrder({ el, ingredients, handleOpenModal, isStatus }) {
+  
+  
   return (
     <li
       id={el._id}
@@ -23,7 +25,7 @@ function FeedOrder({ el, ingredients, handleOpenModal, isStatus }) {
 
       <p className="text text_type_main-medium p-6">{el.name}</p>
       {isStatus && (
-        <p className="text text_type_main-small ml-6 pb-6">{getStatus(el)}</p>
+        <p className="text text_type_main-small ml-6 pb-6" style={{color: getStatusColor(getStatus(el))}}>{getStatus(el)}</p>
       )}
       <div className={styles.wrapper}>
         <div className={styles.icons}>
