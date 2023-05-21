@@ -12,8 +12,8 @@ import { useEffect, useState } from "react";
 import { getCookie } from "../utils/cookie";
 import FeedOrder from "../components/feed-order/feed-order";
 import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_PROFILE_START,
+  WS_CONNECTION_PROFILE_CLOSED,
 } from "../services/actions/wsActionTypes";
 import { WS_URL } from "../utils/constants";
 import PropTypes from "prop-types";
@@ -22,7 +22,7 @@ function OrdersPage({setIsModal}) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {ingredients} = useSelector(state => state.ingredients)
-  const { orders } = useSelector((state) => state.ws);
+  const { orders } = useSelector((state) => state.wsProfile);
   const [profileOrders,setProfileOrders] = useState([])
   const location = useLocation()
   console.log(orders.orders)
@@ -31,10 +31,10 @@ function OrdersPage({setIsModal}) {
   
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START, payload: WS_URL + `?token=${getCookie('token')}` });
+    dispatch({ type: WS_CONNECTION_PROFILE_START});
 
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch({ type: WS_CONNECTION_PROFILE_CLOSED });
     };
   }, [dispatch]);
 

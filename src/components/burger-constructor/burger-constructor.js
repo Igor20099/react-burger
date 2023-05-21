@@ -55,10 +55,11 @@ function BurgerConstructor({ setIsModal }) {
       }
     });
   }, [bun, dispatch]);
+  console.log(burgerIngredients)
 
   const handleOpenModal = () => {
     if (isAuth) {
-      if (bun) {
+      if (bun && burgerIngredients.length > 0) {
         dispatch(getOrder([bun, ...burgerIngredients, bun]));
       }
     } else {

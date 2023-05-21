@@ -5,14 +5,12 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
-  WS_GET_PROFILE_ORDERS,
-  WS_SEND_ORDER,
 } from "../actions/wsActionTypes.js";
 
 const initialState = {
   wsConnected: false,
   orders: [],
-  profileOrders:[],
+  profileOrders: [],
   error: undefined,
 };
 
@@ -46,14 +44,6 @@ export const wsReducer = (state = initialState, action) => {
         orders: action.payload,
       };
 
-      case WS_GET_ORDERS:
-      return {
-        ...state,
-        error: undefined,
-        ordersProfile: action.payload,
-      };
-
-    
     default:
       return state;
   }

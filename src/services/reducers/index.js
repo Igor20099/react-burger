@@ -6,6 +6,7 @@ import { orderDetailsReducer } from "./order-details";
 import { authorizationReducer } from "./auth";
 import { wsReducer } from "./ws";
 import { orderInfoReducer } from "./order-info";
+import { wsProfileReducer } from "./ws-profile-orders";
 
 
 export const rootReducer = combineReducers({
@@ -15,5 +16,6 @@ export const rootReducer = combineReducers({
   orderDetails: orderDetailsReducer,
   auth:authorizationReducer,
   ws:wsReducer,
+  wsProfile:wsProfileReducer,
   orderInfo:orderInfoReducer,
 });
