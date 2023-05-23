@@ -8,32 +8,65 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getPrice, getStatus, getStatusColor } from "../../utils/utils";
-import { WS_CONNECTION_START,WS_CONNECTION_CLOSED } from "../../services/actions/wsActionTypes";
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_PROFILE_START,
+  WS_CONNECTION_PROFILE_CLOSED,
+} from "../../services/actions/wsActionTypes";
 import { WS_URL } from "../../utils/constants";
+import { useLocation } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 function OrderInfo() {
-  const { orders } = useSelector((state) => state.ws);
+  const ordersAll = useSelector((state) => state.ws.orders.orders);
+  const ordersProfile = useSelector(state => state.wsProfile.orders.orders)
   const { order } = useSelector((state) => state.orderInfo);
   const { ingredients } = useSelector((state) => state.ingredients);
+  const location = useLocation();
   const dispatch = useDispatch();
   const [childIngreients, setChildIngredients] = useState(null);
   const [ingredientsCount, setIngredientsCount] = useState({});
+  const [orders,setOrders] = useState([])
   let listTemp = {};
 
   const { id } = useParams();
   let ingredientSet = new Set();
   let ingredientList = [];
 
+  let path = location.pathname.split('/')
+  path = path.slice(0,path.length -1).join('/')
+  console.log(path)
+  
+
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START, payload: WS_URL + '/all' });
+    if (path === '/feed') {
+      dispatch({ type: WS_CONNECTION_START});
+      
+    } else {
+      dispatch({ type: WS_CONNECTION_PROFILE_START});
+    }
+   
 
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      if (path === '/feed') {
+        dispatch({ type: WS_CONNECTION_CLOSED});
+      } else {
+        dispatch({ type: WS_CONNECTION_PROFILE_CLOSED});
+      }
     };
   }, [dispatch]);
+  console.log(order)
+  console.log(orders)
 
   useEffect(() => {
-    orders?.orders?.find((el) => {
+    if (path === '/feed') {
+      setOrders(ordersAll)
+    }
+    else {
+      setOrders(ordersProfile)
+    }
+    orders?.find((el) => {
       if (id === el._id) {
         dispatch(getOrder(el));
       }
@@ -52,7 +85,7 @@ function OrderInfo() {
       setIngredientsCount(listTemp);
       setChildIngredients(ingredientList);
     }
-  }, [orders.orders, id, order, ingredients, childIngreients]);
+  }, [orders,ordersAll,ordersProfile, id, order, ingredients]);
 
   return (
     <div className={styles.order}>
@@ -62,12 +95,17 @@ function OrderInfo() {
             #{order.number}
           </p>
           <p className="text text_type_main-default mb-3">{order.name}</p>
-          <p className="text text_type_main-small mb-15" style={{color: getStatusColor(getStatus(order))}}>{getStatus(order)}</p>
+          <p
+            className="text text_type_main-small mb-15"
+            style={{ color: getStatusColor(getStatus(order)) }}
+          >
+            {getStatus(order)}
+          </p>
           <p className="text text_type_main-default mb-6">Состав:</p>
           <ul className={styles.list}>
             {childIngreients?.map((el) => {
               return (
-                <li className={styles.ingredient}>
+                <li key={uuidv4()} className={styles.ingredient}>
                   <img
                     src={el.image_mobile}
                     alt={el.name}

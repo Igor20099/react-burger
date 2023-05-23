@@ -40,13 +40,13 @@
 
 
 .orders_done {
-  width: 280px;
+  max-width: 280px;
   margin-right: 36px;
 }
 
 .orders_progress {
-  max-width: 272;
-  height: 206;
+  max-width: 280;
+  margin-left: 100px;
 }
 
 .wrapper_list_orders {
@@ -63,7 +63,8 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  height: 180px;
+  width: 200px;
+  height: 320px;
 }
 
 .list_progress {
@@ -74,7 +75,8 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    height: 180px;
+    width: 200px;
+    height: 320px;
 }
 
 .done_number {

@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import FeedOrder from "../components/feed-order/feed-order";
 import { WS_URL } from "../utils/constants";
 import { useLocation, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 
 function FeedPage({setIsModal}) {
@@ -70,7 +71,7 @@ function FeedPage({setIsModal}) {
             <p className="text text_type_main-small mb-6">Готовы:</p>
             <ul className={styles.list_done}>
               {allOrders &&
-                allOrders.slice(0, 10).map((el) => {
+                allOrders.map((el) => {
                   return el.status === "done" ? (
                     <li
                       className={`text text_type_digits-default ${styles.done_number}`}
@@ -82,10 +83,10 @@ function FeedPage({setIsModal}) {
             </ul>
           </div>
           <div className={styles.orders_progress}>
-            <p className="text text_type_main-small">В работе:</p>
+            <p className="text text_type_main-small mb-6">В работе:</p>
             <ul className={styles.list_progress}>
               {allOrders &&
-                allOrders.slice(0, 10).map((el) => {
+                allOrders.map((el) => {
                   return el.status === "pending" ? (
                     <li className="text text_type_digits-default">
                       {el.number}
@@ -107,5 +108,10 @@ function FeedPage({setIsModal}) {
     </section>
   );
 }
+
+FeedPage.propTypes = {
+  setIsModal: PropTypes.func,
+};
+
 
 export default FeedPage;
