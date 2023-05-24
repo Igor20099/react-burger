@@ -11,55 +11,49 @@ import { getPrice, getStatus, getStatusColor } from "../../utils/utils";
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
-  WS_CONNECTION_PROFILE_START,
-  WS_CONNECTION_PROFILE_CLOSED,
 } from "../../services/actions/wsActionTypes";
 import { WS_URL } from "../../utils/constants";
 import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { getCookie } from "../../utils/cookie";
 
 function OrderInfo() {
   const ordersAll = useSelector((state) => state.ws.orders.orders);
-  const ordersProfile = useSelector(state => state.wsProfile.orders.orders)
+  // const ordersProfile = useSelector((state) => state.wsProfile.orders.orders);
   const { order } = useSelector((state) => state.orderInfo);
   const { ingredients } = useSelector((state) => state.ingredients);
   const location = useLocation();
   const dispatch = useDispatch();
   const [childIngreients, setChildIngredients] = useState(null);
   const [ingredientsCount, setIngredientsCount] = useState({});
-  const [orders,setOrders] = useState([])
+  const [orders, setOrders] = useState([]);
   let listTemp = {};
   const { id } = useParams();
   let ingredientSet = new Set();
   let ingredientList = [];
 
-  let path = location.pathname.split('/')
-  path = path.slice(0,path.length -1).join('/')
-  
+  let path = location.pathname.split("/");
+  path = path.slice(0, path.length - 1).join("/");
 
   useEffect(() => {
-    if (path === '/feed') {
-      dispatch({ type: WS_CONNECTION_START});
-      
-    } else {
-      dispatch({ type: WS_CONNECTION_PROFILE_START});
+    if (path === "/feed") {
+      dispatch({ type: WS_CONNECTION_START, payload: WS_URL + "/all" });
+    } else  if (path === '/profile/orders'){
+      dispatch({
+        type: WS_CONNECTION_START,
+        payload: WS_URL + `?token=${getCookie("token")}`,
+      });
     }
-   
 
     return () => {
-      if (path === '/feed') {
-        dispatch({ type: WS_CONNECTION_CLOSED});
-      } else {
-        dispatch({ type: WS_CONNECTION_PROFILE_CLOSED});
-      }
+      dispatch({ type: WS_CONNECTION_CLOSED });
     };
   }, [dispatch]);
   useEffect(() => {
-    if (path === '/feed') {
-      setOrders(ordersAll)
-    }
-    else {
-      setOrders(ordersProfile)
+    if (path === "/feed") {
+      setOrders(ordersAll);
+    } else {
+      setOrders(ordersAll);
     }
     orders?.find((el) => {
       if (id === el._id) {
@@ -80,7 +74,7 @@ function OrderInfo() {
       setIngredientsCount(listTemp);
       setChildIngredients(ingredientList);
     }
-  }, [orders,ordersAll,ordersProfile, id, order, ingredients]);
+  }, [orders, ordersAll,  id, order, ingredients]);
 
   return (
     <div className={styles.order}>

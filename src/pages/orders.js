@@ -1,9 +1,4 @@
 import styles from "./orders.module.css";
-import {
-  EmailInput,
-  PasswordInput,
-  Input,
-} from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 import { logout } from "../services/actions/auth";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -12,8 +7,8 @@ import { useEffect, useState } from "react";
 import { getCookie } from "../utils/cookie";
 import FeedOrder from "../components/feed-order/feed-order";
 import {
-  WS_CONNECTION_PROFILE_START,
-  WS_CONNECTION_PROFILE_CLOSED,
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
 } from "../services/actions/wsActionTypes";
 import { WS_URL } from "../utils/constants";
 import PropTypes from "prop-types";
@@ -23,16 +18,16 @@ function OrdersPage({ setIsModal }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { ingredients } = useSelector((state) => state.ingredients);
-  const { orders } = useSelector((state) => state.wsProfile);
+  const { orders } = useSelector((state) => state.ws);
   const [profileOrders, setProfileOrders] = useState([]);
   const location = useLocation();
   useEffect(() => {
     dispatch({
-      type: WS_CONNECTION_PROFILE_START,
+      type: WS_CONNECTION_START,payload: WS_URL + `?token=${getCookie('token')}`
     });
 
     return () => {
-      dispatch({ type: WS_CONNECTION_PROFILE_CLOSED });
+      dispatch({ type: WS_CONNECTION_CLOSED });
     };
   }, [dispatch]);
 

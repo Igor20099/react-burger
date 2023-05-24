@@ -25,7 +25,7 @@ function FeedPage({setIsModal}) {
   const location = useLocation()
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START});
+    dispatch({ type: WS_CONNECTION_START,payload: WS_URL + '/all'});
 
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
