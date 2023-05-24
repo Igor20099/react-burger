@@ -30,8 +30,7 @@ export const socketMiddleware = (wsActionTypes) => {
 
         socket.onmessage = (event) => {
           const { data } = event;
-          const newData = JSON.parse(data);
-          console.log(newData.message)
+          const newData = JSON.parse(data)
           dispatch({ type: wsActionTypes.WS_GET_ORDERS, payload: newData });
         };
 
