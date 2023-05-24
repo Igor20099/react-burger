@@ -9,7 +9,7 @@ import {
   GET_USER_SUCCESS,
   UPDATE_USER_SUCCESS,
   TOKEN_SUCCESS,
-  FORGOT_PASSWORD_SUCCESS
+  FORGOT_PASSWORD_SUCCESS,
 } from "../actions/auth";
 import { getCookie } from "../../utils/cookie";
 
@@ -19,7 +19,7 @@ const initialState = {
     email: null,
   },
   accessToken: null,
-  isAuth: localStorage.getItem('refreshToken') ? true : false
+  isAuth: localStorage.getItem("refreshToken") ? true : false
 };
 
 export const authorizationReducer = (state = initialState, action) => {
@@ -68,7 +68,7 @@ export const authorizationReducer = (state = initialState, action) => {
     case TOKEN_SUCCESS: {
       return {
         ...state,
-        isAuth:true,
+        isAuth: true,
       };
     }
 

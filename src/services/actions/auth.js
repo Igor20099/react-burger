@@ -117,9 +117,10 @@ export function getUser() {
     dispatch({
       type: GET_USER_REQUEST,
     });
-    return getUserRequest(getCookie('token'))
+    return getUserRequest(getCookie("token"))
       .then((res) => {
         if (res.success) {
+          console.log(res);
           dispatch({
             type: GET_USER_SUCCESS,
             user: res.user,
@@ -127,8 +128,9 @@ export function getUser() {
         }
       })
       .catch((err) => {
-        console.error('Error: ', err);
-    });
+        console.error("Error: ", err);
+        dispatch(tokenRequest());
+      });
   };
 }
 
@@ -160,13 +162,15 @@ export function tokenRequest() {
     return refreshTokenRequest()
       .then((res) => {
         if (res.success) {
+          console.log(res);
           const accessToken = res.accessToken.split("Bearer ")[1];
           const refreshToken = res.refreshToken;
+          console.log(accessToken);
+          delCookie("token");
           setCookie("token", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
           dispatch({
             type: TOKEN_SUCCESS,
-            user: res.user,
             accessToken: accessToken,
           });
         }

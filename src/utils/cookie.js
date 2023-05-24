@@ -1,36 +1,33 @@
-export const setCookie = (name, value, options) => {
-    options = options || {};
-    let expires = options.expires;
-    if (typeof expires === "number" && expires) {
-        let d = new Date();
-        d.setTime(d.getTime() + expires * 1000);
-        expires = options.expires = d;
+export function getCookie(name) {
+    const matches = document.cookie.match(
+        new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
+    );
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+export function setCookie(name, value, props) {
+    props = props || {};
+    let exp = props.expires;
+    if (typeof exp == 'number' && exp) {
+        const d = new Date();
+        d.setTime(d.getTime() + exp * 1000);
+        exp = props.expires = d;
     }
-    if (expires && expires.toUTCString) {
-        options.expires = expires.toUTCString();
+    if (exp && exp.toUTCString) {
+        props.expires = exp.toUTCString();
     }
     value = encodeURIComponent(value);
-    let updatedCookie = name + "=" + value;
-    for (let propName in options) {
-        updatedCookie += "; " + propName;
-        let propValue = options[propName];
+    let updatedCookie = name + '=' + value;
+    for (const propName in props) {
+        updatedCookie += '; ' + propName;
+        const propValue = props[propName];
         if (propValue !== true) {
-            updatedCookie += "=" + propValue;
+            updatedCookie += '=' + propValue;
         }
     }
     document.cookie = updatedCookie;
 }
 
-export const getCookie = (name) => {
-    let value = "; " + document.cookie;
-    let parts = value.split("; " + name + "=");
-    if (parts.length === 2) {
-        return parts.pop().split(";").shift();
-    } else { return false; }
-}
-
-export const delCookie = (name) =>{
+export function delCookie(name) {
     setCookie(name, '', { expires: -1 });
 }
-
-

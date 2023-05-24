@@ -1,8 +1,8 @@
-// socketMiddleware.js
 import { Middleware, MiddlewareAPI } from "redux";
 
 import { WS_URL } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
+import { tokenRequest } from "../actions/auth";
 
 export const socketMiddleware = (wsActionTypes) => {
   return (store) => {
@@ -16,10 +16,12 @@ export const socketMiddleware = (wsActionTypes) => {
         socket = new WebSocket(action.payload);
       }
 
-
       if (socket) {
         socket.onopen = (event) => {
-          dispatch({ type: wsActionTypes.WS_CONNECTION_SUCCESS, payload: event });
+          dispatch({
+            type: wsActionTypes.WS_CONNECTION_SUCCESS,
+            payload: event,
+          });
         };
 
         socket.onerror = (event) => {
@@ -29,10 +31,15 @@ export const socketMiddleware = (wsActionTypes) => {
         socket.onmessage = (event) => {
           const { data } = event;
           const newData = JSON.parse(data);
+          console.log(newData.message)
           dispatch({ type: wsActionTypes.WS_GET_ORDERS, payload: newData });
         };
+
         socket.onclose = (event) => {
-          dispatch({ type: wsActionTypes.WS_CONNECTION_CLOSED, payload: event });
+          dispatch({
+            type: wsActionTypes.WS_CONNECTION_CLOSED,
+            payload: event,
+          });
         };
 
         if (type === wsActionTypes.WS_SEND_MESSAGE) {

@@ -21,7 +21,11 @@ function App() {
     const dispatch = useDispatch()
     let background = location.state && location.state.background;
     const [isModal, setIsModal] = useState(false);
+    const {isAuth} = useSelector(state => state.auth)
     useEffect(() =>{
+      if (isAuth && !getCookie('token')) {
+        dispatch(tokenRequest())
+      }
       dispatch(getIngredients());
       setIsModal(localStorage.getItem('isModal'))
     },[isModal,dispatch])

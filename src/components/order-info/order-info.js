@@ -19,7 +19,6 @@ import { getCookie } from "../../utils/cookie";
 
 function OrderInfo() {
   const ordersAll = useSelector((state) => state.ws.orders.orders);
-  // const ordersProfile = useSelector((state) => state.wsProfile.orders.orders);
   const { order } = useSelector((state) => state.orderInfo);
   const { ingredients } = useSelector((state) => state.ingredients);
   const location = useLocation();
@@ -50,11 +49,7 @@ function OrderInfo() {
     };
   }, [dispatch]);
   useEffect(() => {
-    if (path === "/feed") {
-      setOrders(ordersAll);
-    } else {
-      setOrders(ordersAll);
-    }
+     setOrders(ordersAll)
     orders?.find((el) => {
       if (id === el._id) {
         dispatch(getOrder(el));

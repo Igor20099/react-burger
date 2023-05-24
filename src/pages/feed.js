@@ -12,20 +12,19 @@ import { WS_URL } from "../utils/constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-
-function FeedPage({setIsModal}) {
+function FeedPage({ setIsModal }) {
   const dispatch = useDispatch();
   const [allOrders, setAllOrders] = useState();
   const [ordersCount, setOrdersCount] = useState(0);
   const [ordersToday, setOrdersToday] = useState(0);
   const { orders } = useSelector((state) => state.ws);
   const { ingredients } = useSelector((state) => state.ingredients);
-  const {order} = useSelector(state => state.orderInfo)
-  const navigate = useNavigate()
-  const location = useLocation()
+  const { order } = useSelector((state) => state.orderInfo);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START,payload: WS_URL + '/all'});
+    dispatch({ type: WS_CONNECTION_START, payload: WS_URL + "/all" });
 
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
@@ -41,16 +40,15 @@ function FeedPage({setIsModal}) {
   }, [orders, ingredients]);
 
   const handleOpenModal = (e) => {
-    console.log(e)
+    console.log(e);
     allOrders.forEach((el) => {
       if (e.currentTarget.id === el._id) {
         setIsModal(true);
-        localStorage.setItem('isModal',JSON.stringify(true))
+        localStorage.setItem("isModal", JSON.stringify(true));
         navigate(`/feed/${el._id}`, { state: { background: location } });
       }
     });
   };
-
 
   return (
     <section className={styles.feed}>
@@ -60,7 +58,12 @@ function FeedPage({setIsModal}) {
           {allOrders &&
             allOrders.map((el) => {
               return (
-                <FeedOrder key={el._id} el={el} handleOpenModal={handleOpenModal} isStatus={false}/>
+                <FeedOrder
+                  key={el._id}
+                  el={el}
+                  handleOpenModal={handleOpenModal}
+                  isStatus={false}
+                />
               );
             })}
         </ul>
@@ -74,7 +77,7 @@ function FeedPage({setIsModal}) {
                 allOrders.map((el) => {
                   return el.status === "done" ? (
                     <li
-                    key={uuidv4()}
+                      key={uuidv4()}
                       className={`text text_type_digits-default ${styles.done_number}`}
                     >
                       {el.number}
@@ -89,7 +92,10 @@ function FeedPage({setIsModal}) {
               {allOrders &&
                 allOrders.map((el) => {
                   return el.status === "pending" ? (
-                    <li className="text text_type_digits-default">
+                    <li
+                      key={uuidv4()}
+                      className="text text_type_digits-default"
+                    >
                       {el.number}
                     </li>
                   ) : null;
@@ -113,6 +119,5 @@ function FeedPage({setIsModal}) {
 FeedPage.propTypes = {
   setIsModal: PropTypes.func,
 };
-
 
 export default FeedPage;

@@ -25,24 +25,13 @@ function ProfilePage() {
   const [password, setPassword] = useState("");
   const [isChange, setIsChange] = useState(false);
   const user = useSelector((state) => state.auth.user);
-
+ 
   useEffect(() => {
-    if (!getCookie('token')) {
-      dispatch(tokenRequest()).then(() => {
-        dispatch(getUser()).then(() => {
-          setName(user.name || "");
-          setEmail(user.email || "");
-          setPassword("");
-        });
-      })
-    }
-    else {
-      dispatch(getUser()).then(() => {
-        setName(user.name || "");
-        setEmail(user.email || "");
-        setPassword("");
-      });
-    }
+    dispatch(getUser()).then(() => {
+      setName(user.name || "");
+      setEmail(user.email || "");
+      setPassword("");
+    })
    
   }, [user.name]);
 
@@ -77,6 +66,8 @@ function ProfilePage() {
     setIsChange(true);
     setPassword(e.target.value);
   }
+
+  console.log(getCookie("token"));
 
   return (
     <div className={styles.profile}>

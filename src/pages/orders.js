@@ -1,6 +1,6 @@
 import styles from "./orders.module.css";
 import { NavLink } from "react-router-dom";
-import { logout } from "../services/actions/auth";
+import { logout, tokenRequest } from "../services/actions/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -21,9 +21,11 @@ function OrdersPage({ setIsModal }) {
   const { orders } = useSelector((state) => state.ws);
   const [profileOrders, setProfileOrders] = useState([]);
   const location = useLocation();
+  
   useEffect(() => {
     dispatch({
-      type: WS_CONNECTION_START,payload: WS_URL + `?token=${getCookie('token')}`
+      type: WS_CONNECTION_START,
+      payload: WS_URL + `?token=${getCookie("token")}`,
     });
 
     return () => {
@@ -35,11 +37,12 @@ function OrdersPage({ setIsModal }) {
     if (orders) {
       setProfileOrders(orders.orders);
     }
-  }, [orders, ingredients]);
+  }, [orders, ingredients, dispatch]);
 
   function logoutHandle() {
     dispatch(logout());
   }
+  console.log(getCookie("token"));
 
   const handleOpenModal = (e) => {
     profileOrders.forEach((el) => {
