@@ -60,7 +60,7 @@ function FeedPage({setIsModal}) {
           {allOrders &&
             allOrders.map((el) => {
               return (
-                <FeedOrder key={el._id} el={el} ingredients={ingredients} handleOpenModal={handleOpenModal} isStatus={false}/>
+                <FeedOrder key={el._id} el={el} handleOpenModal={handleOpenModal} isStatus={false}/>
               );
             })}
         </ul>
@@ -74,6 +74,7 @@ function FeedPage({setIsModal}) {
                 allOrders.map((el) => {
                   return el.status === "done" ? (
                     <li
+                    key={uuidv4()}
                       className={`text text_type_digits-default ${styles.done_number}`}
                     >
                       {el.number}

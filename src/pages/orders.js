@@ -102,7 +102,6 @@ function OrdersPage({ setIsModal }) {
                     key={el._id}
                     el={el}
                     uniqueId={uuidv4()}
-                    ingredients={ingredients}
                     handleOpenModal={handleOpenModal}
                     isStatus={true}
                   />

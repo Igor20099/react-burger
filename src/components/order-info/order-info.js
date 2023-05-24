@@ -29,14 +29,12 @@ function OrderInfo() {
   const [ingredientsCount, setIngredientsCount] = useState({});
   const [orders,setOrders] = useState([])
   let listTemp = {};
-
   const { id } = useParams();
   let ingredientSet = new Set();
   let ingredientList = [];
 
   let path = location.pathname.split('/')
   path = path.slice(0,path.length -1).join('/')
-  console.log(path)
   
 
   useEffect(() => {
@@ -56,9 +54,6 @@ function OrderInfo() {
       }
     };
   }, [dispatch]);
-  console.log(order)
-  console.log(orders)
-
   useEffect(() => {
     if (path === '/feed') {
       setOrders(ordersAll)

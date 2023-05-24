@@ -6,14 +6,15 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { getPrice, getStatus, getStatusColor } from "../../utils/utils";
 import PropTypes from "prop-types";
-import {useEffect} from 'react'
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-function FeedOrder({ el, ingredients,uniqueId, handleOpenModal, isStatus }) {
-
+function FeedOrder({ el, handleOpenModal, isStatus }) {
+  const { ingredients } = useSelector((state) => state.ingredients);
 
   return (
     <li
-      key={uniqueId}
+      key={uuidv4()}
       id={el._id}
       className={styles.order}
       onClick={handleOpenModal}
@@ -41,7 +42,7 @@ function FeedOrder({ el, ingredients,uniqueId, handleOpenModal, isStatus }) {
             const image = ingredient?.image_mobile;
             const name = ingredient?.name;
             return (
-              <div className={styles.image_wrapper}>
+              <div key={uuidv4()} className={styles.image_wrapper}>
                 <img src={image} alt={name} className={styles.icon} />
               </div>
             );
@@ -68,19 +69,7 @@ function FeedOrder({ el, ingredients,uniqueId, handleOpenModal, isStatus }) {
 }
 
 FeedOrder.propTypes = {
-  // el: PropTypes.shape({
-  //   _id: PropTypes.string.isRequired,
-  //   name: PropTypes.string.isRequired,
-  //   proteins: PropTypes.number.isRequired,
-  //   fat: PropTypes.number.isRequired,
-  //   carbohydrates: PropTypes.number.isRequired,
-  //   calories: PropTypes.number.isRequired,
-  //   price: PropTypes.number.isRequired,
-  //   image: PropTypes.string.isRequired,
-  //   image_mobile: PropTypes.string.isRequired,
-  //   image_large: PropTypes.string.isRequired,
-  //   __v: PropTypes.number.isRequired,
-  // }),
+  el: PropTypes.object.isRequired,
   handleOpenModal: PropTypes.func.isRequired,
   isStatus: PropTypes.bool.isRequired,
 };
