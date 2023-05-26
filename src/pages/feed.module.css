@@ -1,0 +1,96 @@
+.feed {
+  display: flex;
+  padding-left: 152px;
+}
+
+.order_list {
+  max-width: 584px;
+  margin: 0;
+  padding: 0;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 60px;
+}
+
+.list {
+  list-style-type: none;
+  max-height: 76vh;
+  overflow-y: scroll;
+  margin: 0;
+  padding: 0;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background-color: #2f2f37;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+
+
+
+
+
+.orders_done {
+  max-width: 280px;
+  margin-right: 36px;
+}
+
+.orders_progress {
+  max-width: 280;
+  margin-left: 100px;
+}
+
+.wrapper_list_orders {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.list_done {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  height: 320px;
+}
+
+.list_progress {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    height: 320px;
+}
+
+.done_number {
+  color: rgba(0, 204, 204, 1);
+}
+
+.info_orders {
+    margin-top: 86px;
+}
+
+.count_today_time {
+    margin: 0;
+    padding: 0;
+}
+
+
+

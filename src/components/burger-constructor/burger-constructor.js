@@ -19,16 +19,20 @@ import {
 import ConstructorIngredient from "../constuctor-ingredient/constructor-ingredient";
 import { v4 as uuidv4 } from "uuid";
 import { addIngredient } from "../../services/actions/burger-ingredients";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-function BurgerConstructor() {
+function BurgerConstructor({ setIsModal }) {
   const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [ingredientsOrder, setIngredientsOrder] = useState([]);
 
   const handleDrop = (ingredient) => {
     dispatch(addIngredient(ingredient, uuidv4()));
   };
-
   const { order } = useSelector((state) => state.orderDetails);
-
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(itemId) {
@@ -36,7 +40,6 @@ function BurgerConstructor() {
       dispatch(countUp(itemId._id, itemId.type));
     },
   });
-
   const burgerIngredients = useSelector(
     (state) => state.burgerIngredients.ingredients
   );
@@ -52,13 +55,24 @@ function BurgerConstructor() {
       }
     });
   }, [bun, dispatch]);
+  console.log(burgerIngredients)
 
   const handleOpenModal = () => {
-    dispatch(getOrder(burgerIngredients));
+    if (isAuth) {
+      if (bun && burgerIngredients.length > 0) {
+        dispatch(getOrder([bun, ...burgerIngredients, bun]));
+      }
+    } else {
+      navigate("/login", {
+        state: { from: { pathname: location.pathname } },
+      });
+    }
+    setIsModal(false);
   };
 
   const handleCloseModal = () => {
     dispatch({ type: CLOSE_ORDER });
+    localStorage.setItem("isModal", JSON.stringify(false));
   };
 
   const onDelete = (el) => {
@@ -67,11 +81,13 @@ function BurgerConstructor() {
   };
 
   const modal = (
-    <Modal onClose={handleCloseModal}>
+    <Modal onClose={handleCloseModal} setIsModal={setIsModal}>
       <OrderDetails />
     </Modal>
   );
 
+  console.log(burgerIngredients);
+  console.log(ingredientsOrder);
   return (
     <section className={styles.burger_constructor}>
       <div className={styles.modal}> {order && modal}</div>
@@ -147,5 +163,9 @@ function BurgerConstructor() {
     </section>
   );
 }
+
+BurgerConstructor.propTypes = {
+  setIsModal: PropTypes.func,
+};
 
 export default BurgerConstructor;

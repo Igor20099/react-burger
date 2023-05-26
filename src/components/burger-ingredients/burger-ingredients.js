@@ -1,28 +1,26 @@
 import React, { useRef } from "react";
-
-import {
-  Tab,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions/ingredients";
 import {
   getIngredient,
   deleteIngredient,
 } from "../../services/actions/ingredient-details";
+import { useNavigate } from "react-router-dom";
 import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
+import { useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 
-function BurgerIngredients() {
+function BurgerIngredients({ setIsModal }) {
   const { ingredients } = useSelector((state) => state.ingredients);
   const [current, setCurrent] = React.useState("one");
-  const { ingredient } = useSelector((state) => state.ingredientDetails);
   const ingredientsContainerRef = useRef(null);
   const bunRef = useRef(null);
   const mainRef = useRef(null);
   const sauseRef = useRef(null);
-
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const handleScroll = () => {
@@ -51,35 +49,31 @@ function BurgerIngredients() {
   };
 
   React.useEffect(() => {
-    dispatch(getIngredients());
     const container = document.querySelector("#ingredients-container");
     container.addEventListener("scroll", handleScroll);
     return () => {
       container.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [ingredients]);
 
   const handleOpenModal = (e) => {
     ingredients.forEach((el) => {
       if (e.currentTarget.id === el._id) {
-        dispatch(getIngredient(el));
+        setIsModal(true);
+        localStorage.setItem('isModal',JSON.stringify(true))
+        navigate(`/ingredients/${el._id}`, { state: { background: location } });
       }
     });
   };
 
   const handleCloseModal = () => {
     dispatch(deleteIngredient());
+    setIsModal(false);
+    navigate("/");
   };
-
-  const modal = (
-    <Modal onClose={handleCloseModal} title="Детали ингредиента">
-      <IngredientDetails />
-    </Modal>
-  );
 
   return (
     <section className={styles.burger_ingredients}>
-      <div className={styles.modal}> {ingredient && modal}</div>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
       <div className={styles.tabs}>
         <Tab value="one" active={current === "one"} onClick={setCurrent}>
@@ -103,7 +97,11 @@ function BurgerIngredients() {
             {ingredients.map((el) => {
               if (el.type === "bun") {
                 return (
-                  <DraggableIngredient key={el._id} handleOpenModal={handleOpenModal} ingredient={el}/>
+                  <DraggableIngredient
+                    key={el._id}
+                    handleOpenModal={handleOpenModal}
+                    ingredient={el}
+                  />
                 );
               }
             })}
@@ -115,7 +113,11 @@ function BurgerIngredients() {
             {ingredients.map((el) => {
               if (el.type === "sauce") {
                 return (
-                  <DraggableIngredient key={el._id}  handleOpenModal={handleOpenModal} ingredient={el}/>
+                  <DraggableIngredient
+                    key={el._id}
+                    handleOpenModal={handleOpenModal}
+                    ingredient={el}
+                  />
                 );
               }
             })}
@@ -127,7 +129,11 @@ function BurgerIngredients() {
             {ingredients.map((el) => {
               if (el.type === "main") {
                 return (
-                  <DraggableIngredient key={el._id}  handleOpenModal={handleOpenModal} ingredient={el}/>
+                  <DraggableIngredient
+                    key={el._id}
+                    handleOpenModal={handleOpenModal}
+                    ingredient={el}
+                  />
                 );
               }
             })}
@@ -138,5 +144,8 @@ function BurgerIngredients() {
   );
 }
 
+BurgerIngredients.propTypes = {
+  setIsModal: PropTypes.func,
+};
 
 export default BurgerIngredients;

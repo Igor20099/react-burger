@@ -5,28 +5,43 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
+import { NavLink, useLocation } from "react-router-dom";
 
 function AppHeader() {
+  const { pathname } = useLocation();
+
   return (
     <header className={styles.appHeader}>
       <div className={styles.content}>
         <nav>
           <ul className={styles.list}>
             <li>
-              <a className={styles.link} href="#">
-                <BurgerIcon type="primary" />
+              <NavLink
+                className={
+                  pathname === "/" ? styles.link : styles.link_inactive
+                }
+                to="/"
+              >
+                <BurgerIcon type={pathname === "/" ? "primary" : "secondary"} />
                 <span className="text text_type_main-default pl-2">
                   Конструктор
                 </span>
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a className={styles.link_inactive} href="#">
-                <ListIcon type="secondary" />
+              <NavLink
+                className={
+                  pathname === "/feed" ? styles.link : styles.link_inactive
+                }
+                to="/feed"
+              >
+                <ListIcon
+                  type={pathname === "feed" ? "primary" : "secondary"}
+                />
                 <span className="text text_type_main-default pl-2">
                   Лента заказов
                 </span>
-              </a>
+              </NavLink>
             </li>
           </ul>
         </nav>
@@ -34,12 +49,21 @@ function AppHeader() {
           <Logo />
         </div>
 
-        <a className={styles.login_inactive} href="#">
-          <ProfileIcon type="secondary" />
+        <NavLink
+          className={
+            pathname === "/profile" || pathname === "/profile/orders"
+              ? styles.link
+              : styles.link_inactive
+          }
+          to="/profile"
+        >
+          <ProfileIcon
+            type={pathname === "/profile" || pathname === "/profile/orders" ? "primary" : "secondary"}
+          />
           <span className="text text_type_main-default pl-2">
             Личный кабинет
           </span>
-        </a>
+        </NavLink>
       </div>
     </header>
   );
