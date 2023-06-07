@@ -15,7 +15,7 @@ export function ingredientsRequest() {
 }
 
 //запрос на номер заказа
-export function orderRequest(data: any, token: string) {
+export function orderRequest(data: any, token: string | undefined) {
   return fetch(`${BASE_URL}/orders`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + token,},
@@ -26,7 +26,7 @@ export function orderRequest(data: any, token: string) {
 }
 
 //запрос на регистрацию
-export const registerRequest = ({ email, password, name }:any) => {
+export const registerRequest = ( email:string, password:string, name:string) => {
   return fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
     headers: {
@@ -37,7 +37,7 @@ export const registerRequest = ({ email, password, name }:any) => {
 };
 
 //запрос на авторизацию
-export const loginRequest = ({ email, password }:any) => {
+export const loginRequest = ( email:string, password:string) => {
   return fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -95,7 +95,7 @@ export const logoutRequest = () => {
 };
 
 //запрос данных для профиля
-export const getUserRequest = (token:string) => {
+export const getUserRequest = (token:string | undefined) => {
   return fetch(`${BASE_URL}/auth/user`, {
     method: "GET",
     headers: {
