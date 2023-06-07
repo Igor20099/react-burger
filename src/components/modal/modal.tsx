@@ -2,17 +2,25 @@ import ReactDOM from "react-dom";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
+import React,{FunctionComponent,ReactNode} from "react";
 import PropTypes from "prop-types";
 import { useNavigate,useLocation } from "react-router-dom";
 
-const modalRoot = document.getElementById("react-modals");
+const modalRoot = document.getElementById("react-modals") as HTMLElement;
 
-function Modal({ title, children, setIsModal, onClose }) {
+interface IModalProps {
+  title:string;
+  children?:ReactNode;
+  setIsModal: (isModal:boolean) => void;
+  onClose: () => void;
+
+}
+
+const Modal :FunctionComponent<IModalProps> = ({ title, children, setIsModal, onClose })  =>{
   const navigate = useNavigate();
   const location = useLocation()
   React.useEffect(() => {
-    const handleEscapeClose = (evt) => {
+    const handleEscapeClose = (evt:KeyboardEvent) => {
       if (evt.key === "Escape") {
         handleCloseModal();
       }
@@ -51,10 +59,5 @@ console.log(location.pathname)
   );
 }
 
-Modal.propTypes = {
-  title: PropTypes.string,
-  onClose: PropTypes.func,
-  setIsModal: PropTypes.func,
-};
 
 export default Modal;

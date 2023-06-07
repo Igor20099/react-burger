@@ -2,7 +2,7 @@ import { BASE_URL } from "./constants";
 import { getCookie } from "./cookie";
 
 //проверка на запрос
-export function checkResponse(res) {
+export function checkResponse(res:Response) {
   if (res.ok) {
     return res.json();
   }
@@ -15,7 +15,7 @@ export function ingredientsRequest() {
 }
 
 //запрос на номер заказа
-export function orderRequest(data,token) {
+export function orderRequest(data: any, token: string) {
   return fetch(`${BASE_URL}/orders`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + token,},
@@ -26,7 +26,7 @@ export function orderRequest(data,token) {
 }
 
 //запрос на регистрацию
-export const registerRequest = ({ email, password, name }) => {
+export const registerRequest = ({ email, password, name }:any) => {
   return fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
     headers: {
@@ -37,7 +37,7 @@ export const registerRequest = ({ email, password, name }) => {
 };
 
 //запрос на авторизацию
-export const loginRequest = ({ email, password }) => {
+export const loginRequest = ({ email, password }:any) => {
   return fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -47,7 +47,7 @@ export const loginRequest = ({ email, password }) => {
   }).then(checkResponse);
 };
 
-export const forgotPasswordRequest = (email) => {
+export const forgotPasswordRequest = (email:string) => {
   return fetch(`${BASE_URL}/password-reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -57,7 +57,7 @@ export const forgotPasswordRequest = (email) => {
   }).then(checkResponse);
 };
 
-export const resetPasswordRequest = (password, token) => {
+export const resetPasswordRequest = (password:string, token:string) => {
   return fetch(`${BASE_URL}/password-reset/reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -95,7 +95,7 @@ export const logoutRequest = () => {
 };
 
 //запрос данных для профиля
-export const getUserRequest = (token) => {
+export const getUserRequest = (token:string) => {
   return fetch(`${BASE_URL}/auth/user`, {
     method: "GET",
     headers: {
@@ -106,7 +106,7 @@ export const getUserRequest = (token) => {
 };
 
 //обновление данных профиля
-export const updateUserRequest = (email, name, token) => {
+export const updateUserRequest = (email:string, name:string, token:string) => {
   return fetch(`${BASE_URL}/auth/user`, {
     method: "PATCH",
     headers: {
