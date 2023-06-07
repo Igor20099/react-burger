@@ -16,7 +16,7 @@ interface IModalProps {
 
 }
 
-const Modal :FunctionComponent<IModalProps> = ({ title, children, setIsModal, onClose })  =>{
+const Modal : FunctionComponent<IModalProps> = ({ title, children, setIsModal, onClose })  =>{
   const navigate = useNavigate();
   const location = useLocation()
   React.useEffect(() => {

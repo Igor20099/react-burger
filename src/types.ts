@@ -1,4 +1,7 @@
+import { store } from './services/store';
 
+export type AppDispatch = typeof store.dispatch; 
+export type RootState = ReturnType<typeof store.getState>; 
 
 export type TIngredient = {
     _id: string;
