@@ -1,3 +1,4 @@
+import { TUser } from "../../types";
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -11,9 +12,16 @@ import {
   TOKEN_SUCCESS,
   FORGOT_PASSWORD_SUCCESS,
 } from "../actions/auth";
-import { getCookie } from "../../utils/cookie";
+import { TAuthActions } from "../actions/auth";
 
-const initialState = {
+
+type TAuthState = {
+  user:TUser | null
+  accessToken:string | null
+  isAuth: boolean
+}
+
+const authInitialState:TAuthState = {
   user: {
     name: null,
     email: null,
@@ -22,7 +30,7 @@ const initialState = {
   isAuth: localStorage.getItem("refreshToken") ? true : false
 };
 
-export const authorizationReducer = (state = initialState, action) => {
+export const authorizationReducer = (state = authInitialState, action:TAuthActions) => {
   switch (action.type) {
     case REGISTER_SUCCESS: {
       return {

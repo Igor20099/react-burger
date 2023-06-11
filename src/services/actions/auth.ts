@@ -1,4 +1,4 @@
-import { AppDispatch } from "../../types";
+import { AppDispatch, TUser } from "../../types";
 import {
   registerRequest,
   loginRequest,
@@ -52,6 +52,8 @@ export interface IRegisterRequest {
 
 export interface IRegisterSuccess {
   readonly type: typeof REGISTER_SUCCESS;
+  user:TUser;
+  accessToken:string;
 }
 
 export interface IRegisterError {
@@ -64,6 +66,8 @@ export interface ILoginRequest {
 
 export interface ILoginSuccess {
   readonly type: typeof LOGIN_SUCCESS;
+  user:TUser;
+  accessToken:string;
 }
 
 export interface ILoginError {
@@ -112,6 +116,7 @@ export interface IGetUserRequest {
 
 export interface IGetUserSuccess {
   readonly type: typeof GET_USER_SUCCESS;
+  user:TUser;
 }
 
 export interface IGetUserError {
@@ -124,6 +129,7 @@ export interface IUpdateUserRequest {
 
 export interface IUpdateUserSuccess {
   readonly type: typeof UPDATE_USER_SUCCESS;
+  user:TUser;
 }
 
 export interface IUpdateUserError {
