@@ -5,7 +5,7 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
-} from "../actions/wsActionTypes.js";
+} from "../actions/wsActionTypes";
 
 const initialState = {
   wsConnected: false,

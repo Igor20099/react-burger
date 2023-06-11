@@ -12,6 +12,8 @@ export interface IDeleteOrderAction {
   readonly type: typeof DELETE_ORDER;
 }
 
+export type TOrderInfoActions = | IGetOrderAction | IDeleteOrderAction
+
 export const getOrder = (order:TOrder) : IGetOrderAction => ({
   type: GET_ORDER,
   payload: order,
