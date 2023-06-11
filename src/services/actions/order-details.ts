@@ -1,4 +1,4 @@
-import { AppDispatch } from "../../types";
+import { AppDispatch, TOrder } from "../../types";
 import { orderRequest } from "../../utils/api";
 import { getCookie } from "../../utils/cookie";
 
@@ -14,6 +14,7 @@ export interface IGetOrderRequest {
 
 export interface IGetOrderSuccess {
   readonly type: typeof GET_ORDER_SUCCESS;
+  payload:TOrder
 }
 
 export interface IGetOrderError {
@@ -28,7 +29,7 @@ export interface ICloseOrder {
   readonly type: typeof CLOSE_ORDER;
 }
 
-export type IOrderDetailsActions = | IGetOrderRequest | IGetOrderSuccess | IGetOrderError | IGetOrderNumber | ICloseOrder
+export type TOrderDetailsActions = | IGetOrderRequest | IGetOrderSuccess | IGetOrderError | IGetOrderNumber | ICloseOrder
 
 export function getOrder(data: any) {
   return function (dispatch: AppDispatch) {

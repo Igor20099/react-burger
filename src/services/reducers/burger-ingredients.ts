@@ -1,19 +1,28 @@
+import { TIngredient } from "../../types";
 import {
   ADD_INGREDIENT,
   COUNT_UP,
   COUNT_DOWN,
+  TBurgerIngredientsActions,
 } from "../actions/burger-ingredients";
 import { DELETE_INGREDIENT } from "../actions/burger-ingredients";
 import { MOVE_INGREDIENT } from "../actions/burger-ingredients";
 
-const initialState = {
+type TBurgerIngredientsState = {
+  ingredients: Array<TIngredient>;
+  bun: TIngredient | null;
+  counts:any;
+  count:number;
+}
+
+const burgerIngredientsInitialState :TBurgerIngredientsState = {
   ingredients: [],
   bun: null,
   counts: {},
   count: 0,
 };
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, action:TBurgerIngredientsActions) => {
   switch (action.type) {
     case ADD_INGREDIENT: {
       if (action.payload.type !== "bun") {

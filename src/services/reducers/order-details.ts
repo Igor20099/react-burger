@@ -1,17 +1,25 @@
+import { TOrder } from "../../types";
 import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_ERROR,
   CLOSE_ORDER,
+  TOrderDetailsActions
 } from "../actions/order-details";
 
-const initialState = {
+type TOrderDetailsState = {
+  orderRequest: boolean;
+  orderFailed: boolean;
+  order: TOrder | null
+}
+
+const orderDetailsInitialState:TOrderDetailsState = {
   orderRequest: false,
   orderFailed: false,
   order: null,
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (state = orderDetailsInitialState, action:TOrderDetailsActions) => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {
@@ -36,7 +44,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
     }
     case CLOSE_ORDER: {
         return {
-            ...initialState
+            ...orderDetailsInitialState
         }
     }
     default: {

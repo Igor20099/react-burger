@@ -5,6 +5,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export type TIngredient = {
   _id: string;
+  uniqueId?:string;
   name: string;
   type: string;
   proteins: number;

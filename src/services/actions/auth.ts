@@ -264,7 +264,7 @@ export function getUser() {
       })
       .catch((err) => {
         console.error("Error: ", err);
-        dispatch(tokenRequest());
+        // dispatch(tokenRequest());
       });
   };
 }

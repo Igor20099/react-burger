@@ -8,22 +8,31 @@ export const COUNT_DOWN: "COUNT_DOWN" = "COUNT_DOWN";
 
 export interface IAddIngredient {
   readonly type: typeof ADD_INGREDIENT;
+  payload:TIngredient;
+  uniqueId:string;
 }
 
 export interface IDeleteIngredient {
   readonly type: typeof DELETE_INGREDIENT;
+  id:string
 }
 
 export interface IMoveIngredient {
   readonly type: typeof MOVE_INGREDIENT;
+  fromIndex:number;
+  toIndex:number;
 }
 
 export interface ICountUp {
   readonly type: typeof COUNT_UP;
+  id:string;
+  ingredientType:string
 }
 
 export interface ICountDown {
   readonly type: typeof COUNT_DOWN;
+  id:string;
+  ingredientType:string
 }
 
 export type TBurgerIngredientsActions =

@@ -5,6 +5,7 @@ export const DELETE_INGREDIENT: "REMOVE_INGREDIENT" = "REMOVE_INGREDIENT";
 
 export interface IGetIngredient {
   readonly type: typeof GET_INGREDIENT;
+  payload:TIngredient;
 }
 
 export interface IDeleteIngredient {

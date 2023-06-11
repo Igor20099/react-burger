@@ -1,4 +1,4 @@
-import { AppDispatch } from "../../types";
+import { AppDispatch, TIngredient } from "../../types";
 import { ingredientsRequest } from "../../utils/api";
 export const INGREDIENTS_REQUEST:"INGREDIENTS_REQUEST" = "INGREDIENTS_REQUEST";
 export const INGREDIENTS_SUCCESS:"INGREDIENTS_SUCCESS" = "INGREDIENTS_SUCCESS";
@@ -10,6 +10,7 @@ export interface IIngredientsRequest {
 
 export interface IIngredientsSuccess {
   readonly type: typeof INGREDIENTS_SUCCESS
+  ingredients:Array<TIngredient>
 }
 
 export interface IIngredientsError {
