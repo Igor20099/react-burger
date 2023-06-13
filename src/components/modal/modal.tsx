@@ -9,7 +9,7 @@ import { useNavigate,useLocation } from "react-router-dom";
 const modalRoot = document.getElementById("react-modals") as HTMLElement;
 
 interface IModalProps {
-  title:string;
+  title?:string;
   children?:ReactNode;
   setIsModal: (isModal:boolean) => void;
   onClose: () => void;

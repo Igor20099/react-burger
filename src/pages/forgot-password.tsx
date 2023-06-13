@@ -5,23 +5,23 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from '../hooks';
 import { forgotPasswordRequest } from "../utils/api";
 import { useEffect } from "react";
 
 function ForgotPasswordPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  function changeEmail(e) {
+  function changeEmail(e:React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
   }
   useEffect(() => {});
 
-  function forgotPasswordHandle(e) {
+  function forgotPasswordHandle(e:React.SyntheticEvent) {
     e.preventDefault();
     forgotPasswordRequest(email)
       .then(() => {
-        localStorage.setItem("forgotPassword", true);
+        localStorage.setItem("forgotPassword", 'true');
         navigate("/reset-password");
       })
       .catch((err) => {

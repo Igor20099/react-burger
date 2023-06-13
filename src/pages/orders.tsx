@@ -2,8 +2,8 @@ import styles from "./orders.module.css";
 import { NavLink } from "react-router-dom";
 import { logout, tokenRequest } from "../services/actions/auth";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useDispatch,useSelector } from '../hooks';
+import { useEffect, useState,FunctionComponent } from "react";
 import { getCookie } from "../utils/cookie";
 import FeedOrder from "../components/feed-order/feed-order";
 import {
@@ -13,13 +13,18 @@ import {
 import { WS_URL } from "../utils/constants";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
+import { TOrder } from "../types";
 
-function OrdersPage({ setIsModal }) {
+interface IOrdersPage {
+  setIsModal: (isModal:boolean) => void;
+}
+
+const OrdersPage:FunctionComponent<IOrdersPage> = ({ setIsModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { ingredients } = useSelector((state) => state.ingredients);
   const { orders } = useSelector((state) => state.ws);
-  const [profileOrders, setProfileOrders] = useState([]);
+  const [profileOrders, setProfileOrders] = useState<TOrder[]>([]);
   const location = useLocation();
   
   useEffect(() => {
@@ -44,7 +49,7 @@ function OrdersPage({ setIsModal }) {
   }
   console.log(getCookie("token"));
 
-  const handleOpenModal = (e) => {
+  const handleOpenModal = (e:React.SyntheticEvent) => {
     profileOrders.forEach((el) => {
       if (e.currentTarget.id === el._id) {
         setIsModal(true);
@@ -111,9 +116,5 @@ function OrdersPage({ setIsModal }) {
     </div>
   );
 }
-
-OrdersPage.propTypes = {
-  setIsModal: PropTypes.func,
-};
 
 export default OrdersPage;

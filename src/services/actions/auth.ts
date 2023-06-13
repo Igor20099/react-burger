@@ -1,4 +1,4 @@
-import { AppDispatch, TUser } from "../../types";
+import { AppDispatch, AppThunk, TUser } from "../../types";
 import {
   registerRequest,
   loginRequest,
@@ -52,8 +52,8 @@ export interface IRegisterRequest {
 
 export interface IRegisterSuccess {
   readonly type: typeof REGISTER_SUCCESS;
-  user:TUser;
-  accessToken:string;
+  user: TUser;
+  accessToken: string;
 }
 
 export interface IRegisterError {
@@ -66,8 +66,8 @@ export interface ILoginRequest {
 
 export interface ILoginSuccess {
   readonly type: typeof LOGIN_SUCCESS;
-  user:TUser;
-  accessToken:string;
+  user: TUser;
+  accessToken: string;
 }
 
 export interface ILoginError {
@@ -116,7 +116,7 @@ export interface IGetUserRequest {
 
 export interface IGetUserSuccess {
   readonly type: typeof GET_USER_SUCCESS;
-  user:TUser;
+  user: TUser;
 }
 
 export interface IGetUserError {
@@ -129,7 +129,7 @@ export interface IUpdateUserRequest {
 
 export interface IUpdateUserSuccess {
   readonly type: typeof UPDATE_USER_SUCCESS;
-  user:TUser;
+  user: TUser;
 }
 
 export interface IUpdateUserError {
@@ -174,8 +174,9 @@ export type TAuthActions =
   | ITokenSuccess
   | ITokenError;
 
-export function register(name: string, email: string, password: string) {
-  return function (dispatch: AppDispatch) {
+export const register: AppThunk =
+  (name: string, email: string, password: string) =>
+  (dispatch: AppDispatch) => {
     dispatch({
       type: REGISTER_REQUEST,
     });
@@ -198,10 +199,35 @@ export function register(name: string, email: string, password: string) {
         console.error("Error: ", err);
       });
   };
-}
 
-export function login(email: string, password: string) {
-  return function (dispatch: AppDispatch) {
+// export function register(name: string, email: string, password: string) {
+//   return function (dispatch: AppDispatch) {
+//     dispatch({
+//       type: REGISTER_REQUEST,
+//     });
+//     registerRequest(name, email, password)
+//       .then((res) => {
+//         if (res.success) {
+//           const accessToken = res.accessToken.split("Bearer ")[1];
+//           const refreshToken = res.refreshToken;
+//           setCookie("token", accessToken);
+//           localStorage.setItem("refreshToken", refreshToken);
+
+//           dispatch({
+//             type: REGISTER_SUCCESS,
+//             user: res.user,
+//             accessToken: accessToken,
+//           });
+//         }
+//       })
+//       .catch((err) => {
+//         console.error("Error: ", err);
+//       });
+//   };
+// }
+
+export const login: AppThunk =
+  (email: string, password: string) => (dispatch: AppDispatch) => {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -223,54 +249,118 @@ export function login(email: string, password: string) {
         console.error("Error: ", err);
       });
   };
-}
 
-export function logout() {
-  return function (dispatch: AppDispatch) {
-    dispatch({
-      type: LOGOUT_REQUEST,
+// export function login(email: string, password: string) {
+//   return function (dispatch: AppDispatch) {
+//     dispatch({
+//       type: LOGIN_REQUEST,
+//     });
+//     loginRequest(email, password)
+//       .then((res) => {
+//         if (res.success) {
+//           const accessToken = res.accessToken.split("Bearer ")[1];
+//           const refreshToken = res.refreshToken;
+//           setCookie("token", accessToken);
+//           localStorage.setItem("refreshToken", refreshToken);
+//           dispatch({
+//             type: LOGIN_SUCCESS,
+//             user: res.user,
+//             accessToken: accessToken,
+//           });
+//         }
+//       })
+//       .catch((err) => {
+//         console.error("Error: ", err);
+//       });
+//   };
+// }
+
+export const logout: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch({
+    type: LOGOUT_REQUEST,
+  });
+  logoutRequest()
+    .then((res) => {
+      if (res.success) {
+        delCookie("token");
+        localStorage.removeItem("refreshToken");
+        dispatch({
+          type: LOGOUT_SUCCESS,
+        });
+        return true;
+      }
+    })
+    .catch((err) => {
+      console.error("Error: ", err);
     });
-    logoutRequest()
-      .then((res) => {
-        if (res.success) {
-          delCookie("token");
-          localStorage.removeItem("refreshToken");
-          dispatch({
-            type: LOGOUT_SUCCESS,
-          });
-          return true;
-        }
-      })
-      .catch((err) => {
-        console.error("Error: ", err);
-      });
-  };
-}
+};
 
-export function getUser() {
-  return function (dispatch: AppDispatch) {
-    dispatch({
-      type: GET_USER_REQUEST,
+// export function logout() {
+//   return function (dispatch: AppDispatch) {
+//     dispatch({
+//       type: LOGOUT_REQUEST,
+//     });
+//     logoutRequest()
+//       .then((res) => {
+//         if (res.success) {
+//           delCookie("token");
+//           localStorage.removeItem("refreshToken");
+//           dispatch({
+//             type: LOGOUT_SUCCESS,
+//           });
+//           return true;
+//         }
+//       })
+//       .catch((err) => {
+//         console.error("Error: ", err);
+//       });
+//   };
+// }
+
+export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch({
+    type: GET_USER_REQUEST,
+  });
+  return getUserRequest(getCookie("token"))
+    .then((res) => {
+      if (res.success) {
+        console.log(res);
+        dispatch({
+          type: GET_USER_SUCCESS,
+          user: res.user,
+        });
+      }
+    })
+    .catch((err) => {
+      console.error("Error: ", err);
+      // dispatch(tokenRequest());
     });
-    return getUserRequest(getCookie("token"))
-      .then((res) => {
-        if (res.success) {
-          console.log(res);
-          dispatch({
-            type: GET_USER_SUCCESS,
-            user: res.user,
-          });
-        }
-      })
-      .catch((err) => {
-        console.error("Error: ", err);
-        // dispatch(tokenRequest());
-      });
-  };
-}
+};
 
-export function updateUser(name: string, email: string, token: string) {
-  return function (dispatch: AppDispatch) {
+// export function getUser() {
+//   return function (dispatch: AppDispatch) {
+//     dispatch({
+//       type: GET_USER_REQUEST,
+//     });
+//     return getUserRequest(getCookie("token"))
+//       .then((res) => {
+//         if (res.success) {
+//           console.log(res);
+//           dispatch({
+//             type: GET_USER_SUCCESS,
+//             user: res.user,
+//           });
+//         }
+//       })
+//       .catch((err) => {
+//         console.error("Error: ", err);
+//         dispatch(tokenRequest());
+//       });
+//   };
+// }
+
+export const updateUser: AppThunk =
+  (name: string, email: string, token: string) => (dispatch: AppDispatch) => {
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
@@ -287,31 +377,75 @@ export function updateUser(name: string, email: string, token: string) {
         console.error("Error: ", err);
       });
   };
-}
 
-export function tokenRequest() {
-  return function (dispatch: AppDispatch) {
-    dispatch({
-      type: TOKEN_REQUEST,
+// export function updateUser(name: string, email: string, token: string) {
+//   return function (dispatch: AppDispatch) {
+//     dispatch({
+//       type: UPDATE_USER_REQUEST,
+//     });
+//     return updateUserRequest(name, email, token)
+//       .then((res) => {
+//         if (res.success) {
+//           dispatch({
+//             type: UPDATE_USER_SUCCESS,
+//             user: res.user,
+//           });
+//         }
+//       })
+//       .catch((err) => {
+//         console.error("Error: ", err);
+//       });
+//   };
+// }
+
+export const tokenRequest: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch({
+    type: TOKEN_REQUEST,
+  });
+  return refreshTokenRequest()
+    .then((res) => {
+      if (res.success) {
+        console.log(res);
+        const accessToken = res.accessToken.split("Bearer ")[1];
+        const refreshToken = res.refreshToken;
+        console.log(accessToken);
+        delCookie("token");
+        setCookie("token", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        dispatch({
+          type: TOKEN_SUCCESS,
+          accessToken: accessToken,
+        });
+      }
+    })
+    .catch((err) => {
+      console.error("Error: ", err);
     });
-    return refreshTokenRequest()
-      .then((res) => {
-        if (res.success) {
-          console.log(res);
-          const accessToken = res.accessToken.split("Bearer ")[1];
-          const refreshToken = res.refreshToken;
-          console.log(accessToken);
-          delCookie("token");
-          setCookie("token", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
-          dispatch({
-            type: TOKEN_SUCCESS,
-            accessToken: accessToken,
-          });
-        }
-      })
-      .catch((err) => {
-        console.error("Error: ", err);
-      });
-  };
-}
+};
+
+// export function tokenRequest() {
+//   return function (dispatch: AppDispatch) {
+//     dispatch({
+//       type: TOKEN_REQUEST,
+//     });
+//     return refreshTokenRequest()
+//       .then((res) => {
+//         if (res.success) {
+//           console.log(res);
+//           const accessToken = res.accessToken.split("Bearer ")[1];
+//           const refreshToken = res.refreshToken;
+//           console.log(accessToken);
+//           delCookie("token");
+//           setCookie("token", accessToken);
+//           localStorage.setItem("refreshToken", refreshToken);
+//           dispatch({
+//             type: TOKEN_SUCCESS,
+//             accessToken: accessToken,
+//           });
+//         }
+//       })
+//       .catch((err) => {
+//         console.error("Error: ", err);
+//       });
+//   };
+// }

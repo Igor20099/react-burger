@@ -1,6 +1,6 @@
 import styles from "./login.module.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector } from '../hooks';
 import { useEffect, useState } from "react";
 import { login } from "../services/actions/auth";
 import {
@@ -16,7 +16,7 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const {isAuth} = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuth) {
@@ -32,15 +32,15 @@ function LoginPage() {
     }
   });
 
-  const changeEmail = (e) => {
+  const changeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const changePassword = (e) => {
+  const changePassword = (e:React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  function loginHandle(e) {
+  function loginHandle(e:React.SyntheticEvent) {
     e.preventDefault();
     dispatch(login({ email, password }));
   }

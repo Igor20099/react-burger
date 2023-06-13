@@ -1,4 +1,4 @@
-import { AppDispatch, TOrder } from "../../types";
+import { AppDispatch, AppThunk, TOrder } from "../../types";
 import { orderRequest } from "../../utils/api";
 import { getCookie } from "../../utils/cookie";
 
@@ -31,8 +31,8 @@ export interface ICloseOrder {
 
 export type TOrderDetailsActions = | IGetOrderRequest | IGetOrderSuccess | IGetOrderError | IGetOrderNumber | ICloseOrder
 
-export function getOrder(data: any) {
-  return function (dispatch: AppDispatch) {
+export const getOrder:AppThunk = (data: any) =>(dispatch: AppDispatch) => {
+
     dispatch({
       type: GET_ORDER_REQUEST,
     });
@@ -45,5 +45,22 @@ export function getOrder(data: any) {
       .catch((error) => {
         console.log(error);
       });
-  };
+ 
 }
+
+// export function getOrder(data: any) {
+//   return function (dispatch: AppDispatch) {
+//     dispatch({
+//       type: GET_ORDER_REQUEST,
+//     });
+//     orderRequest(data, getCookie("token"))
+//       .then((res) => {
+//         if (res.success) {
+//           dispatch({ type: GET_ORDER_SUCCESS, payload: res });
+//         }
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+// }

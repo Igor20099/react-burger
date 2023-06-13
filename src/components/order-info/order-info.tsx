@@ -1,5 +1,5 @@
 import styles from "./order-info.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector } from '../../hooks';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOrder } from "../../services/actions/order-info";
@@ -16,6 +16,9 @@ import { WS_URL } from "../../utils/constants";
 import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { getCookie } from "../../utils/cookie";
+import { TIngredient, TOrder } from "../../types";
+
+
 
 function OrderInfo() {
   const ordersAll = useSelector((state) => state.ws.orders.orders);
@@ -23,16 +26,16 @@ function OrderInfo() {
   const { ingredients } = useSelector((state) => state.ingredients);
   const location = useLocation();
   const dispatch = useDispatch();
-  const [childIngreients, setChildIngredients] = useState(null);
-  const [ingredientsCount, setIngredientsCount] = useState({});
+  const [childIngreients, setChildIngredients] = useState<Array<TIngredient>>([]);
+  const [ingredientsCount, setIngredientsCount] = useState<{ [key: string]: number } >({});
   const [orders, setOrders] = useState([]);
-  let listTemp = {};
+  let listTemp:{ [key: string]: any }  = {};
   const { id } = useParams();
-  let ingredientSet = new Set();
-  let ingredientList = [];
+  let ingredientSet = new Set<string>();
+  let ingredientList:Array<TIngredient> = [];
 
-  let path = location.pathname.split("/");
-  path = path.slice(0, path.length - 1).join("/");
+  let pathArray:Array<string> = location.pathname.split("/");
+  let path:string = pathArray.slice(0, pathArray.length - 1).join("/");
 
   useEffect(() => {
     if (path === "/feed") {
@@ -50,7 +53,7 @@ function OrderInfo() {
   }, [dispatch]);
   useEffect(() => {
      setOrders(ordersAll)
-    orders?.find((el) => {
+    orders?.find((el:TOrder) => {
       if (id === el._id) {
         dispatch(getOrder(el));
       }
@@ -64,7 +67,10 @@ function OrderInfo() {
         const count = order.ingredients.filter((ing) => ing === id);
         listTemp[id] = count.length;
         const ingredient = ingredients.find((el) => el._id === id);
-        ingredientList.push(ingredient);
+        if (ingredient) {
+          ingredientList.push(ingredient);
+        }
+        
       });
       setIngredientsCount(listTemp);
       setChildIngredients(ingredientList);
@@ -102,7 +108,7 @@ function OrderInfo() {
                     <p className="mr-2">{`${ingredientsCount[el._id]} x ${
                       el.price
                     }`}</p>
-                    <CurrencyIcon />
+                    <CurrencyIcon type='primary'/>
                   </div>
                 </li>
               );
@@ -114,7 +120,7 @@ function OrderInfo() {
             </p>
             <div className={styles.price}>
               <p className="mr-2">{getPrice(order.ingredients, ingredients)}</p>{" "}
-              <CurrencyIcon />
+              <CurrencyIcon type='primary' />
             </div>
           </div>
         </>

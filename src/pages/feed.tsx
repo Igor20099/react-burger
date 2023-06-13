@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FunctionComponent } from "react";
 import styles from "./feed.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector } from '../hooks';
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
@@ -11,10 +11,15 @@ import FeedOrder from "../components/feed-order/feed-order";
 import { WS_URL } from "../utils/constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { TOrder } from "../types";
 
-function FeedPage({ setIsModal }) {
+interface IFeedPage {
+  setIsModal: (isModal:boolean) => void;
+}
+
+const FeedPage:FunctionComponent<IFeedPage> = ({ setIsModal }) => {
   const dispatch = useDispatch();
-  const [allOrders, setAllOrders] = useState();
+  const [allOrders, setAllOrders] = useState<TOrder[]>([]);
   const [ordersCount, setOrdersCount] = useState(0);
   const [ordersToday, setOrdersToday] = useState(0);
   const { orders } = useSelector((state) => state.ws);
@@ -39,7 +44,7 @@ function FeedPage({ setIsModal }) {
     }
   }, [orders, ingredients]);
 
-  const handleOpenModal = (e) => {
+  const handleOpenModal = (e:React.SyntheticEvent) => {
     console.log(e);
     allOrders.forEach((el) => {
       if (e.currentTarget.id === el._id) {
@@ -115,9 +120,5 @@ function FeedPage({ setIsModal }) {
     </section>
   );
 }
-
-FeedPage.propTypes = {
-  setIsModal: PropTypes.func,
-};
 
 export default FeedPage;

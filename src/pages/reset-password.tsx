@@ -1,12 +1,12 @@
 import styles from "./reset-password.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect,SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import {
   Button,
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector } from '../hooks';
 import { resetPasswordRequest } from "../utils/api";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -27,15 +27,15 @@ function ResetPasswordPage() {
     }
   }, []);
   
-  function changePassword(e) {
+  function changePassword(e:React.ChangeEvent<HTMLInputElement>) {
     setPassword(e.target.value);
   }
 
-  function changeToken(e) {
+  function changeToken(e:React.ChangeEvent<HTMLInputElement>) {
     setToken(e.target.value);
   }
 
-  function resetPasswordHandle(e) {
+  function resetPasswordHandle(e:SyntheticEvent) {
     e.preventDefault();
     resetPasswordRequest(password, token).then(() => {
       navigate("/login");

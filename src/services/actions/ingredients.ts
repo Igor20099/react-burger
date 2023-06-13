@@ -1,4 +1,4 @@
-import { AppDispatch, TIngredient } from "../../types";
+import { AppDispatch, AppThunk, TIngredient } from "../../types";
 import { ingredientsRequest } from "../../utils/api";
 export const INGREDIENTS_REQUEST:"INGREDIENTS_REQUEST" = "INGREDIENTS_REQUEST";
 export const INGREDIENTS_SUCCESS:"INGREDIENTS_SUCCESS" = "INGREDIENTS_SUCCESS";
@@ -20,8 +20,8 @@ export interface IIngredientsError {
 export type TIngredientsActions = | IIngredientsRequest | IIngredientsSuccess | IIngredientsError
 
 
-export function getIngredients() {
-  return function (dispatch:AppDispatch) {
+export const getIngredients:AppThunk = () =>  (dispatch:AppDispatch) => {
+ 
     dispatch({
       type: INGREDIENTS_REQUEST,
     });
@@ -35,5 +35,24 @@ export function getIngredients() {
       .catch((error) => {
         console.log(error);
       });
-  };
+ 
 }
+
+
+// export function getIngredients() {
+//   return function (dispatch:AppDispatch) {
+//     dispatch({
+//       type: INGREDIENTS_REQUEST,
+//     });
+//     ingredientsRequest()
+//       .then((res) => {
+//         dispatch({
+//           type: INGREDIENTS_SUCCESS,
+//           ingredients: res.data,
+//         });
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+// }

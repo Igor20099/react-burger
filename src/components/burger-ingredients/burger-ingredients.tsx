@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef,FunctionComponent } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks";
 import { getIngredients } from "../../services/actions/ingredients";
 import {
   getIngredient,
@@ -12,56 +12,72 @@ import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
-function BurgerIngredients({ setIsModal }) {
+interface IBurgerIngredients {
+  setIsModal: (isModal:boolean) => void;
+}
+
+const BurgerIngredients:FunctionComponent<IBurgerIngredients> = ({ setIsModal }) => {
   const { ingredients } = useSelector((state) => state.ingredients);
   const [current, setCurrent] = React.useState("one");
-  const ingredientsContainerRef = useRef(null);
-  const bunRef = useRef(null);
-  const mainRef = useRef(null);
-  const sauseRef = useRef(null);
+  const ingredientsContainerRef = useRef<HTMLDivElement>(null);
+  const bunRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const sauseRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
   const handleScroll = () => {
     if (
-      bunRef.current.getBoundingClientRect().top ===
-        ingredientsContainerRef.current.getBoundingClientRect().top &&
-      bunRef.current.getBoundingClientRect().bottom >
-        ingredientsContainerRef.current.getBoundingClientRect().top
+      bunRef &&
+      mainRef &&
+      sauseRef &&
+      ingredientsContainerRef &&
+      ingredientsContainerRef.current &&
+      sauseRef.current &&
+      mainRef.current
     ) {
-      setCurrent("one");
-    } else if (
-      sauseRef.current.getBoundingClientRect().top <=
-        ingredientsContainerRef.current.getBoundingClientRect().top &&
-      sauseRef.current.getBoundingClientRect().bottom >
-        ingredientsContainerRef.current.getBoundingClientRect().top
-    ) {
-      setCurrent("two");
-    } else if (
-      mainRef.current.getBoundingClientRect().top <=
-        ingredientsContainerRef.current.getBoundingClientRect().top &&
-      mainRef.current.getBoundingClientRect().bottom >
-        ingredientsContainerRef.current.getBoundingClientRect().top
-    ) {
-      setCurrent("three");
+      if (
+        bunRef?.current?.getBoundingClientRect().top ===
+          ingredientsContainerRef.current.getBoundingClientRect().top &&
+        bunRef.current.getBoundingClientRect().bottom >
+          ingredientsContainerRef.current.getBoundingClientRect().top
+      ) {
+        setCurrent("one");
+      } else if (
+        sauseRef.current.getBoundingClientRect().top <=
+          ingredientsContainerRef.current.getBoundingClientRect().top &&
+        sauseRef.current.getBoundingClientRect().bottom >
+          ingredientsContainerRef.current.getBoundingClientRect().top
+      ) {
+        setCurrent("two");
+      } else if (
+        mainRef.current.getBoundingClientRect().top <=
+          ingredientsContainerRef.current.getBoundingClientRect().top &&
+        mainRef.current.getBoundingClientRect().bottom >
+          ingredientsContainerRef.current.getBoundingClientRect().top
+      ) {
+        setCurrent("three");
+      }
     }
   };
 
   React.useEffect(() => {
     const container = document.querySelector("#ingredients-container");
-    container.addEventListener("scroll", handleScroll);
+    container?.addEventListener("scroll", handleScroll);
     return () => {
-      container.removeEventListener("scroll", handleScroll);
+      container?.removeEventListener("scroll", handleScroll);
     };
   }, [ingredients]);
 
-  const handleOpenModal = (e) => {
+  const handleOpenModal = (e: any) => {
     ingredients.forEach((el) => {
-      if (e.currentTarget.id === el._id) {
-        setIsModal(true);
-        localStorage.setItem('isModal',JSON.stringify(true))
-        navigate(`/ingredients/${el._id}`, { state: { background: location } });
+      if(e.currentTarget) {
+        if ( e.currentTarget.id === el._id) {
+          setIsModal(true);
+          localStorage.setItem("isModal", JSON.stringify(true));
+          navigate(`/ingredients/${el._id}`, { state: { background: location } });
+        }
       }
     });
   };
@@ -144,8 +160,5 @@ function BurgerIngredients({ setIsModal }) {
   );
 }
 
-BurgerIngredients.propTypes = {
-  setIsModal: PropTypes.func,
-};
 
 export default BurgerIngredients;

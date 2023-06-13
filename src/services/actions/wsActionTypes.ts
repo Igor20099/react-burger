@@ -28,7 +28,7 @@ export interface IWsConnectionClosedAction {
 
 export interface IWsGetOrdersAction {
   readonly type: typeof WS_GET_ORDERS;
-  payload: Array<TOrder>;
+  payload: any;
 }
 
 export interface IWsSendOrderAction {

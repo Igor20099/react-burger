@@ -4,14 +4,21 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { useDrop, useDrag } from "react-dnd";
-import { useDispatch } from "react-redux";
-import { useRef } from "react";
+import { useDispatch,useSelector } from '../../hooks';
+import { useRef,FunctionComponent } from "react";
 import styles from "./constructor-ingredient.module.css";
 import { moveIngredient } from "../../services/actions/burger-ingredients";
+import { TIngredient } from "../../types";
 
-function ConstructorIngredient({ el, onDelete, index }) {
+interface IConstructorIngredient {
+  el:TIngredient;
+  onDelete: (el:TIngredient) => void;
+  index:number;
+}
+
+const ConstructorIngredient:FunctionComponent<IConstructorIngredient> = ({ el, onDelete, index }) => {
   const id = el._id;
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
   const dispatch = useDispatch();
 
   const [, drop] = useDrop({
@@ -22,7 +29,7 @@ function ConstructorIngredient({ el, onDelete, index }) {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item:any, monitor) {
       if (!ref.current) return;
       const dragIndex = item.index;
       const hoverIndex = index;
@@ -30,10 +37,13 @@ function ConstructorIngredient({ el, onDelete, index }) {
       const hoverRect = ref.current.getBoundingClientRect();
       const hoverMidY = (hoverRect.bottom - hoverRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverRect.top;
+      let hoverClientY:number | undefined
+      if(clientOffset) {
+        hoverClientY = clientOffset.y - hoverRect.top;
+      }
 
-      if (dragIndex < hoverIndex && hoverClientY < hoverMidY) return;
-      if (dragIndex > hoverIndex && hoverClientY > hoverMidY) return;
+      if (hoverClientY && dragIndex < hoverIndex && hoverClientY < hoverMidY) return;
+      if (hoverClientY && dragIndex > hoverIndex && hoverClientY > hoverMidY) return;
 
       dispatch(moveIngredient(dragIndex, hoverIndex));
       item.index = hoverIndex;
@@ -56,7 +66,7 @@ function ConstructorIngredient({ el, onDelete, index }) {
     <li className={styles.item} ref={ref}>
       <DragIcon type="primary"></DragIcon>
       <ConstructorElement
-        type={el.type}
+        // type={el.type}
         isLocked={el.isLocked}
         text={el.name}
         price={el.price}
@@ -70,24 +80,6 @@ function ConstructorIngredient({ el, onDelete, index }) {
   );
 }
 
-ConstructorIngredient.propTypes = {
-  el: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    uniqueId: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  }).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-};
+
 
 export default ConstructorIngredient;

@@ -6,10 +6,18 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { getPrice, getStatus, getStatusColor } from "../../utils/utils";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { FunctionComponent } from "react";
+import { useDispatch,useSelector } from '../../hooks';
+import { TOrder } from "../../types";
 
-function FeedOrder({ el, handleOpenModal, isStatus }) {
+interface IFeedOrder {
+   el: TOrder;
+   handleOpenModal: (e:React.SyntheticEvent) => void;
+   isStatus:boolean;
+   uniqueId?:string;
+}
+
+const FeedOrder:FunctionComponent<IFeedOrder> = ({ el, handleOpenModal, isStatus }) => {
   const { ingredients } = useSelector((state) => state.ingredients);
 
   return (
@@ -68,10 +76,5 @@ function FeedOrder({ el, handleOpenModal, isStatus }) {
   );
 }
 
-FeedOrder.propTypes = {
-  el: PropTypes.object.isRequired,
-  handleOpenModal: PropTypes.func.isRequired,
-  isStatus: PropTypes.bool.isRequired,
-};
 
 export default FeedOrder;

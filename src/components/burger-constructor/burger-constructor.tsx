@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks";
 import { getOrder, CLOSE_ORDER } from "../../services/actions/order-details";
 import { useDrop } from "react-dnd";
 import {
@@ -20,24 +20,33 @@ import ConstructorIngredient from "../constuctor-ingredient/constructor-ingredie
 import { v4 as uuidv4 } from "uuid";
 import { addIngredient } from "../../services/actions/burger-ingredients";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, FunctionComponent } from "react";
+import { TIngredient } from "../../types";
 
-function BurgerConstructor({ setIsModal }) {
+interface IBurgerConstuctor {
+  setIsModal: (isModal: boolean) => void;
+}
+
+const BurgerConstructor: FunctionComponent<IBurgerConstuctor> = ({
+  setIsModal,
+}) => {
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const { isAuth } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
   const [ingredientsOrder, setIngredientsOrder] = useState([]);
 
-  const handleDrop = (ingredient) => {
+  const handleDrop = (ingredient: TIngredient) => {
     dispatch(addIngredient(ingredient, uuidv4()));
   };
   const { order } = useSelector((state) => state.orderDetails);
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(itemId) {
+    drop(itemId: TIngredient) {
       handleDrop(itemId);
-      dispatch(countUp(itemId._id, itemId.type));
+      if (itemId.type) {
+        dispatch(countUp(itemId._id, itemId.type));
+      }
     },
   });
   const burgerIngredients = useSelector(
@@ -50,12 +59,12 @@ function BurgerConstructor({ setIsModal }) {
     const buns = ingredients.ingredients.filter((item) => item.type === "bun");
 
     buns.forEach((element) => {
-      if (bun && element._id !== bun._id) {
+      if (bun && element.type && element._id !== bun._id) {
         dispatch(countDown(element._id, element.type));
       }
     });
   }, [bun, dispatch]);
-  console.log(burgerIngredients)
+  console.log(burgerIngredients);
 
   const handleOpenModal = () => {
     if (isAuth) {
@@ -75,9 +84,13 @@ function BurgerConstructor({ setIsModal }) {
     localStorage.setItem("isModal", JSON.stringify(false));
   };
 
-  const onDelete = (el) => {
-    dispatch(deleteIngredient(el.uniqueId));
-    dispatch(countDown(el._id, el.type));
+  const onDelete = (el: TIngredient) => {
+    if (el.uniqueId) {
+      dispatch(deleteIngredient(el.uniqueId));
+    }
+    if (el.type) {
+      dispatch(countDown(el._id, el.type));
+    }
   };
 
   const modal = (
@@ -162,10 +175,6 @@ function BurgerConstructor({ setIsModal }) {
       </div>
     </section>
   );
-}
-
-BurgerConstructor.propTypes = {
-  setIsModal: PropTypes.func,
 };
 
 export default BurgerConstructor;

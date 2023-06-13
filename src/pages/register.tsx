@@ -1,6 +1,6 @@
 import styles from "./register.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector } from '../hooks';
 import { useEffect, useState } from "react";
 import {
   EmailInput,
@@ -15,7 +15,7 @@ function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const isAuth = useSelector(state => state.auth.isAuth)
+  const {isAuth} = useSelector(state => state.auth)
   const navigate = useNavigate()
   const location = useLocation()
   useEffect(() => {
@@ -29,17 +29,17 @@ function RegisterPage() {
   console.log(location.state?.from.pathname)
   
 
-  const changeName = (e) => {
+  const changeName = (e:React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-  const changeEmail = (e) => {
+  const changeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const changePassword = (e) => {
+  const changePassword = (e:React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  function registerHandle(e) {
+  function registerHandle(e:React.SyntheticEvent) {
     e.preventDefault();
     dispatch(register({name, email, password}))
   }

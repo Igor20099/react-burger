@@ -12,27 +12,28 @@ import {
   tokenRequest,
   updateUser,
 } from "../services/actions/auth";
-import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../hooks";
 import { getCookie } from "../utils/cookie";
 import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isChange, setIsChange] = useState(false);
-  const user = useSelector((state) => state.auth.user);
- 
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isChange, setIsChange] = useState<boolean>(false);
+  const { user } = useSelector((state) => state.auth);
+
   useEffect(() => {
     dispatch(getUser()).then(() => {
-      setName(user.name || "");
-      setEmail(user.email || "");
-      setPassword("");
-    })
-   
+      if (user) {
+        setName(user.name || "");
+        setEmail(user.email || "");
+        setPassword("");
+      }
+      
+    });
   }, [user.name]);
 
   function cancelChange() {
@@ -52,17 +53,17 @@ function ProfilePage() {
     dispatch(logout());
   }
 
-  function changeName(e) {
+  function changeName(e: React.ChangeEvent<HTMLInputElement>) {
     setIsChange(true);
     setName(e.target.value);
   }
 
-  function changeEmail(e) {
+  function changeEmail(e: React.ChangeEvent<HTMLInputElement>) {
     setIsChange(true);
     setEmail(e.target.value);
   }
 
-  function changePassword(e) {
+  function changePassword(e: React.ChangeEvent<HTMLInputElement>) {
     setIsChange(true);
     setPassword(e.target.value);
   }
@@ -105,12 +106,8 @@ function ProfilePage() {
       </ul>
       <div>
         <EmailInput
-          type={"text"}
           placeholder={"Имя"}
-          icon={"EditIcon"}
           name={"name"}
-          error={false}
-          errorText={"Ошибка"}
           size={"default"}
           extraClass="mb-6"
           isIcon={true}

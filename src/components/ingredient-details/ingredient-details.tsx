@@ -1,8 +1,8 @@
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from '../../hooks';
 import { useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+
 import { getIngredient } from "../../services/actions/ingredient-details";
 import { useNavigate } from "react-router-dom";
 

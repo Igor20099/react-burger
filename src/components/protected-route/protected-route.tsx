@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from '../../hooks';
 import { useLocation } from "react-router-dom";
 
-export function ProtectedRouteElement({ element, anonymous = false }) {
-  const isAuth = useSelector((state) => state.auth.isAuth);
+export function ProtectedRouteElement({ element, anonymous = false }:any) {
+  const {isAuth} = useSelector((state) => state.auth);
 
   const location = useLocation();
   const from = location.state?.from || "/";

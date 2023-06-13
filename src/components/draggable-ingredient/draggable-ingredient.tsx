@@ -1,4 +1,4 @@
-import React from "react";
+import { FunctionComponent } from "react";
 import styles from "./draggable-ingredient.module.css";
 import PropTypes from "prop-types";
 import {
@@ -7,9 +7,18 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks";
+import { TIngredient } from "../../types";
 
-function DraggableIngredient({ ingredient, handleOpenModal }) {
+interface IDraggableIngredient {
+  ingredient: TIngredient;
+  handleOpenModal: (e:React.SyntheticEvent) => void;
+}
+
+const DraggableIngredient: FunctionComponent<IDraggableIngredient> = ({
+  ingredient,
+  handleOpenModal,
+}) => {
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: ingredient,
@@ -40,24 +49,6 @@ function DraggableIngredient({ ingredient, handleOpenModal }) {
       <p className="text text_type_main-small">{ingredient.name}</p>
     </li>
   );
-}
-
-DraggableIngredient.propTypes = {
-  ingredient: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  }).isRequired,
-  handleOpenModal: PropTypes.func.isRequired,
 };
 
 export default DraggableIngredient;
