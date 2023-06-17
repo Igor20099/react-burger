@@ -33,6 +33,7 @@ export interface IWsGetOrdersAction {
 
 export interface IWsSendOrderAction {
   readonly type: typeof WS_SEND_ORDER;
+  payload:string;
 }
 
 export type TWsActions =
