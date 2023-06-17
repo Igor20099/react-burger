@@ -2,16 +2,17 @@
 import styles from "./order-details.module.css";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch,useSelector } from '../../hooks';
+import { useState } from "react";
 
 function OrderDetails() {
 
-  const {order} = useSelector(state => state.orderDetails)
-
+  const order = useSelector(state => state.orderDetails.order)
+  
 
 
   return (
     <div className={styles.order}>
-      {order && <p className="text text_type_digits-large mb-8">{order.number}</p>}
+      {order && <p className="text text_type_digits-large mb-8">{order.order.number}</p>}
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
       <div className={styles.done}>
         {" "}
