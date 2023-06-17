@@ -176,8 +176,8 @@ export type TAuthActions =
   | ITokenError;
 
 export const register =
-  (name: string, email: string, password: string) :AppThunk =>
-  (dispatch: AppDispatch):any => {
+  (name: string, email: string, password: string): AppThunk =>
+  (dispatch: AppDispatch): any => {
     dispatch({
       type: REGISTER_REQUEST,
     });
@@ -201,34 +201,9 @@ export const register =
       });
   };
 
-// export function register(name: string, email: string, password: string) {
-//   return function (dispatch: AppDispatch) {
-//     dispatch({
-//       type: REGISTER_REQUEST,
-//     });
-//     registerRequest(name, email, password)
-//       .then((res) => {
-//         if (res.success) {
-//           const accessToken = res.accessToken.split("Bearer ")[1];
-//           const refreshToken = res.refreshToken;
-//           setCookie("token", accessToken);
-//           localStorage.setItem("refreshToken", refreshToken);
-
-//           dispatch({
-//             type: REGISTER_SUCCESS,
-//             user: res.user,
-//             accessToken: accessToken,
-//           });
-//         }
-//       })
-//       .catch((err) => {
-//         console.error("Error: ", err);
-//       });
-//   };
-// }
-
 export const login =
-  (email: string, password: string):AppThunk => (dispatch: AppDispatch):any => {
+  (email: string, password: string): AppThunk =>
+  (dispatch: AppDispatch): any => {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -251,117 +226,53 @@ export const login =
       });
   };
 
-// export function login(email: string, password: string) {
-//   return function (dispatch: AppDispatch) {
-//     dispatch({
-//       type: LOGIN_REQUEST,
-//     });
-//     loginRequest(email, password)
-//       .then((res) => {
-//         if (res.success) {
-//           const accessToken = res.accessToken.split("Bearer ")[1];
-//           const refreshToken = res.refreshToken;
-//           setCookie("token", accessToken);
-//           localStorage.setItem("refreshToken", refreshToken);
-//           dispatch({
-//             type: LOGIN_SUCCESS,
-//             user: res.user,
-//             accessToken: accessToken,
-//           });
-//         }
-//       })
-//       .catch((err) => {
-//         console.error("Error: ", err);
-//       });
-//   };
-// }
-
-export const logout = ():AppThunk => (dispatch: AppDispatch):any => {
-  dispatch({
-    type: LOGOUT_REQUEST,
-  });
-  logoutRequest()
-    .then((res) => {
-      if (res.success) {
-        delCookie("token");
-        localStorage.removeItem("refreshToken");
-        dispatch({
-          type: LOGOUT_SUCCESS,
-        });
-        return true;
-      }
-    })
-    .catch((err) => {
-      console.error("Error: ", err);
+export const logout =
+  (): AppThunk =>
+  (dispatch: AppDispatch): any => {
+    dispatch({
+      type: LOGOUT_REQUEST,
     });
-};
+    logoutRequest()
+      .then((res) => {
+        if (res.success) {
+          delCookie("token");
+          localStorage.removeItem("refreshToken");
+          dispatch({
+            type: LOGOUT_SUCCESS,
+          });
+          return true;
+        }
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
+  };
 
-// export function logout() {
-//   return function (dispatch: AppDispatch) {
-//     dispatch({
-//       type: LOGOUT_REQUEST,
-//     });
-//     logoutRequest()
-//       .then((res) => {
-//         if (res.success) {
-//           delCookie("token");
-//           localStorage.removeItem("refreshToken");
-//           dispatch({
-//             type: LOGOUT_SUCCESS,
-//           });
-//           return true;
-//         }
-//       })
-//       .catch((err) => {
-//         console.error("Error: ", err);
-//       });
-//   };
-// }
-
-export const getUser = ():AppThunk => (dispatch: AppDispatch):any => {
-  dispatch({
-    type: GET_USER_REQUEST,
-  });
-  return getUserRequest(getCookie("token"))
-    .then((res) => {
-      if (res.success) {
-        console.log(res);
-        dispatch({
-          type: GET_USER_SUCCESS,
-          user: res.user,
-        });
-      }
-    })
-    .catch((err) => {
-      console.error("Error: ", err);
-      // dispatch(tokenRequest());
+export const getUser =
+  (): AppThunk =>
+  (dispatch: AppDispatch): any => {
+    dispatch({
+      type: GET_USER_REQUEST,
     });
-};
-
-// export function getUser() {
-//   return function (dispatch: AppDispatch) {
-//     dispatch({
-//       type: GET_USER_REQUEST,
-//     });
-//     return getUserRequest(getCookie("token"))
-//       .then((res) => {
-//         if (res.success) {
-//           console.log(res);
-//           dispatch({
-//             type: GET_USER_SUCCESS,
-//             user: res.user,
-//           });
-//         }
-//       })
-//       .catch((err) => {
-//         console.error("Error: ", err);
-//         dispatch(tokenRequest());
-//       });
-//   };
-// }
+    return getUserRequest(getCookie("token"))
+      .then((res) => {
+        if (res.success) {
+          console.log(res);
+          dispatch({
+            type: GET_USER_SUCCESS,
+            user: res.user,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+         dispatch(tokenRequest());
+      });
+  };
 
 export const updateUser =
-  (name: string, email: string, token: string):AppThunk => (dispatch: AppDispatch):any => {
+  (name: string, email: string, token: string): AppThunk =>
+  (dispatch: AppDispatch): any => {
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
@@ -379,74 +290,29 @@ export const updateUser =
       });
   };
 
-// export function updateUser(name: string, email: string, token: string) {
-//   return function (dispatch: AppDispatch) {
-//     dispatch({
-//       type: UPDATE_USER_REQUEST,
-//     });
-//     return updateUserRequest(name, email, token)
-//       .then((res) => {
-//         if (res.success) {
-//           dispatch({
-//             type: UPDATE_USER_SUCCESS,
-//             user: res.user,
-//           });
-//         }
-//       })
-//       .catch((err) => {
-//         console.error("Error: ", err);
-//       });
-//   };
-// }
-
-export const tokenRequest = () :AppThunk => (dispatch: AppDispatch):any => {
-  dispatch({
-    type: TOKEN_REQUEST,
-  });
-  return refreshTokenRequest()
-    .then((res) => {
-      if (res.success) {
-        console.log(res);
-        const accessToken = res.accessToken.split("Bearer ")[1];
-        const refreshToken = res.refreshToken;
-        console.log(accessToken);
-        delCookie("token");
-        setCookie("token", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        dispatch({
-          type: TOKEN_SUCCESS,
-          accessToken: accessToken,
-        });
-      }
-    })
-    .catch((err) => {
-      console.error("Error: ", err);
+export const tokenRequest =
+  (): AppThunk =>
+  (dispatch: AppDispatch): any => {
+    dispatch({
+      type: TOKEN_REQUEST,
     });
-};
-
-// export function tokenRequest() {
-//   return function (dispatch: AppDispatch) {
-//     dispatch({
-//       type: TOKEN_REQUEST,
-//     });
-//     return refreshTokenRequest()
-//       .then((res) => {
-//         if (res.success) {
-//           console.log(res);
-//           const accessToken = res.accessToken.split("Bearer ")[1];
-//           const refreshToken = res.refreshToken;
-//           console.log(accessToken);
-//           delCookie("token");
-//           setCookie("token", accessToken);
-//           localStorage.setItem("refreshToken", refreshToken);
-//           dispatch({
-//             type: TOKEN_SUCCESS,
-//             accessToken: accessToken,
-//           });
-//         }
-//       })
-//       .catch((err) => {
-//         console.error("Error: ", err);
-//       });
-//   };
-// }
+    return refreshTokenRequest()
+      .then((res) => {
+        if (res.success) {
+          console.log(res);
+          const accessToken = res.accessToken.split("Bearer ")[1];
+          const refreshToken = res.refreshToken;
+          console.log(accessToken);
+          delCookie("token");
+          setCookie("token", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          dispatch({
+            type: TOKEN_SUCCESS,
+            accessToken: accessToken,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
+  };

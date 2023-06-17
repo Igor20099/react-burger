@@ -10,7 +10,7 @@ import {
 type TOrderDetailsState = {
   orderRequest: boolean;
   orderFailed: boolean;
-  order: any | null;
+  order: TOrder | null;
   number:number
 }
 

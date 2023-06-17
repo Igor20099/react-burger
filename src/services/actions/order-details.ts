@@ -58,20 +58,3 @@ export const getOrder =
         console.log(error);
       });
   };
-
-// export function getOrder(data: any) {
-//   return function (dispatch: AppDispatch) {
-//     dispatch({
-//       type: GET_ORDER_REQUEST,
-//     });
-//     orderRequest(data, getCookie("token"))
-//       .then((res) => {
-//         if (res.success) {
-//           dispatch({ type: GET_ORDER_SUCCESS, payload: res });
-//         }
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-// }

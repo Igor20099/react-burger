@@ -106,15 +106,15 @@ function ProfilePage() {
         </li>
       </ul>
       <div>
-        <EmailInput
-          
+        <Input
+          type={"text"}
           placeholder={"Имя"}
+          onChange={changeName}
+          icon={"EditIcon"}
+          value={name}
           name={"name"}
           size={"default"}
           extraClass="mb-6"
-          isIcon={true}
-          value={name}
-          onChange={changeName}
         />
         <EmailInput
           name={"email"}
