@@ -42,7 +42,7 @@ function LoginPage() {
 
   function loginHandle(e:React.SyntheticEvent) {
     e.preventDefault();
-    dispatch(login({ email, password }));
+    dispatch(login( email, password ));
   }
 
   return (

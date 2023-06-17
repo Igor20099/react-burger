@@ -1,5 +1,5 @@
 import { store } from "./services/store";
-import { ThunkAction } from "redux-thunk";
+import { ThunkAction,ThunkDispatch } from "redux-thunk";
 import { Action, ActionCreator } from "redux";
 import { TAuthActions } from "./services/actions/auth";
 import { TBurgerIngredientsActions } from "./services/actions/burger-ingredients";
@@ -8,11 +8,13 @@ import { TIngredientsActions } from "./services/actions/ingredients";
 import { TOrderDetailsActions } from "./services/actions/order-details";
 import { TOrderInfoActions } from "./services/actions/order-info";
 import { TWsActions } from "./services/actions/wsActionTypes";
-import { Dispatch } from 'redux';
+import { Dispatch } from "redux";
+import { rootReducer } from "./services/reducers";
 
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
+
 
 // Типизация всех экшенов приложения
 type TApplicationActions =
@@ -24,16 +26,12 @@ type TApplicationActions =
   | TOrderInfoActions
   | TWsActions;
 
-
 // Типизация thunk в нашем приложении
-export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
->;
-
+export type AppThunk<ReturnType = void> = ActionCreator <ThunkAction <ReturnType, Action, RootState, TApplicationActions>>;
 export type TIngredient = {
   _id: string;
   uniqueId?: string;
-  isLocked?:boolean;
+  isLocked?: boolean;
   name: string;
   type?: string;
   proteins: number;

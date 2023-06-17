@@ -20,7 +20,7 @@ export interface IIngredientsError {
 export type TIngredientsActions = | IIngredientsRequest | IIngredientsSuccess | IIngredientsError
 
 
-export const getIngredients:AppThunk = () =>  (dispatch:AppDispatch) => {
+export const getIngredients = (): AppThunk =>  (dispatch:AppDispatch):any => {
  
     dispatch({
       type: INGREDIENTS_REQUEST,

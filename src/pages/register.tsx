@@ -41,7 +41,7 @@ function RegisterPage() {
 
   function registerHandle(e:React.SyntheticEvent) {
     e.preventDefault();
-    dispatch(register({name, email, password}))
+    dispatch(register(name, email, password))
   }
 
   return (

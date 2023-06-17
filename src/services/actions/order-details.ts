@@ -31,7 +31,7 @@ export interface ICloseOrder {
 
 export type TOrderDetailsActions = | IGetOrderRequest | IGetOrderSuccess | IGetOrderError | IGetOrderNumber | ICloseOrder
 
-export const getOrder:AppThunk = (data: any) =>(dispatch: AppDispatch) => {
+export const getOrder= (data: any) : AppThunk  =>(dispatch: AppDispatch):any => {
 
     dispatch({
       type: GET_ORDER_REQUEST,

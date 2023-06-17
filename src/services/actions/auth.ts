@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { AppDispatch, AppThunk, TUser } from "../../types";
 import {
   registerRequest,
@@ -174,9 +175,9 @@ export type TAuthActions =
   | ITokenSuccess
   | ITokenError;
 
-export const register: AppThunk =
-  (name: string, email: string, password: string) =>
-  (dispatch: AppDispatch) => {
+export const register =
+  (name: string, email: string, password: string) :AppThunk =>
+  (dispatch: AppDispatch):any => {
     dispatch({
       type: REGISTER_REQUEST,
     });
@@ -226,8 +227,8 @@ export const register: AppThunk =
 //   };
 // }
 
-export const login: AppThunk =
-  (email: string, password: string) => (dispatch: AppDispatch) => {
+export const login =
+  (email: string, password: string):AppThunk => (dispatch: AppDispatch):any => {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -275,7 +276,7 @@ export const login: AppThunk =
 //   };
 // }
 
-export const logout: AppThunk = () => (dispatch: AppDispatch) => {
+export const logout = ():AppThunk => (dispatch: AppDispatch):any => {
   dispatch({
     type: LOGOUT_REQUEST,
   });
@@ -317,7 +318,7 @@ export const logout: AppThunk = () => (dispatch: AppDispatch) => {
 //   };
 // }
 
-export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
+export const getUser = ():AppThunk => (dispatch: AppDispatch):any => {
   dispatch({
     type: GET_USER_REQUEST,
   });
@@ -359,8 +360,8 @@ export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
 //   };
 // }
 
-export const updateUser: AppThunk =
-  (name: string, email: string, token: string) => (dispatch: AppDispatch) => {
+export const updateUser =
+  (name: string, email: string, token: string):AppThunk => (dispatch: AppDispatch):any => {
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
@@ -398,7 +399,7 @@ export const updateUser: AppThunk =
 //   };
 // }
 
-export const tokenRequest: AppThunk = () => (dispatch: AppDispatch) => {
+export const tokenRequest = () :AppThunk => (dispatch: AppDispatch):any => {
   dispatch({
     type: TOKEN_REQUEST,
   });

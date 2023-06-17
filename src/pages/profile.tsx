@@ -26,27 +26,28 @@ function ProfilePage() {
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getUser()).then(() => {
-      if (user) {
-        setName(user.name || "");
-        setEmail(user.email || "");
-        setPassword("");
-      }
-      
-    });
-  }, [user.name]);
+    dispatch(getUser())
+    
+    // .then(() => {
+    //   setName(user.name || "");
+    //   setEmail(user.email || "");
+    //   setPassword("");
+    // });
+  }, []);
 
   function cancelChange() {
-    setName(user.name);
-    setEmail(user.email);
+    // setName(user.name);
+    // setEmail(user.email);
     setPassword("");
     setIsChange(false);
   }
 
   function saveChange() {
-    dispatch(updateUser(email, name, getCookie("token"))).then(() => {
-      setIsChange(false);
-    });
+    dispatch(updateUser(email, name, getCookie("token")!))
+    
+    // .then(() => {
+    //   setIsChange(false);
+    // });
   }
 
   function logoutHandle() {

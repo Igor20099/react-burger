@@ -4,8 +4,13 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 import PropTypes from "prop-types";
+import { FunctionComponent } from "react";
 
-function HomePage({ setIsModal }) {
+interface IHomePage {
+  setIsModal: (isModal: boolean) => void;
+}
+
+const HomePage: FunctionComponent<IHomePage> = ({ setIsModal }) => {
   return (
     <div className={styles.app}>
       <main className={styles.content}>
@@ -16,10 +21,7 @@ function HomePage({ setIsModal }) {
       </main>
     </div>
   );
-}
-
-HomePage.propTypes = {
-  setIsModal:PropTypes.func
 };
+
 
 export default HomePage;
