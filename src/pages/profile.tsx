@@ -23,21 +23,25 @@ function ProfilePage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isChange, setIsChange] = useState<boolean>(false);
-  const { user } = useSelector((state) => state.auth);
+  const user  = useSelector((state) => state.auth.user);
+  
 
   useEffect(() => {
     dispatch(getUser())
     
-    // .then(() => {
-    //   setName(user.name || "");
-    //   setEmail(user.email || "");
-    //   setPassword("");
-    // });
-  }, []);
+    .then(() => {
+      if (user) {
+        setName(user.name || "");
+        setEmail(user.email || "");
+        setPassword("");
+      }
+    
+    });
+  }, [user]);
 
   function cancelChange() {
-    // setName(user.name);
-    // setEmail(user.email);
+    setName(user.name);
+    setEmail(user.email);
     setPassword("");
     setIsChange(false);
   }

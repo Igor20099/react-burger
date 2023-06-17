@@ -15,15 +15,16 @@ import {
 import { TAuthActions } from "../actions/auth";
 
 type TAuthState = {
-  user: TUser | null;
+  user: TUser;
   accessToken: string | null;
   isAuth: boolean;
 };
 
 const authInitialState: TAuthState = {
   user: {
-    name: null,
-    email: null,
+    name: '',
+    email: '',
+    password:''
   },
   accessToken: null,
   isAuth: localStorage.getItem("refreshToken") ? true : false,
@@ -32,7 +33,7 @@ const authInitialState: TAuthState = {
 export const authorizationReducer = (
   state = authInitialState,
   action: TAuthActions
-) => {
+) : TAuthState => {
   switch (action.type) {
     case REGISTER_SUCCESS: {
       return {
@@ -55,7 +56,11 @@ export const authorizationReducer = (
     case LOGOUT_SUCCESS: {
       return {
         ...state,
-        user: {},
+        user: {
+          name : '',
+          email: '',
+          password : ''
+      },
         accessToken: null,
         isAuth: false,
       };
