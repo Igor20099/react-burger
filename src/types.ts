@@ -66,8 +66,8 @@ export type TOrder = {
 };
 
 export type TUser = {
-  name: string | null;
-  email: string | null;
-  password?: string | null;
-  token?: string | null;
+  name: string ;
+  email: string ;
+  password?: string ;
+  token?: string;
 };

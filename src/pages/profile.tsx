@@ -23,35 +23,31 @@ function ProfilePage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isChange, setIsChange] = useState<boolean>(false);
-  const user  = useSelector((state) => state.auth.user);
-  
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    dispatch(getUser())
-    
-    .then(() => {
-      if (user) {
-        setName(user.name || "");
-        setEmail(user.email || "");
-        setPassword("");
-      }
-    
-    });
-  }, [user]);
+    dispatch(getUser());
+
+    if (user) {
+      setName(user.name || "");
+      setEmail(user.email || "");
+      setPassword("");
+    }
+  }, [user.name]);
 
   function cancelChange() {
-    setName(user.name);
-    setEmail(user.email);
-    setPassword("");
-    setIsChange(false);
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+      setPassword("");
+      setIsChange(false);
+    }
   }
 
   function saveChange() {
-    dispatch(updateUser(email, name, getCookie("token")!))
-    
-    // .then(() => {
-    //   setIsChange(false);
-    // });
+    dispatch(updateUser(email, name, getCookie("token")!));
+
+    setIsChange(false);
   }
 
   function logoutHandle() {
@@ -111,6 +107,7 @@ function ProfilePage() {
       </ul>
       <div>
         <EmailInput
+          
           placeholder={"Имя"}
           name={"name"}
           size={"default"}

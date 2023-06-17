@@ -7,12 +7,13 @@ import { useState } from "react";
 function OrderDetails() {
 
   const order = useSelector(state => state.orderDetails.order)
+  const number = useSelector(state => state.orderDetails.number)
   
 
 
   return (
     <div className={styles.order}>
-      {order && <p className="text text_type_digits-large mb-8">{order.order.number}</p>}
+      {order && <p className="text text_type_digits-large mb-8">{number}</p>}
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
       <div className={styles.done}>
         {" "}

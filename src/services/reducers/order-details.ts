@@ -10,16 +10,18 @@ import {
 type TOrderDetailsState = {
   orderRequest: boolean;
   orderFailed: boolean;
-  order: any | null
+  order: any | null;
+  number:number
 }
 
 const orderDetailsInitialState:TOrderDetailsState = {
   orderRequest: false,
   orderFailed: false,
   order: null,
+  number:0
 };
 
-export const orderDetailsReducer = (state = orderDetailsInitialState, action:TOrderDetailsActions) => {
+export const orderDetailsReducer = (state = orderDetailsInitialState, action:TOrderDetailsActions)  => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {
@@ -33,6 +35,7 @@ export const orderDetailsReducer = (state = orderDetailsInitialState, action:TOr
         ...state,
         order: action.payload,
         orderRequest: false,
+        number:action.number
       };
     }
     case GET_ORDER_ERROR: {

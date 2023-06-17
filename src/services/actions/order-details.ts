@@ -14,7 +14,8 @@ export interface IGetOrderRequest {
 
 export interface IGetOrderSuccess {
   readonly type: typeof GET_ORDER_SUCCESS;
-  payload:TOrder
+  payload: TOrder;
+  number: number;
 }
 
 export interface IGetOrderError {
@@ -29,24 +30,34 @@ export interface ICloseOrder {
   readonly type: typeof CLOSE_ORDER;
 }
 
-export type TOrderDetailsActions = | IGetOrderRequest | IGetOrderSuccess | IGetOrderError | IGetOrderNumber | ICloseOrder
+export type TOrderDetailsActions =
+  | IGetOrderRequest
+  | IGetOrderSuccess
+  | IGetOrderError
+  | IGetOrderNumber
+  | ICloseOrder;
 
-export const getOrder= (data: any) : AppThunk  =>(dispatch: AppDispatch):any => {
-
+export const getOrder =
+  (data: any): AppThunk =>
+  (dispatch: AppDispatch): any => {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
     orderRequest(data, getCookie("token"))
       .then((res) => {
         if (res.success) {
-          dispatch({ type: GET_ORDER_SUCCESS, payload: res });
+          console.log(res);
+          dispatch({
+            type: GET_ORDER_SUCCESS,
+            payload: res,
+            number: res.order.number,
+          });
         }
       })
       .catch((error) => {
         console.log(error);
       });
- 
-}
+  };
 
 // export function getOrder(data: any) {
 //   return function (dispatch: AppDispatch) {
