@@ -18,7 +18,7 @@ interface IBurgerIngredients {
 
 const BurgerIngredients:FunctionComponent<IBurgerIngredients> = ({ setIsModal }) => {
   const { ingredients } = useSelector((state) => state.ingredients);
-  const [current, setCurrent] = React.useState("one");
+  const [current, setCurrent] = React.useState<string>("one");
   const ingredientsContainerRef = useRef<HTMLDivElement>(null);
   const bunRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);

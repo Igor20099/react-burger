@@ -14,8 +14,8 @@ function ResetPasswordPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
+  const [password, setPassword] = useState<string>("");
+  const [token, setToken] = useState<string>("");
   const forgotPassword = localStorage.getItem("forgotPassword");
 
   useEffect(() => {

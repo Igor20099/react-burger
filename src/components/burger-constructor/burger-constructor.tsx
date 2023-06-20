@@ -34,7 +34,7 @@ const BurgerConstructor: FunctionComponent<IBurgerConstuctor> = ({
   const { isAuth } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
-  const [ingredientsOrder, setIngredientsOrder] = useState([]);
+  const [ingredientsOrder, setIngredientsOrder] = useState<Array<String>>([]);
 
   const handleDrop = (ingredient: TIngredient) => {
     dispatch(addIngredient(ingredient, uuidv4()));

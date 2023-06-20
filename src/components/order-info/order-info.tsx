@@ -21,15 +21,15 @@ import { TIngredient, TOrder } from "../../types";
 
 
 function OrderInfo() {
-  const ordersAll = useSelector((state) => state.ws.orders.orders);
+  const ordersAll = useSelector((state) => state.ws.orders?.orders);
   const { order } = useSelector((state) => state.orderInfo);
   const { ingredients } = useSelector((state) => state.ingredients);
   const location = useLocation();
   const dispatch = useDispatch();
   const [childIngreients, setChildIngredients] = useState<Array<TIngredient>>([]);
   const [ingredientsCount, setIngredientsCount] = useState<{ [key: string]: number } >({});
-  const [orders, setOrders] = useState([]);
-  let listTemp:{ [key: string]: any }  = {};
+  const [orders, setOrders] = useState<Array<TOrder>>([]);
+  let listTemp:{ [key: string]: number }  = {};
   const { id } = useParams();
   let ingredientSet = new Set<string>();
   let ingredientList:Array<TIngredient> = [];
@@ -52,7 +52,10 @@ function OrderInfo() {
     };
   }, [dispatch]);
   useEffect(() => {
-     setOrders(ordersAll)
+    if (ordersAll) {
+      setOrders(ordersAll)
+    }
+     
     orders?.find((el:TOrder) => {
       if (id === el._id) {
         dispatch(getOrder(el));

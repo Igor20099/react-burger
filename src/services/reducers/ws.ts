@@ -1,5 +1,6 @@
 // rootReducer.js
 
+import { TWsOrders } from "../../types";
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
@@ -8,19 +9,26 @@ import {
   TWsActions,
 } from "../actions/wsActionTypes";
 
-const initialState = {
-  wsConnected: false,
-  orders: [],
-  profileOrders: [],
-  error: undefined,
+type TWsState = {
+  wsConnected: boolean;
+  orders: TWsOrders | null;
+  profileOrders: TWsOrders | null;
+  error: Event | null;
 };
 
-export const wsReducer = (state = initialState, action: TWsActions) => {
+const WsInitialState: TWsState = {
+  wsConnected: false,
+  orders: null,
+  profileOrders: null,
+  error: null,
+};
+
+export const wsReducer = (state = WsInitialState, action: TWsActions): TWsState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
         ...state,
-        error: undefined,
+        error: null,
         wsConnected: true,
       };
 
@@ -34,14 +42,14 @@ export const wsReducer = (state = initialState, action: TWsActions) => {
     case WS_CONNECTION_CLOSED:
       return {
         ...state,
-        error: undefined,
+        error: null,
         wsConnected: false,
       };
 
     case WS_GET_ORDERS:
       return {
         ...state,
-        error: undefined,
+        error: null,
         orders: action.payload,
       };
 

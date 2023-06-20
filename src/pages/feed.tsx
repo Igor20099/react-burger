@@ -20,8 +20,8 @@ interface IFeedPage {
 const FeedPage:FunctionComponent<IFeedPage> = ({ setIsModal }) => {
   const dispatch = useDispatch();
   const [allOrders, setAllOrders] = useState<TOrder[]>([]);
-  const [ordersCount, setOrdersCount] = useState(0);
-  const [ordersToday, setOrdersToday] = useState(0);
+  const [ordersCount, setOrdersCount] = useState<number>(0);
+  const [ordersToday, setOrdersToday] = useState<number>(0);
   const { orders } = useSelector((state) => state.ws);
   const { ingredients } = useSelector((state) => state.ingredients);
   const { order } = useSelector((state) => state.orderInfo);

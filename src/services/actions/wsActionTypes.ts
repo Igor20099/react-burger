@@ -1,4 +1,4 @@
-import { TOrder } from "../../types";
+import { TOrder, TWsOrders } from "../../types";
 
 export const WS_CONNECTION_START: "WS_CONNECTION_START" = "WS_CONNECTION_START";
 export const WS_CONNECTION_SUCCESS: "WS_CONNECTION_SUCCESS" =
@@ -11,6 +11,7 @@ export const WS_SEND_ORDER: "WS_SEND_ORDER" = "WS_SEND_ORDER";
 
 export interface IWsConnectionStartAction {
   readonly type: typeof WS_CONNECTION_START;
+  payload: string;
 }
 
 export interface IWsConnectionSuccessAction {
@@ -19,7 +20,7 @@ export interface IWsConnectionSuccessAction {
 
 export interface IWsConnectionErrorAction {
   readonly type: typeof WS_CONNECTION_ERROR;
-  payload: any;
+  payload: Event | null;
 }
 
 export interface IWsConnectionClosedAction {
@@ -28,12 +29,12 @@ export interface IWsConnectionClosedAction {
 
 export interface IWsGetOrdersAction {
   readonly type: typeof WS_GET_ORDERS;
-  payload: any;
+  payload: TWsOrders;
 }
 
 export interface IWsSendOrderAction {
   readonly type: typeof WS_SEND_ORDER;
-  payload:string;
+  payload: string;
 }
 
 export type TWsActions =

@@ -1,9 +1,17 @@
 import { Navigate } from "react-router-dom";
-import { useDispatch,useSelector } from '../../hooks';
-import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "../../hooks";
+import { useLocation, RouteProps } from "react-router-dom";
+import { FunctionComponent, ReactElement } from "react";
 
-export function ProtectedRouteElement({ element, anonymous = false }:any) {
-  const {isAuth} = useSelector((state) => state.auth);
+interface IProtectedRouteElement {
+  element: ReactElement;
+  anonymous?: boolean;
+}
+
+export const ProtectedRouteElement: FunctionComponent<
+  IProtectedRouteElement
+> = ({ element, anonymous = false }) => {
+  const { isAuth } = useSelector((state) => state.auth);
 
   const location = useLocation();
   const from = location.state?.from || "/";
@@ -17,4 +25,4 @@ export function ProtectedRouteElement({ element, anonymous = false }:any) {
   }
 
   return element;
-}
+};

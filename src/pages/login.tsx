@@ -12,8 +12,8 @@ import { getCookie } from "../utils/cookie";
 
 function LoginPage() {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
   const location = useLocation();
   const {isAuth} = useSelector((state) => state.auth);

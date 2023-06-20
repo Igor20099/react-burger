@@ -12,9 +12,9 @@ import { register } from "../services/actions/auth";
 
 function RegisterPage() {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const {isAuth} = useSelector(state => state.auth)
   const navigate = useNavigate()
   const location = useLocation()

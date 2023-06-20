@@ -13,7 +13,7 @@ import { rootReducer } from "./services/reducers";
 
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
+export type AppDispatch = typeof store.dispatch;
 
 
 // Типизация всех экшенов приложения
@@ -27,7 +27,9 @@ type TApplicationActions =
   | TWsActions;
 
 // Типизация thunk в нашем приложении
-export type AppThunk<ReturnType = void> = ActionCreator <ThunkAction <ReturnType, Action, RootState, TApplicationActions>>;
+export type AppThunk<ReturnType = Promise<any> | void> = ActionCreator<
+  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
+>;
 export type TIngredient = {
   _id: string;
   uniqueId?: string;
@@ -71,3 +73,10 @@ export type TUser = {
   password?: string ;
   token?: string;
 };
+
+export type TWsOrders = {
+  success: boolean;
+  orders: Array<TOrder>;
+  total: number;
+  totalToday: number;
+}

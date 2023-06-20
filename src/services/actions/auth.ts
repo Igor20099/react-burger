@@ -175,9 +175,12 @@ export type TAuthActions =
   | ITokenSuccess
   | ITokenError;
 
-export const register =
-  (name: string, email: string, password: string): AppThunk =>
-  (dispatch: AppDispatch): any => {
+export const register: AppThunk = (
+  name: string,
+  email: string,
+  password: string
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER_REQUEST,
     });
@@ -200,10 +203,10 @@ export const register =
         console.error("Error: ", err);
       });
   };
+};
 
-export const login =
-  (email: string, password: string): AppThunk =>
-  (dispatch: AppDispatch): any => {
+export const login: AppThunk = (email: string, password: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -225,10 +228,12 @@ export const login =
         console.error("Error: ", err);
       });
   };
+};
 
-export const logout =
-  (): AppThunk =>
-  (dispatch: AppDispatch): any => {
+export const logout: AppThunk =
+  () =>
+ {
+  return function (dispatch:AppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST,
     });
@@ -247,10 +252,12 @@ export const logout =
         console.error("Error: ", err);
       });
   };
+}
 
-export const getUser =
-  (): AppThunk =>
-  (dispatch: AppDispatch): any => {
+export const getUser: AppThunk =
+  () =>
+  {
+    return function (dispatch:AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST,
     });
@@ -266,13 +273,19 @@ export const getUser =
       })
       .catch((err) => {
         console.error("Error: ", err);
-         dispatch(tokenRequest());
+        dispatch({
+          type: TOKEN_REQUEST,
+      })
       });
   };
+}
 
-export const updateUser =
-  (name: string, email: string, token: string): AppThunk =>
-  (dispatch: AppDispatch): any => {
+export const updateUser: AppThunk =
+  (name: string, email: string, token: string) =>
+   {
+    return function (dispatch:AppDispatch) {
+
+   
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
@@ -289,10 +302,14 @@ export const updateUser =
         console.error("Error: ", err);
       });
   };
+}
 
-export const tokenRequest =
-  (): AppThunk =>
-  (dispatch: AppDispatch): any => {
+export const tokenRequest: AppThunk =
+  () =>
+{
+  return function (dispatch:AppDispatch) {
+
+ 
     dispatch({
       type: TOKEN_REQUEST,
     });
@@ -316,3 +333,4 @@ export const tokenRequest =
         console.error("Error: ", err);
       });
   };
+}

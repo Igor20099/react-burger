@@ -1,49 +1,49 @@
-import { Middleware, MiddlewareAPI } from "redux";
+import { Middleware, MiddlewareAPI, AnyAction, Dispatch } from "redux";
 
 import { WS_URL } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
 import { tokenRequest } from "../actions/auth";
 import { TWsActionNames, TWsActions } from "../actions/wsActionTypes";
+import { RootState } from "../../types";
 
-export const socketMiddleware = (wsActionTypes:TWsActionNames) => {
-  return (store:any) => {
-    let socket:any = null;
+export const socketMiddleware = (wsActionTypes: TWsActionNames) => {
+  return (store: { dispatch: Dispatch<TWsActions> }) => {
+    let socket: WebSocket | null = null;
 
-    return (next:any) => (action:any) => {
-      const { dispatch, getState } = store;
-      const { type, payload } = action;
+    return (next: (i: AnyAction) => void) => (action: TWsActions) => {
+      const { dispatch } = store;
 
-      if (type === wsActionTypes.WS_CONNECTION_START) {
+      if (action.type === wsActionTypes.WS_CONNECTION_START) {
         socket = new WebSocket(action.payload);
       }
 
       if (socket) {
-        socket.onopen = (event :WebSocketEventMap) => {
+        socket.onopen = (event) => {
           dispatch({
             type: wsActionTypes.WS_CONNECTION_SUCCESS,
             payload: event,
           });
         };
 
-        socket.onerror = (event:WebSocketEventMap) => {
+        socket.onerror = (event) => {
           dispatch({ type: wsActionTypes.WS_CONNECTION_ERROR, payload: event });
         };
 
-        socket.onmessage = (event:WebSocketEventMap & {data:string}) => {
+        socket.onmessage = (event: Event & { data: string })=> {
           const { data } = event;
-          const newData = JSON.parse(data)
+          const newData = JSON.parse(data);
           dispatch({ type: wsActionTypes.WS_GET_ORDERS, payload: newData });
         };
 
-        socket.onclose = (event:WebSocketEventMap) => {
+        socket.onclose = (event) => {
           dispatch({
             type: wsActionTypes.WS_CONNECTION_CLOSED,
             payload: event,
           });
         };
 
-        if (type === wsActionTypes.WS_SEND_ORDER) {
-          const order = payload;
+        if (action.type === wsActionTypes.WS_SEND_ORDER) {
+          const order = action.payload;
           socket.send(JSON.stringify(order));
         }
       }

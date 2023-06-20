@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 function ForgotPasswordPage() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState<string>("");
   function changeEmail(e:React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
   }
