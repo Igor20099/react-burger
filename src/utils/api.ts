@@ -1,3 +1,4 @@
+import { TOrder } from "../types";
 import { BASE_URL } from "./constants";
 import { getCookie } from "./cookie";
 
@@ -15,7 +16,7 @@ export function ingredientsRequest() {
 }
 
 //запрос на номер заказа
-export function orderRequest(data: any, token: string | undefined) {
+export function orderRequest(data: TOrder, token: string | undefined) {
   return fetch(`${BASE_URL}/orders`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + token,},

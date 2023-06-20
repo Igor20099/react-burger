@@ -11,7 +11,9 @@ import { MOVE_INGREDIENT } from "../actions/burger-ingredients";
 type TBurgerIngredientsState = {
   ingredients: Array<TIngredient>;
   bun: TIngredient | null;
-  counts:any;
+  counts: {
+    [name: string]: number
+}
   count:number;
 }
 

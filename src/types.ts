@@ -1,5 +1,5 @@
 import { store } from "./services/store";
-import { ThunkAction,ThunkDispatch } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { Action, ActionCreator } from "redux";
 import { TAuthActions } from "./services/actions/auth";
 import { TBurgerIngredientsActions } from "./services/actions/burger-ingredients";
@@ -11,10 +11,8 @@ import { TWsActions } from "./services/actions/wsActionTypes";
 import { Dispatch } from "redux";
 import { rootReducer } from "./services/reducers";
 
-
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
-
 
 // Типизация всех экшенов приложения
 type TApplicationActions =
@@ -27,7 +25,7 @@ type TApplicationActions =
   | TWsActions;
 
 // Типизация thunk в нашем приложении
-export type AppThunk<ReturnType = Promise<any> | void> = ActionCreator<
+export type AppThunk<ReturnType = void> = ActionCreator<
   ThunkAction<ReturnType, Action, RootState, TApplicationActions>
 >;
 export type TIngredient = {
@@ -68,9 +66,9 @@ export type TOrder = {
 };
 
 export type TUser = {
-  name: string ;
-  email: string ;
-  password?: string ;
+  name: string;
+  email: string;
+  password?: string;
   token?: string;
 };
 
@@ -79,4 +77,4 @@ export type TWsOrders = {
   orders: Array<TOrder>;
   total: number;
   totalToday: number;
-}
+};

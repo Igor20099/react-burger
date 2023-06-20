@@ -37,9 +37,8 @@ export type TOrderDetailsActions =
   | IGetOrderNumber
   | ICloseOrder;
 
-export const getOrder =
-  (data: any): AppThunk =>
-  (dispatch: AppDispatch): any => {
+export const getOrder: AppThunk = (data: TOrder) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
@@ -58,3 +57,4 @@ export const getOrder =
         console.log(error);
       });
   };
+};

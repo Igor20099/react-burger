@@ -70,7 +70,7 @@ const BurgerIngredients:FunctionComponent<IBurgerIngredients> = ({ setIsModal })
     };
   }, [ingredients]);
 
-  const handleOpenModal = (e: any) => {
+  const handleOpenModal = (e: React.SyntheticEvent) => {
     ingredients.forEach((el) => {
       if(e.currentTarget) {
         if ( e.currentTarget.id === el._id) {

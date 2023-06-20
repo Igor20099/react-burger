@@ -22,9 +22,8 @@ export type TIngredientsActions =
   | IIngredientsSuccess
   | IIngredientsError;
 
-export const getIngredients =
-  (): AppThunk =>
-  (dispatch: AppDispatch): any => {
+export const getIngredients: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: INGREDIENTS_REQUEST,
     });
@@ -39,3 +38,4 @@ export const getIngredients =
         console.log(error);
       });
   };
+};
